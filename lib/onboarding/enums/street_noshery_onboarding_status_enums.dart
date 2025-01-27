@@ -1,0 +1,5 @@
+enum StreetNosheryOnboardingEnums{
+  MOBILE_VERIFICATION,
+  EMAIL_VERIFICATION,
+  ADDRESS_VERIFICATION
+}
