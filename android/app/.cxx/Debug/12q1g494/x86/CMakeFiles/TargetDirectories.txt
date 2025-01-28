@@ -1,0 +1,2 @@
+C:/Users/hp5cd/Documents/street_noshery/street_noshery/android/app/.cxx/Debug/12q1g494/x86/CMakeFiles/edit_cache.dir
+C:/Users/hp5cd/Documents/street_noshery/street_noshery/android/app/.cxx/Debug/12q1g494/x86/CMakeFiles/rebuild_cache.dir
