@@ -11,6 +11,7 @@ import 'package:street_noshery/onboarding/views/street_noshery_email_view.dart';
 import 'package:street_noshery/onboarding/views/street_noshery_mobile_number_view.dart';
 import 'package:street_noshery/onboarding/views/street_noshery_otp_view.dart';
 import 'package:street_noshery/profile/views/street_noshery_profile_view.dart';
+import 'package:street_noshery/profile/widgets/street_noshery_help_widget.dart';
 import 'package:street_noshery/profile/widgets/street_noshery_profile_edit_widget.dart';
 import 'package:street_noshery/reviews/binding/street_noshery_app_review_binding.dart';
 import 'package:street_noshery/reviews/view/street_noshery_review_app_view.dart';
@@ -77,6 +78,10 @@ class Pages {
     GetPage(
       name: _Pages.reviewApp, 
       page: () => const StreetNosheryAppReviewView(),
-      binding: StreetNosheryAppReviewBinding())
+      binding: StreetNosheryAppReviewBinding()),
+    GetPage(
+      name: _Pages.help, 
+      page: () => const StreetNosheryHelp(),
+      binding: StreetNosheryHomeBinding())
   ];
 }

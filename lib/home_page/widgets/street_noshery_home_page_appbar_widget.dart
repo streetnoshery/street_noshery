@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
 import 'package:street_noshery/routes/app_pages.dart';
 
@@ -15,10 +16,11 @@ class StreetNosheryHomepageAppbar extends GetView<StreetNosheryHomeController>
   @override
   Widget build(BuildContext context) {
     final name = controller.username.value;
+    final colors = CommonTheme();
     return PreferredSize(
       preferredSize: const Size.fromHeight(80), // Set desired height here
       child: AppBar(
-        backgroundColor: Colors.teal.shade200,
+        backgroundColor: colors.lightLeafGreen,
         automaticallyImplyLeading: false,
         title: Padding(
           padding: const EdgeInsets.only(left: 5, top: 15),
@@ -26,11 +28,11 @@ class StreetNosheryHomepageAppbar extends GetView<StreetNosheryHomeController>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Hi, $name!",
+                "${controller.streetNosheryHomePageFirebaseModel.appBar?.titlePrefix ?? "Hi,"} $name!",
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                     fontSize: 20,
-                    color: Colors.black,
+                    color: colors.textPrimary,
                     fontWeight: FontWeight.bold),
               ),
               InkWell(
@@ -40,7 +42,7 @@ class StreetNosheryHomepageAppbar extends GetView<StreetNosheryHomeController>
                 },
                 child: Text(
                   "sumit kumaar godwan...",
-                  style: TextStyle(color: Colors.grey.shade900, fontSize: 12),
+                  style: TextStyle(color: colors.textSecondary, fontSize: 12),
                 ),
               )
             ],
@@ -55,7 +57,7 @@ class StreetNosheryHomepageAppbar extends GetView<StreetNosheryHomeController>
               },
               child: CircleAvatar(
                 radius: 15,
-                backgroundColor: Colors.grey[200],
+                backgroundColor: colors.textTer,
                 child: const Icon(
                   Icons.person, // Profile placeholder icon
                   color: Colors.black,

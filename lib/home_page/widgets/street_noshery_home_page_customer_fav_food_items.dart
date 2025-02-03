@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
 import 'package:street_noshery/menu/enums/street_noshery_menu_enums.dart';
 import 'package:street_noshery/routes/app_pages.dart';
@@ -17,6 +18,7 @@ class BestSellerFoodItems extends StatelessWidget {
             ? Get.find<StreetNosheryHomeController>()
             : Get.put(StreetNosheryHomeController());
     final favFoodData = streetNosheryHomeController.bestSeller;
+    final colors = CommonTheme();
     return SizedBox(
       width: 150,
       height: 350,
@@ -57,10 +59,10 @@ class BestSellerFoodItems extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                const Center(
+                Center(
                   child: Text(
-                    "Special Meal",
-                    style: TextStyle(
+                    streetNosheryHomeController.streetNosheryHomePageFirebaseModel.homePageBestSeller?.subTitle ?? "Special Meal",
+                    style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 12),
@@ -100,10 +102,10 @@ class BestSellerFoodItems extends StatelessWidget {
                           const SizedBox(
                             width: 5,
                           ),
-                          const Icon(
+                          Icon(
                             Icons.star, // Star icon
-                            color: Colors.amber, // Icon color
-                            size: 15, // Icon size
+                            color: colors.yellowStar, // Icon color
+                            size: 20, // Icon size
                           ),
                           const SizedBox(
                             width: 15,

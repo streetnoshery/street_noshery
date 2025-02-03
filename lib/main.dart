@@ -4,15 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:street_noshery/firebase_options.dart';
 import 'package:street_noshery/onboarding/views/street_noshery_first_view.dart';
-import 'package:street_noshery/onboarding/views/street_noshery_mobile_number_view.dart';
 import 'package:street_noshery/routes/app_pages.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await Hive.initFlutter(); // Initializes Hive with Flutter bindings
   await Hive.openBox('myBox'); // Open a box named 'myBox'
   runApp(const MyApp());

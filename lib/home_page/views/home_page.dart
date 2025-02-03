@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
+import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
 import 'package:street_noshery/home_page/enums/street_noshery_home_page_enums.dart';
 import 'package:street_noshery/home_page/widgets/street_noshery_home_page_appbar_widget.dart';
@@ -13,16 +14,16 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
 
   @override
   Widget build(BuildContext context) {
-
+    final colors = CommonTheme();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const StreetNosheryHomepageAppbar(),
       body: Container(
         decoration: BoxDecoration(
-          color: Colors.grey.shade100,
+          color: colors.greyTer,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3), // Shadow color
+              color: colors.textPrimary.withOpacity(0.3), // Shadow color
               spreadRadius: 2, // Spread radius
               blurRadius: 8, // Blur radius
               offset: const Offset(0, 4), // Offset in X and Y direction
@@ -55,8 +56,8 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                   height: 20,
                 ),
                 Divider(
-                  thickness: 2,
-                  color: Colors.grey.shade300,
+                  thickness: 1.5,
+                  color: colors.greySecondary,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -71,10 +72,10 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                                 controller.selectedTab.value =
                                     TabEnum.home;
                               },
-                              child: const Text(
-                                "Home",
+                              child: Text(
+                                controller.streetNosheryHomePageFirebaseModel.menuTab?.home ?? "Home",
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: colors.textPrimary,
                                 ),
                               )),
                           (controller.selectedTab.value ==
@@ -83,7 +84,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                                   width: 50,
                                   height: 5,
                                   decoration: BoxDecoration(
-                                    color: Colors.teal.shade200,
+                                    color: colors.lightMossgreen,
                                     borderRadius: const BorderRadius.all(Radius.circular(10))
                                   ),
                                 )
@@ -98,9 +99,9 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                                     TabEnum.menu;
                                 Get.toNamed(Routes.menu);
                               },
-                              child: const Text(
-                                "Menu",
-                                style: TextStyle(
+                              child: Text(
+                                controller.streetNosheryHomePageFirebaseModel.menuTab?.menu ?? "Menu",
+                                style: const TextStyle(
                                   color: Colors.black,
                                 ),
                               )),
@@ -110,7 +111,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                                   width: 50,
                                   height: 5,
                                   decoration: BoxDecoration(
-                                    color: Colors.teal.shade200,
+                                    color: colors.lightMossgreen,
                                     borderRadius: const BorderRadius.all(Radius.circular(10))
                                   ),
                                 )
@@ -125,9 +126,9 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                                     TabEnum.cart;
                                 Get.toNamed(Routes.cart);
                               },
-                              child: const Text(
-                                "Cart",
-                                style: TextStyle(
+                              child: Text(
+                                controller.streetNosheryHomePageFirebaseModel.menuTab?.cart ?? "Cart",
+                                style: const TextStyle(
                                   color: Colors.black,
                                 ),
                               )),
@@ -137,7 +138,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                                   width: 50,
                                   height: 5,
                                   decoration: BoxDecoration(
-                                    color: Colors.teal.shade200,
+                                    color: colors.lightMossgreen,
                                     borderRadius: const BorderRadius.all(Radius.circular(10))
                                   ),
                                 )
@@ -148,17 +149,17 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                   ),
                 ),
                 Divider(
-                  thickness: 2,
-                  color: Colors.grey.shade300,
+                  thickness: 1,
+                  color: colors.greySecondary,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
-                    "BestSeller",
-                    style: TextStyle(
+                    controller.streetNosheryHomePageFirebaseModel.homePageBestSeller?.title ?? "BestSeller",
+                    style: const TextStyle(
                         fontStyle: FontStyle.italic,
                         fontSize: 18,
                         color: Colors.orangeAccent,
@@ -183,11 +184,11 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
-                    "Recent brought",
-                    style: TextStyle(
+                    controller.streetNosheryHomePageFirebaseModel.recentBrought?.title ?? "Recent brought",
+                    style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 15),

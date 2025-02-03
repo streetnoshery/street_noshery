@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/reviews/controller/street_noshery_app_review_controller.dart';
 
 class StreetNosheryAppReviewView
@@ -8,6 +9,7 @@ class StreetNosheryAppReviewView
 
   @override
   Widget build(BuildContext context) {
+    final colors = CommonTheme();
     return Scaffold(
       body: Obx(() {
         return SingleChildScrollView(
@@ -19,7 +21,7 @@ class StreetNosheryAppReviewView
                   height: Get.height * .16,
                   width: Get.width,
                   decoration: BoxDecoration(
-                    color: Colors.teal.shade100,
+                    color: colors.lightLeafGreen,
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(30),
                         bottomRight:
@@ -70,7 +72,7 @@ class StreetNosheryAppReviewView
                                 ? Icons.star
                                 : Icons.star_border,
                             color: index < controller.selectedStars.value
-                                ? Colors.amber
+                                ? colors.yellowStar
                                 : Colors.grey,
                             size: 40,
                           ),
@@ -142,7 +144,7 @@ class StreetNosheryAppReviewView
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                           decoration: BoxDecoration(
-                            color: Colors.teal.shade200,
+                            color: colors.lightLeafGreen,
                             borderRadius: const BorderRadius.all(Radius.circular(10)),
                             border: Border.all(
                               color: Colors.grey.shade400

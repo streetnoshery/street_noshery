@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:street_noshery/cart/controllers/street_noshery_cart_controller.dart';
+import 'package:street_noshery/common/common_theme.dart';
 
 class StreetNosheryServiceTypeWidget
     extends GetView<StreetNosheryCartController> {
@@ -8,6 +9,7 @@ class StreetNosheryServiceTypeWidget
 
   @override
   Widget build(BuildContext context) {
+    final colors = CommonTheme();
     return Obx(() {
       return Visibility(
       visible: controller.homeController.foodCartList.isNotEmpty,
@@ -41,7 +43,7 @@ class StreetNosheryServiceTypeWidget
                 title: Text(value),
                 leading: Radio<int>(
                   value: key,
-                  activeColor: Colors.teal.shade500,
+                  activeColor: colors.lightMossgreen,
                   groupValue: controller.serviceOption.value,
                   onChanged: (selectedValue) {
                     if (selectedValue != null) {
@@ -68,6 +70,7 @@ void _showBottomSheet(BuildContext context) {
   showModalBottomSheet(
     context: context,
     builder: (context) {
+      final colors = CommonTheme();
       return Obx(() {
         return Padding(
           padding: const EdgeInsets.all(16.0),
@@ -78,7 +81,7 @@ void _showBottomSheet(BuildContext context) {
                 title: Text(
                     'Selected Date: ${cartController.selectedDate.value.isNotEmpty ? cartController.selectedDate.value : 'Not Selected'}'),
                 trailing:
-                    Icon(Icons.calendar_today, color: Colors.teal.shade800),
+                    Icon(Icons.calendar_today, color: colors.darkLeafGreen),
                 onTap: () {
                   cartController.selectDate(context);
                 },
@@ -88,7 +91,7 @@ void _showBottomSheet(BuildContext context) {
                     'Selected Time: ${cartController.selectedTime.isNotEmpty ? cartController.selectedTime.value : 'Not Selected'}'),
                 trailing: Icon(
                   Icons.access_time,
-                  color: Colors.teal.shade800,
+                  color: colors.darkLeafGreen,
                 ),
                 onTap: () {
                   cartController.selectTime(context);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
 import 'package:street_noshery/home_page/models/favourite_food_model.dart';
 import 'package:street_noshery/reviews/widget/street_noshery_common_review_dialogue_box.dart';
@@ -12,6 +13,7 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = CommonTheme();
     return Obx(() {
       return Scaffold(
         appBar: PreferredSize(
@@ -19,7 +21,7 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
           child: Container(
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(
-                color: Colors.teal.shade200, // Shadow color
+                color: colors.lightLeafGreen, // Shadow color
                 spreadRadius: 2, // Spread radius
                 blurRadius: 1, // Blur radius
                 offset: const Offset(0, 4), // Offset in X and Y direction
@@ -45,7 +47,7 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                         // Help button at the right
                         InkWell(
                           onTap: () {
-                            print("Help pressed");
+                            Get.toNamed(Routes.help);
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(right: 20),
@@ -57,8 +59,8 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                                       Radius.circular(20)),
                                   gradient: LinearGradient(
                                     colors: [
-                                      Colors.grey.shade300,
-                                      Colors.teal.shade200
+                                      colors.lightGreen,
+                                      colors.lightMossgreen
                                     ], // Gradient colors
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
@@ -330,18 +332,59 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
 
   @override
   Widget build(BuildContext context) {
-    final recentBroughtItems = controller.recentlyBroughtFoodItems;
+    final colors = CommonTheme();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "${recentBroughtItems[index].itemName}",
-            style: TextStyle(color: Colors.grey.shade900, fontSize: 15),
+          Row(
+            children: [
+              Text(
+                "${foodList[index].itemName}",
+                style: TextStyle(color: Colors.grey.shade900, fontSize: 15),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Text("${foodList[index].rating}",
+                  style: TextStyle(color: Colors.grey.shade900, fontSize: 15)),
+              const SizedBox(
+                width: 5,
+              ),
+              Icon(
+                Icons.star, // Star icon
+                color: colors.yellowStar, // Icon color
+                size: 18, // Icon size
+              ),
+              const Spacer(),
+              Obx(() {
+                return IconButton(
+                  icon: Icon(
+                    (controller.isFavorite.value && controller.tappedFoodId.value == foodList[index].dishId?.toInt())
+                        ? Icons.favorite
+                        : Icons.favorite_border,
+                    color: (controller.isFavorite.value && controller.tappedFoodId.value == foodList[index].dishId?.toInt())
+                        ? colors.darkLeafGreen
+                        : Colors.grey,
+                    size: 18,
+                  ),
+                  onPressed: () {
+                    if(controller.tappedFoodId.value == foodList[index].dishId?.toInt()) {
+                      controller.isFavorite.value = !controller.isFavorite.value;
+                    }
+                    else if(controller.tappedFoodId.value != foodList[index].dishId?.toInt()) {
+                      controller.isFavorite.value = true;
+                    }
+                    controller.tappedFoodId.value = foodList[index].dishId?.toInt() ?? 0;
+                    controller.updateFavoriteFood();
+                  },
+                );
+              })
+            ],
           ),
           Text(
-            "${recentBroughtItems[index].dateTime}",
+            "${foodList[index].dateTime}",
             style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
           ),
           const SizedBox(
@@ -353,10 +396,11 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
                 child: InkWell(
                   onTap: () {
                     controller.updateCart(
-                        recentBroughtItems[index].itemName ?? "",
-                        recentBroughtItems[index].price as num, recentBroughtItems[index].dishId as num);
+                        foodList[index].itemName ?? "",
+                        foodList[index].price as num,
+                        foodList[index].dishId as num);
                     controller.updateCartAmount(
-                        recentBroughtItems[index].price ?? 0, UpdatePrice.add);
+                        foodList[index].price ?? 0, UpdatePrice.add);
                     Get.toNamed(Routes.cart);
                   },
                   child: Container(
@@ -365,9 +409,9 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.black),
                         color: Colors.white),
-                    child: const Text(
-                      "REORDER",
-                      style: TextStyle(color: Colors.black, fontSize: 15),
+                    child: Text(
+                      controller.streetNosheryHomePageFirebaseModel.recentBrought?.reorder.toUpperCase() ?? "REORDER",
+                      style: const TextStyle(color: Colors.black, fontSize: 15),
                     ),
                   ),
                 ),
@@ -381,7 +425,7 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return ReviewPopup();
+                        return const ReviewPopup();
                       },
                     );
                   },
@@ -391,10 +435,10 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.orangeAccent),
                         color: Colors.white),
-                    child: const Text(
-                      "RATE ORDER",
+                    child: Text(
+                      controller.streetNosheryHomePageFirebaseModel.recentBrought?.rate.toUpperCase() ?? "RATE ORDER",
                       style:
-                          TextStyle(color: Colors.orangeAccent, fontSize: 15),
+                          const TextStyle(color: Colors.orangeAccent, fontSize: 15),
                     ),
                   ),
                 ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:street_noshery/common/common_images.dart';
+import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
 import 'package:street_noshery/menu/controller/street_noshery_menu_controller.dart';
 
@@ -21,6 +22,7 @@ class StreetNosheryCartController extends GetxController {
   final selectedTime = "".obs;
 
   Future<void> selectDate(BuildContext context) async {
+    final colors = CommonTheme();
     DateFormat format = DateFormat("dd-MM-yyyy");
     final DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -32,9 +34,9 @@ class StreetNosheryCartController extends GetxController {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: Colors.teal.shade800, // Header background color
+            primaryColor: colors.darkLeafGreen, // Header background color
             colorScheme: ColorScheme.light(
-                primary: Colors.teal.shade800), // Header text color
+                primary: colors.darkLeafGreen), // Header text color
             buttonTheme:
                 const ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
@@ -51,6 +53,7 @@ class StreetNosheryCartController extends GetxController {
   }
 
   Future<void> selectTime(BuildContext context) async {
+    final colors = CommonTheme();
     List<String> timeParts =
         selectedTime.split(':'); // Split string into hours and minutes
     int hour = 0;
@@ -68,9 +71,9 @@ class StreetNosheryCartController extends GetxController {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: Colors.teal.shade800, // Header background color
+            primaryColor: colors.darkLeafGreen, // Header background color
             colorScheme: ColorScheme.light(
-                primary: Colors.teal.shade800), // Header text color
+                primary: colors.darkLeafGreen), // Header text color
             buttonTheme:
                 const ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:street_noshery/common/common_images.dart';
+import 'package:street_noshery/firebase/firebase_helper.dart';
 import 'package:street_noshery/routes/app_pages.dart';
 
 class StreetNosheryOnboardingController extends GetxController {
@@ -35,6 +36,12 @@ class StreetNosheryOnboardingController extends GetxController {
   Timer? timer;
   late AnimationController controller;
   late Animation<double> animation;
+  final fireBaseContentHandler = Get.isRegistered<FirebaseHelper>() ? Get.find<FirebaseHelper>() : Get.put(FirebaseHelper());
+
+  @override
+  void onInit() async {
+    super.onInit();
+  }
 
   @override
   void onReady() async {

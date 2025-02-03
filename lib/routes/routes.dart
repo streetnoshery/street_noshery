@@ -15,6 +15,7 @@ class Routes {
   static const onboardingUserDetails = _Pages.onboardingUserDetails;
   static const editUserprofile = _Pages.editUserprofile;
   static const reviewApp = _Pages.reviewApp;
+  static const help = _Pages.help;
 }
 
 abstract class _Pages {
@@ -33,4 +34,5 @@ abstract class _Pages {
   static const onboardingUserDetails = "/street-noshery-user-onboarding-details";
   static const editUserprofile = "/street-noshery-edit-user-profile";
   static const reviewApp = "/street-noshery-review-app";
+  static const help = "/street-noshery-help";
 }

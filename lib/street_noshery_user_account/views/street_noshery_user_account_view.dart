@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_theme.dart';
 
 import '../controllers/street_noshery_user_account_controller.dart';
 
@@ -10,6 +10,7 @@ class StreetNosheryUserAccountView
 
   @override
   Widget build(BuildContext context) {
+    final colors = CommonTheme();
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: PreferredSize(
@@ -17,7 +18,7 @@ class StreetNosheryUserAccountView
         child: Container(
           decoration: BoxDecoration(boxShadow: [
             BoxShadow(
-              color: Colors.teal.shade200, // Shadow color
+              color: colors.lightLeafGreen, // Shadow color
               spreadRadius: 2, // Spread radius
               blurRadius: 1, // Blur radius
               offset: const Offset(0, 4), // Offset in X and Y direction
@@ -122,7 +123,7 @@ class StreetNosheryUserAccountView
                             onChanged: (value) {
                               controller.isWhatsAppToggled.value = value;
                             },
-                            activeColor: Colors.teal,
+                            activeColor: colors.lightMossgreen,
                           );
                         })
                       ],
@@ -146,7 +147,7 @@ class StreetNosheryUserAccountView
                             onChanged: (value) {
                               controller.isSMSToggled.value = value;
                             },
-                            activeColor: Colors.teal,
+                            activeColor: colors.lightMossgreen,
                           );
                         })
                       ],

@@ -5,6 +5,7 @@ import 'package:street_noshery/cart/widgets/street_noshery_cart_details_widget.d
 import 'package:street_noshery/cart/widgets/street_noshery_cart_saving_corner_widget.dart';
 import 'package:street_noshery/cart/widgets/street_noshery_payment_list_widget.dart';
 import 'package:street_noshery/cart/widgets/street_noshery_service_type_widget.dart';
+import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/home_page/enums/street_noshery_home_page_enums.dart';
 
 class StreetNosheryCartView extends GetView<StreetNosheryCartController> {
@@ -12,6 +13,7 @@ class StreetNosheryCartView extends GetView<StreetNosheryCartController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = CommonTheme();
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       floatingActionButton: Obx(() {
@@ -44,7 +46,7 @@ class StreetNosheryCartView extends GetView<StreetNosheryCartController> {
                   height: Get.height * .16,
                   width: Get.width,
                   decoration: BoxDecoration(
-                    color: Colors.teal.shade100,
+                    color: colors.lightLeafGreen,
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(30),
                         bottomRight:

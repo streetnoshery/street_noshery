@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
+import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/home_page/enums/street_noshery_home_page_enums.dart';
 import 'package:street_noshery/menu/controller/street_noshery_menu_controller.dart';
 import 'package:street_noshery/menu/widgets/street_noshery_menu_food_item_widget.dart';
@@ -13,6 +14,7 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = CommonTheme();
     return Obx(() {
       controller.menuList;
       return Scaffold(
@@ -59,7 +61,7 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                   Container(
                     height: Get.height * .25,
                     decoration: BoxDecoration(
-                      color: Colors.teal.shade100,
+                      color: colors.lightLeafGreen,
                       borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(30),
                           bottomRight:
@@ -138,36 +140,35 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                                                         vertical: 2),
                                                 decoration: BoxDecoration(
                                                     color:
-                                                        Colors.green.shade700,
+                                                        colors.lightMossgreen,
                                                     borderRadius:
                                                         const BorderRadius.all(
                                                             Radius.circular(
                                                                 10))),
-                                                child: const Row(
+                                                child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.center,
                                                   children: [
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       width: 5,
                                                     ),
                                                     Icon(
                                                       Icons.star, // Star icon
-                                                      color: Colors
-                                                          .white, // Icon color
+                                                      color: colors.yellowStar, // Icon color
                                                       size: 15, // Icon size
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       width: 5,
                                                     ),
-                                                    Text(
+                                                    const Text(
                                                       "4",
                                                       style: TextStyle(
                                                           fontSize: 15,
                                                           color: Colors.white),
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       width: 5,
                                                     ),
                                                   ],
@@ -175,7 +176,8 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                                             Text(
                                               "Ratings",
                                               style: TextStyle(
-                                                  color: Colors.grey.shade500),
+                                                  color: Colors.grey.shade600,
+                                                  fontSize: 13),
                                             )
                                           ],
                                         ),
@@ -290,7 +292,9 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20,),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Container(
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -445,7 +449,9 @@ Widget _buildListItems(BuildContext context, int index) {
       },
       onTap: () {
         streetNosheryMenuController.homeController.updateCart(
-            favFoodData[index].itemName ?? "", favFoodData[index].price as num, favFoodData[index].dishId as num);
+            favFoodData[index].itemName ?? "",
+            favFoodData[index].price as num,
+            favFoodData[index].dishId as num);
         streetNosheryMenuController.homeController
             .updateCartAmount(favFoodData[index].price ?? 0, UpdatePrice.add);
         Get.toNamed(Routes.cart);

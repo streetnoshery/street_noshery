@@ -1,6 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/street_noshery_user_address/controllers/street_noshery_user_address_controller.dart';
 
 class StreetNosheryUserAddressView
@@ -9,6 +10,7 @@ class StreetNosheryUserAddressView
 
   @override
   Widget build(BuildContext context) {
+    final colors = CommonTheme();
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: PreferredSize(
@@ -16,7 +18,7 @@ class StreetNosheryUserAddressView
         child: Container(
           decoration: BoxDecoration(boxShadow: [
             BoxShadow(
-              color: Colors.teal.shade200, // Shadow color
+              color: colors.lightLeafGreen, // Shadow color
               spreadRadius: 2, // Spread radius
               blurRadius: 1, // Blur radius
               offset: const Offset(0, 4), // Offset in X and Y direction
