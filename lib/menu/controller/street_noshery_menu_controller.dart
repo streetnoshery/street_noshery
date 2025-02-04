@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:street_noshery/common/common_images.dart';
+import 'package:street_noshery/firebase/firebase_model/street_noshery_menu_static_data.model.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
 import 'package:street_noshery/home_page/models/favourite_food_model.dart';
 import 'package:street_noshery/menu/enums/street_noshery_menu_enums.dart';
@@ -85,6 +86,7 @@ class StreetNosheryMenuController extends GetxController {
   final tempFoodArray = <FavouriteFood>[].obs;
   final tempDrinks = <FavouriteFood>[].obs;
   final tempBreakfast = <FavouriteFood>[].obs;
+  StreetNosheryMenuFirebaseModel get streetNosheryMenuFirebaseStaticModel => homeController.onboardingController.fireBaseContentHandler.streetNosheryMenuFireBasemodel;
 
   @override
   void onReady() {

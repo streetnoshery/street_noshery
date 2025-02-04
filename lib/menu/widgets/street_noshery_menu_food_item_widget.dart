@@ -102,7 +102,7 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                     border: Border.all(color: Colors.grey.shade400)),
                 child: Text(
-                  "More Details >",
+                  controller.streetNosheryMenuFirebaseStaticModel.menu?.moreDetail ?? "More Details >",
                   style: TextStyle(color: Colors.grey.shade600, fontSize: 15),
                 ),
               ),

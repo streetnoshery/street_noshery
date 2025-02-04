@@ -46,9 +46,9 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                child: const Text(
-                  "Cart >",
-                  style: TextStyle(fontSize: 16), // Text style
+                child: Text(
+                  controller.streetNosheryMenuFirebaseStaticModel.primaryCtaTitle ?? "Cart >",
+                  style: const TextStyle(fontSize: 16), // Text style
                 ),
               ),
             ),
@@ -107,11 +107,11 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      const Column(
+                                      Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
+                                          const Text(
                                             "Office address cafe name",
                                             style: TextStyle(
                                                 color: Colors.black,
@@ -119,8 +119,8 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                                                 fontSize: 20),
                                           ),
                                           Text(
-                                            "5-10 mins",
-                                            style: TextStyle(
+                                            "5-10 ${controller.streetNosheryMenuFirebaseStaticModel.appbar?.deliveryTimeMin ?? "mins"}",
+                                            style: const TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 15),
                                           )
@@ -174,7 +174,7 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                                                   ],
                                                 )),
                                             Text(
-                                              "Ratings",
+                                              controller.streetNosheryMenuFirebaseStaticModel.appbar?.rating ?? "Ratings",
                                               style: TextStyle(
                                                   color: Colors.grey.shade600,
                                                   fontSize: 13),
@@ -195,22 +195,22 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
                       children: [
                         Text(
-                          "Recently Brought",
-                          style: TextStyle(
+                          controller.streetNosheryMenuFirebaseStaticModel.recentBroughtTitle ?? "Recently Brought",
+                          style: const TextStyle(
                               fontStyle: FontStyle.italic,
                               fontSize: 18,
                               color: Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
-                        Text(
+                        const Text(
                           "😋", // Yummy face emoji
                           style: TextStyle(fontSize: 15),
                         )
@@ -249,9 +249,9 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  "Healthy Breakfast & Gym Diet",
-                                  style: TextStyle(
+                                Text(
+                                  controller.streetNosheryMenuFirebaseStaticModel.menu?.breakfastTitle ?? "Healthy Breakfast & Gym Diet",
+                                  style: const TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
@@ -313,9 +313,9 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  "Thalis & Combos for ${"Sumit"}",
-                                  style: TextStyle(
+                                Text(
+                                  controller.streetNosheryMenuFirebaseStaticModel.menu?.thaliAndCombosTitle ?? "Thalis & Combos for ${"Sumit"}",
+                                  style: const TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
@@ -375,9 +375,9 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  "Sides & Drinks",
-                                  style: TextStyle(
+                                Text(
+                                  controller.streetNosheryMenuFirebaseStaticModel.menu?.sidesAndDrinksTitle ?? "Sides & Drinks",
+                                  style: const TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
