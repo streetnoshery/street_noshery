@@ -65,9 +65,9 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
                                   )),
-                              child: const Text(
-                                "Help",
-                                style: TextStyle(color: Colors.black),
+                              child: Text(
+                                controller.streetNosheryProfileFireBaseModel.appbar?.help ?? "Help",
+                                style: const TextStyle(color: Colors.black),
                               ),
                             ),
                           ),
@@ -116,9 +116,9 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                       onTap: () {
                         Get.toNamed(Routes.editUserprofile);
                       },
-                      child: const Text(
-                        "EDIT PROFILE  >",
-                        style: TextStyle(
+                      child: Text(
+                        controller.streetNosheryProfileFireBaseModel.appbar?.editProfile?.toUpperCase() ?? "EDIT PROFILE",
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 12,
                         ),
@@ -151,12 +151,12 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "My Account",
-                          style: TextStyle(color: Colors.black),
+                        Text(
+                         controller.streetNosheryProfileFireBaseModel.body?.accountSetting?.title ?? "My Account",
+                          style: const TextStyle(color: Colors.black),
                         ),
                         Text(
-                          "Settings",
+                          controller.streetNosheryProfileFireBaseModel.body?.accountSetting?.subTitle ?? "Settings",
                           style: TextStyle(color: Colors.grey.shade600),
                         )
                       ],
@@ -185,12 +185,12 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Address",
-                          style: TextStyle(color: Colors.black),
+                        Text(
+                        controller.streetNosheryProfileFireBaseModel.body?.addressSetting?.title ?? "Address",
+                          style: const TextStyle(color: Colors.black),
                         ),
                         Text(
-                          "Share, Edit & Add New Address",
+                          controller.streetNosheryProfileFireBaseModel.body?.addressSetting?.subTitle ?? "Share, Edit & Add New Address",
                           style: TextStyle(color: Colors.grey.shade600),
                         )
                       ],
@@ -219,12 +219,12 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Review",
-                          style: TextStyle(color: Colors.black),
+                        Text(
+                          controller.streetNosheryProfileFireBaseModel.body?.review?.title ??"Review",
+                          style: const TextStyle(color: Colors.black),
                         ),
                         Text(
-                          "Share App Reviews",
+                          controller.streetNosheryProfileFireBaseModel.body?.review?.subTitle ?? "Share App Reviews",
                           style: TextStyle(color: Colors.grey.shade600),
                         )
                       ],
@@ -241,17 +241,17 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text("PAST ORDERS",
+              child: Text(controller.streetNosheryProfileFireBaseModel.body?.pastOrder?.toUpperCase() ?? "PAST ORDERS",
                   style: TextStyle(color: Colors.grey.shade600, fontSize: 15)),
             ),
             const SizedBox(
               height: 10,
             ),
-            const Visibility(
+            Visibility(
                 visible: false,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Text("Order to removing your cravings"),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(controller.streetNosheryProfileFireBaseModel.body?.emptyOrderTitle ?? "Order to removing your cravings"),
                 )),
             Visibility(
               child: Container(
@@ -306,9 +306,9 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                  child: const Text(
-                    "Cart >",
-                    style: TextStyle(fontSize: 16), // Text style
+                  child: Text(
+                    controller.streetNosheryProfileFireBaseModel.primaryButtonTitle ?? "Cart >",
+                    style: const TextStyle(fontSize: 16), // Text style
                   ),
                 ),
               ),

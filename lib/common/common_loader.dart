@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:street_noshery/common/common_images.dart';
 
 class FullPageLoader extends StatelessWidget {
+  const FullPageLoader({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return CustomFoodLoader();
+    return const CustomFoodLoader();
   }
 }
 
 class CustomFoodLoader extends StatefulWidget {
+  const CustomFoodLoader({super.key});
+
   @override
   _CustomFoodLoaderState createState() => _CustomFoodLoaderState();
 }
@@ -87,7 +91,7 @@ void showLoader(BuildContext context) {
     context,
     PageRouteBuilder(
       opaque: false, // Ensures transparency effect
-      pageBuilder: (context, _, __) => FullPageLoader(),
+      pageBuilder: (context, _, __) => const FullPageLoader(),
     ),
   );
 }

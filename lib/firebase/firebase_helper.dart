@@ -3,9 +3,11 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_home_page_static_data.model.dart';
+import 'package:street_noshery/firebase/firebase_model/street_noshery_profile_static_data.model.dart';
 
 class FirebaseHelper extends GetxController{
   StreetNosheryHomePageFireBaseModel streetNosheryHomePageFireBaseModel = StreetNosheryHomePageFireBaseModel();
+  StreetNosheryProfileFireBaseModel streetNosheryProfileFireBaseModel = StreetNosheryProfileFireBaseModel();
 
   @override
   void onInit() async {
@@ -56,7 +58,13 @@ class FirebaseHelper extends GetxController{
     return StreetNosheryHomePageFireBaseModel.fromJson(streetNosheryHomeStaticData);
   }
 
+  Future<StreetNosheryProfileFireBaseModel> _getprofileStaticData() async {
+    final streetNosheryHomeStaticData = await getData("appConfig", "street_noshery_profile");
+    return StreetNosheryProfileFireBaseModel.fromJson(streetNosheryHomeStaticData);
+  }
+
   Future<void> _setStaticData() async {
     streetNosheryHomePageFireBaseModel = await _getHomeStaticData();
+    streetNosheryProfileFireBaseModel = await _getprofileStaticData();
   }
 }

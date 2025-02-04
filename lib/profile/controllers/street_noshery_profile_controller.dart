@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:street_noshery/common/common_images.dart';
+import 'package:street_noshery/firebase/firebase_model/street_noshery_profile_static_data.model.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
 
@@ -14,6 +15,7 @@ class StreetnosheryProfileController extends GetxController {
   final TextEditingController phoneController = TextEditingController();
   final selectedCountryCode = "+1".obs;  // Default country code
   final contactNumber = "".obs;
+  StreetNosheryProfileFireBaseModel get streetNosheryProfileFireBaseModel => homeController.onboardingController.fireBaseContentHandler.streetNosheryProfileFireBaseModel;
 
   void isValidDetails() {
     if(userName.isNotEmpty && isMobileNumberValid()) {

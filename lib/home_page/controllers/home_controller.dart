@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:street_noshery/common/common_images.dart';
 import 'package:street_noshery/common/common_theme.dart';
-import 'package:street_noshery/firebase/firebase_helper.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_home_page_static_data.model.dart';
 import 'package:street_noshery/home_page/enums/street_noshery_home_page_enums.dart';
 import 'package:street_noshery/home_page/models/favourite_food_model.dart';
