@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/firebase/firebase_model/street_noshery_account_setting_static_data.model.dart';
+import 'package:street_noshery/firebase/firebase_model/street_noshery_cart_static_data.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_home_page_static_data.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_menu_static_data.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_profile_static_data.model.dart';
@@ -10,6 +12,8 @@ class FirebaseHelper extends GetxController{
   StreetNosheryHomePageFireBaseModel streetNosheryHomePageFireBaseModel = StreetNosheryHomePageFireBaseModel();
   StreetNosheryProfileFireBaseModel streetNosheryProfileFireBaseModel = StreetNosheryProfileFireBaseModel();
   StreetNosheryMenuFirebaseModel streetNosheryMenuFireBasemodel = StreetNosheryMenuFirebaseModel();
+  StreetNosheryCartFirebaseStaticDataModel streetNosheryCartFirebaseModel = StreetNosheryCartFirebaseStaticDataModel();
+  NotificationSettings streetNosheryAccountSettingFirebaseModel = NotificationSettings();
 
   @override
   void onInit() async {
@@ -70,9 +74,21 @@ class FirebaseHelper extends GetxController{
     return StreetNosheryMenuFirebaseModel.fromJson(streetNosheryHomeStaticData);
   }
 
+  Future<StreetNosheryCartFirebaseStaticDataModel> _getCartStaticData() async {
+    final streetNosheryHomeStaticData = await getData("appConfig", "street_noshery_cart");
+    return StreetNosheryCartFirebaseStaticDataModel.fromJson(streetNosheryHomeStaticData);
+  }
+  
+  Future<NotificationSettings> _getAccountSettingStaticData() async {
+    final streetNosheryHomeStaticData = await getData("appConfig", "street_noshery_account_setting");
+    return NotificationSettings.fromJson(streetNosheryHomeStaticData);
+  }
+
   Future<void> _setStaticData() async {
     streetNosheryHomePageFireBaseModel = await _getHomeStaticData();
     streetNosheryProfileFireBaseModel = await _getprofileStaticData();
     streetNosheryMenuFireBasemodel = await _getMenuStaticData();
+    streetNosheryCartFirebaseModel =  await _getCartStaticData();
+    streetNosheryAccountSettingFirebaseModel = await _getAccountSettingStaticData();
   }
 }

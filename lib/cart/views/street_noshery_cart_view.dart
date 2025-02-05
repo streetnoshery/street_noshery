@@ -31,7 +31,7 @@ class StreetNosheryCartView extends GetView<StreetNosheryCartController> {
                       print('Save button pressed');
                     }
                   : null,
-              child: const Text('Pay'),
+              child: Text(controller.streetNosheryFirebasemodel.primaryCTA ?? 'Pay'),
             ),
           ),
         );
@@ -67,10 +67,10 @@ class StreetNosheryCartView extends GetView<StreetNosheryCartController> {
                           },
                         ),
                       ),
-                      const Center(
+                      Center(
                         child: Text(
-                          "Cart",
-                          style: TextStyle(color: Colors.black, fontSize: 20),
+                          controller.streetNosheryFirebasemodel.title ?? "Cart",
+                          style: const TextStyle(color: Colors.black, fontSize: 20),
                         ),
                       )
                     ],
@@ -108,9 +108,9 @@ class StreetNosheryCartView extends GetView<StreetNosheryCartController> {
                           const SizedBox(
                             height: 10,
                           ),
-                          const Text(
-                            "Please choose a food item to enjoy!",
-                            style: TextStyle(color: Colors.black),
+                          Text(
+                            controller.streetNosheryFirebasemodel.emptyCartTitle ?? "Please choose a food item to enjoy!",
+                            style: const TextStyle(color: Colors.black),
                           )
                         ],
                       )),

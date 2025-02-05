@@ -33,12 +33,12 @@ class StreetNosheryPaymentWidget extends GetView<StreetNosheryCartController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "To Pay \u20B9 ${controller.homeController.totalPayment.value}",
+                      "${controller.streetNosheryFirebasemodel.bill?.title ?? "To Pay"} \u20B9 ${controller.homeController.totalPayment.value}",
                       style: const TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "Incl. all taxes & charges",
+                      controller.streetNosheryFirebasemodel.bill?.subTitle ?? "Incl. all taxes & charges",
                       style: TextStyle(color: Colors.grey.shade600),
                     ),
                     const SizedBox(
@@ -53,7 +53,7 @@ class StreetNosheryPaymentWidget extends GetView<StreetNosheryCartController> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Item total",
+                        Text(controller.streetNosheryFirebasemodel.bill?.totalitem ?? "Item total",
                             style: TextStyle(color: Colors.grey.shade600)),
                         Text(
                             "\u20B9 ${controller.homeController.totalCartAmount.value}",
@@ -66,7 +66,7 @@ class StreetNosheryPaymentWidget extends GetView<StreetNosheryCartController> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Delivery Fee",
+                        Text(controller.streetNosheryFirebasemodel.bill?.deliveryFee ?? "Delivery Fee",
                             style: TextStyle(color: Colors.grey.shade600)),
                         Text("\u20B9 ${controller.homeController.deliveryFee.value}",
                             style: TextStyle(color: Colors.grey.shade900))
@@ -91,7 +91,7 @@ class StreetNosheryPaymentWidget extends GetView<StreetNosheryCartController> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Platform fee",
+                        Text(controller.streetNosheryFirebasemodel.bill?.platformFee ?? "Platform fee",
                             style: TextStyle(color: Colors.grey.shade600)),
                         Text("\u20B9 ${controller.homeController.platFormFee.value}",
                             style: TextStyle(color: Colors.grey.shade900))
@@ -103,7 +103,7 @@ class StreetNosheryPaymentWidget extends GetView<StreetNosheryCartController> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("GST and Restaurant Charges",
+                        Text(controller.streetNosheryFirebasemodel.bill?.restaurantCharges ??  "GST and Restaurant Charges",
                             style: TextStyle(color: Colors.grey.shade600)),
                         Text("\u20B9 ${controller.homeController.gst.value}",
                             style: TextStyle(color: Colors.grey.shade900))
@@ -119,8 +119,8 @@ class StreetNosheryPaymentWidget extends GetView<StreetNosheryCartController> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "Pay",
+                        Text(
+                          controller.streetNosheryFirebasemodel.bill?.pay ?? "Pay",
                         ),
                         Text("\u20B9 ${controller.homeController.totalPayment.value}",
                             style: TextStyle(color: Colors.grey.shade900))

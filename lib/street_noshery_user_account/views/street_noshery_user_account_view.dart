@@ -36,9 +36,9 @@ class StreetNosheryUserAccountView
                   },
                 ),
                 // Help button at the right
-                const Text(
-                  "SETTINGS",
-                  style: TextStyle(color: Colors.black),
+                Text(
+                  controller.accountSettingFirebaseModel.title ?? "SETTINGS",
+                  style: const TextStyle(color: Colors.black),
                 ),
               ],
             ),
@@ -55,7 +55,7 @@ class StreetNosheryUserAccountView
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              "ORDER RELATED MESSAGES",
+              controller.accountSettingFirebaseModel.orderRelatedMessages?.title?.toUpperCase() ?? "ORDER RELATED MESSAGES",
               style: TextStyle(color: Colors.grey.shade700, fontSize: 12),
             ),
           ),
@@ -63,11 +63,11 @@ class StreetNosheryUserAccountView
             padding: const EdgeInsets.only(top: 20),
             child: Container(
               color: Colors.white,
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 child: Text(
-                  "Order related SMS cannot be disabled as they are critical to provide service",
-                  style: TextStyle(color: Colors.black54, fontSize: 12),
+                  controller.accountSettingFirebaseModel.orderRelatedMessages?.subTitle ?? "Order related SMS cannot be disabled as they are critical to provide service",
+                  style: const TextStyle(color: Colors.black54, fontSize: 12),
                 ),
               ),
             ),
@@ -78,7 +78,7 @@ class StreetNosheryUserAccountView
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              "RECOMMENDATIONS & REMINDERS",
+              controller.accountSettingFirebaseModel.recommendations?.title ?? "RECOMMENDATIONS & REMINDERS",
               style: TextStyle(color: Colors.grey.shade700, fontSize: 12),
             ),
           ),
@@ -86,11 +86,11 @@ class StreetNosheryUserAccountView
             padding: const EdgeInsets.only(top: 20),
             child: Container(
               color: Colors.white,
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 child: Text(
-                  "Keep this on to receive offer recommendations & timely reminders based on your interests",
-                  style: TextStyle(color: Colors.black54, fontSize: 12),
+                  controller.accountSettingFirebaseModel.recommendations?.subTitle ?? "Keep this on to receive offer recommendations & timely reminders based on your interests",
+                  style: const TextStyle(color: Colors.black54, fontSize: 12),
                 ),
               ),
             ),
@@ -110,9 +110,9 @@ class StreetNosheryUserAccountView
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "WhatsApp",
-                          style: TextStyle(
+                        Text(
+                          controller.accountSettingFirebaseModel.whatsApp ?? "WhatsApp",
+                          style: const TextStyle(
                               color: Colors.black54,
                               fontSize: 20,
                               fontWeight: FontWeight.bold),
@@ -134,9 +134,9 @@ class StreetNosheryUserAccountView
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "SMS",
-                          style: TextStyle(
+                         Text(
+                          controller.accountSettingFirebaseModel.sms?.toUpperCase() ?? "SMS",
+                          style: const TextStyle(
                               color: Colors.black54,
                               fontSize: 20,
                               fontWeight: FontWeight.bold),
@@ -161,7 +161,7 @@ class StreetNosheryUserAccountView
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              "ACCOUNT DELETION",
+              controller.accountSettingFirebaseModel.accountDelete?.title ?? "ACCOUNT DELETION",
               style: TextStyle(color: Colors.grey.shade700, fontSize: 12),
             ),
           ),
@@ -169,9 +169,9 @@ class StreetNosheryUserAccountView
           Container(
             width: Get.width,
             color: Colors.white,
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Text("Delete account", style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Text(controller.accountSettingFirebaseModel.accountDelete?.subTitle ?? "Delete account", style: TextStyle(color: colors.lightMossgreen, fontWeight: FontWeight.bold),),
             ),
           )
         ],

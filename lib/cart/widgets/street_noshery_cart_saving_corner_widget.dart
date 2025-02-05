@@ -30,8 +30,8 @@ class StreetNosherySavingCorner extends GetView<StreetNosheryCartController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Savings Corner",
+                    Text(
+                      controller.streetNosheryFirebasemodel.savingCorner?.title ??  "Savings Corner",
                       style: TextStyle(fontSize: 15),
                     ),
                     const SizedBox(
@@ -48,7 +48,7 @@ class StreetNosherySavingCorner extends GetView<StreetNosheryCartController> {
                           width: 5,
                         ),
                         Text(
-                          "Savings Corner",
+                          controller.streetNosheryFirebasemodel.savingCorner?.subtitle ?? "Savings Corner",
                           style: TextStyle(
                               fontSize: 15, color: Colors.grey.shade600),
                         )

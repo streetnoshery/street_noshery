@@ -3,15 +3,16 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:street_noshery/common/common_images.dart';
 import 'package:street_noshery/common/common_theme.dart';
+import 'package:street_noshery/firebase/firebase_model/street_noshery_cart_static_data.model.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
 import 'package:street_noshery/menu/controller/street_noshery_menu_controller.dart';
 
 class StreetNosheryCartController extends GetxController {
   final homeController = Get.find<StreetNosheryHomeController>();
   final menuController = Get.isRegistered<StreetNosheryMenuController>()
-            ? Get.find<StreetNosheryMenuController>()
-            : Get.put(StreetNosheryMenuController());
-  final serviceType = [
+      ? Get.find<StreetNosheryMenuController>()
+      : Get.put(StreetNosheryMenuController());
+  List serviceType = [
     {1: "take Away"},
     {2: "book Table"},
     {3: "Schedule"}
@@ -20,6 +21,18 @@ class StreetNosheryCartController extends GetxController {
   final allImages = CommonImages();
   final selectedDate = "".obs;
   final selectedTime = "".obs;
+  StreetNosheryCartFirebaseStaticDataModel get streetNosheryFirebasemodel =>
+      homeController.onboardingController.fireBaseContentHandler
+          .streetNosheryCartFirebaseModel;
+
+  @override
+  void onReady() {
+    serviceType = [
+      {1: streetNosheryFirebasemodel.serviceChoice?[0] ?? "take Away"},
+      {2: streetNosheryFirebasemodel.serviceChoice?[1] ?? "book Table"},
+      {3: streetNosheryFirebasemodel.serviceChoice?[2] ?? "Schedule"}
+    ];
+  }
 
   Future<void> selectDate(BuildContext context) async {
     final colors = CommonTheme();
