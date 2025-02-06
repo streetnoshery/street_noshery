@@ -40,10 +40,10 @@ class StreetNosheryAppReviewView
                           },
                         ),
                       ),
-                      const Center(
+                      Center(
                         child: Text(
-                          "Rate and Review",
-                          style: TextStyle(color: Colors.black, fontSize: 20),
+                          controller.streetNosheryReviewFirebasemodel.title ?? "Rate and Review",
+                          style: const TextStyle(color: Colors.black, fontSize: 20),
                         ),
                       ),
                     ],
@@ -55,7 +55,7 @@ class StreetNosheryAppReviewView
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
-                    "Rating(${controller.selectedStars.value}/5)",
+                    "${controller.streetNosheryReviewFirebasemodel.ratings ?? "Rating"}(${controller.selectedStars.value}/5)",
                     style: TextStyle(color: Colors.grey.shade800),
                   ),
                 ),
@@ -88,7 +88,7 @@ class StreetNosheryAppReviewView
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
-                    "Review",
+                    controller.streetNosheryReviewFirebasemodel.review ?? "Review",
                     style: TextStyle(color: Colors.grey.shade800),
                   ),
                 ),
@@ -109,7 +109,7 @@ class StreetNosheryAppReviewView
                         borderSide: BorderSide(
                             color: Colors.green.shade800, width: 2.0),
                       ),
-                      hintText: "Write your review here...",
+                      hintText: controller.streetNosheryReviewFirebasemodel.reviewPrefilled ?? "Write your review here...",
                     ),
                   ),
                 ),
@@ -133,7 +133,7 @@ class StreetNosheryAppReviewView
                               color: Colors.grey.shade400
                             )
                           ),
-                          child: const Text("Cancel", style: TextStyle(color: Colors.black),),
+                          child: Text(controller.streetNosheryReviewFirebasemodel.secondaryCta ?? "Cancel", style: TextStyle(color: Colors.black),),
                         ),
                       ),
                       InkWell(
@@ -150,7 +150,7 @@ class StreetNosheryAppReviewView
                               color: Colors.grey.shade400
                             )
                           ),
-                          child: const Text("Post", style: TextStyle(color: Colors.black),),
+                          child: Text(controller.streetNosheryReviewFirebasemodel.primaryCta ?? "Post", style: TextStyle(color: Colors.black),),
                         ),
                       )
                     ],

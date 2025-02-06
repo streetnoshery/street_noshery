@@ -36,9 +36,9 @@ class StreetNosheryUserAddressView
                   },
                 ),
                 // Help button at the right
-                const Text(
-                  "ADDRESSES",
-                  style: TextStyle(color: Colors.black),
+                Text(
+                  controller.streetNosheryAddressFirebaseModel.title?.toUpperCase() ?? "ADDRESSES",
+                  style: const TextStyle(color: Colors.black),
                 ),
               ],
             ),
@@ -61,11 +61,11 @@ class StreetNosheryUserAddressView
                   ),
                 ),
                 items: controller.items, // List of items to display
-                dropdownDecoratorProps: const DropDownDecoratorProps(
+                dropdownDecoratorProps: DropDownDecoratorProps(
                   dropdownSearchDecoration: InputDecoration(
-                    labelText: "Search the address",
+                    labelText: controller.streetNosheryAddressFirebaseModel.searchAddress ?? "Search the address",
                     hintText: "Choose one",
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                   ),
                 ),
                 onChanged: (value) {
@@ -79,7 +79,7 @@ class StreetNosheryUserAddressView
                 visible: controller.selectedAddress.isNotEmpty,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20),
-                  child: Text("SAVED ADDRESS",
+                  child: Text(controller.streetNosheryAddressFirebaseModel.savedAddress?.title?.toUpperCase() ?? "SAVED ADDRESS",
                       style:
                           TextStyle(color: Colors.grey.shade700, fontSize: 12)),
                 ),
@@ -99,8 +99,8 @@ class StreetNosheryUserAddressView
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("OFFICE",
-                            style: TextStyle(
+                         Text(controller.streetNosheryAddressFirebaseModel.savedAddress?.office?.toUpperCase() ??  "OFFICE",
+                            style: const TextStyle(
                                 color: Colors.black54,
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold)),
@@ -113,7 +113,7 @@ class StreetNosheryUserAddressView
                         const SizedBox(
                           height: 10,
                         ),
-                        Text("Phone Number: ${controller.phoneNumber.value}",
+                        Text(controller.streetNosheryAddressFirebaseModel.savedAddress?.phoneNumber ?? "Phone Number: ${controller.phoneNumber.value}",
                             style: TextStyle(
                                 color: Colors.grey.shade700, fontSize: 12))
                       ],

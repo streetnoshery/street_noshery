@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:street_noshery/firebase/firebase_model/street_noshery_address.model.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
 import 'package:street_noshery/profile/controllers/street_noshery_profile_controller.dart';
 
@@ -12,6 +13,7 @@ class StreetNosheryUserAddressController extends GetxController {
     ];
   final onboardingController = Get.find<StreetNosheryOnboardingController>();
   final profileController = Get.find<StreetnosheryProfileController>();
+  StreetNosheryFirebaseModel get streetNosheryAddressFirebaseModel => onboardingController.fireBaseContentHandler.streetNosheryAddressFirebaseModel;
 
   @override
   void onReady() {
