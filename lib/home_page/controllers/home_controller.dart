@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:street_noshery/common/common_images.dart';
 import 'package:street_noshery/common/common_theme.dart';
+import 'package:street_noshery/firebase/firebase_model/street_noshery_help_static_data.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_home_page_static_data.model.dart';
 import 'package:street_noshery/home_page/enums/street_noshery_home_page_enums.dart';
 import 'package:street_noshery/home_page/models/favourite_food_model.dart';
 import 'package:street_noshery/menu/enums/street_noshery_menu_enums.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class StreetNosheryHomeController extends GetxController {
   final RxBool homeState = false.obs;
@@ -109,12 +111,15 @@ class StreetNosheryHomeController extends GetxController {
   final tappedFoodId = 0.obs;
 
   // Firebase static data
-  StreetNosheryHomePageFireBaseModel get streetNosheryHomePageFirebaseModel => onboardingController.fireBaseContentHandler.streetNosheryHomePageFireBaseModel;
+  StreetNosheryHomePageFireBaseModel get streetNosheryHomePageFirebaseModel =>
+      onboardingController
+          .fireBaseContentHandler.streetNosheryHomePageFireBaseModel;
+  StreetNosheryHelpAndSupportFirebasemodel
+      get streetnosheryHelpAndSupportFirebaseModel => onboardingController
+          .fireBaseContentHandler.streetNosheryHelpAndSupportFirebaseModel;
 
   @override
-  void onReady() {
-    
-  }
+  void onReady() {}
 
   void updateCart(Object itemName, num itemPrice, num dishId) {
     // Check if the item exists in the cart
@@ -176,31 +181,34 @@ class StreetNosheryHomeController extends GetxController {
   Future<void> submitReviews(String? review, BuildContext context) async {
     final colors = CommonTheme();
     ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            "Review submitted",
-            style: TextStyle(color: colors.textPrimary),
-          ),
-          backgroundColor: colors.lightGreen,
+      SnackBar(
+        content: Text(
+          "Review submitted",
+          style: TextStyle(color: colors.textPrimary),
         ),
-      );
-      boxReviewController.text = "";
-      selectedStars.value = 0;
-      Get.back();
+        backgroundColor: colors.lightGreen,
+      ),
+    );
+    boxReviewController.text = "";
+    selectedStars.value = 0;
+    Get.back();
     /*
     TODO: Review API
      */
   }
 
   bool shouldReviewButtonEnable(String? review) {
-    if((review?.isNotEmpty ?? false) && selectedStars.value > 0){
+    if ((review?.isNotEmpty ?? false) && selectedStars.value > 0) {
       return true;
     }
     return false;
   }
 
   void updateTotalPayment() {
-    totalPayment.value = totalCartAmount.value + deliveryFee.value + platFormFee.value + gst.value;
+    totalPayment.value = totalCartAmount.value +
+        deliveryFee.value +
+        platFormFee.value +
+        gst.value;
   }
 
   void increaseStarCount(int index) {
@@ -209,5 +217,18 @@ class StreetNosheryHomeController extends GetxController {
 
   Future<void> updateFavoriteFood() async {
     // TODO: update favorite food API
+  }
+
+  void sendEmail(String email) async {
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: email,
+    );
+
+    try {
+      await launchUrl(emailUri, mode: LaunchMode.externalApplication);
+    } catch (e) {
+      print("Error launching email: $e");
+    }
   }
 }

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_account_setting_static_data.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_address.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_cart_static_data.model.dart';
+import 'package:street_noshery/firebase/firebase_model/street_noshery_help_static_data.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_home_page_static_data.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_menu_static_data.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_profile_static_data.model.dart';
@@ -18,6 +19,7 @@ class FirebaseHelper extends GetxController{
   NotificationSettings streetNosheryAccountSettingFirebaseModel = NotificationSettings();
   StreetNosheryFirebaseModel streetNosheryAddressFirebaseModel = StreetNosheryFirebaseModel();
   StreetNosheryReviewFirebaseModel streetNosheryReviewFirebaseModel = StreetNosheryReviewFirebaseModel();
+  StreetNosheryHelpAndSupportFirebasemodel streetNosheryHelpAndSupportFirebaseModel = StreetNosheryHelpAndSupportFirebasemodel();
 
   @override
   void onInit() async {
@@ -98,6 +100,11 @@ class FirebaseHelper extends GetxController{
     return StreetNosheryReviewFirebaseModel.fromJson(streetNosheryHomeStaticData);
   }
 
+  Future<StreetNosheryHelpAndSupportFirebasemodel> _getHelpStaticData() async {
+    final streetNosheryHomeStaticData = await getData("appConfig", "street_noshery_help");
+    return StreetNosheryHelpAndSupportFirebasemodel.fromJson(streetNosheryHomeStaticData);
+  }
+
   Future<void> _setStaticData() async {
     streetNosheryHomePageFireBaseModel = await _getHomeStaticData();
     streetNosheryProfileFireBaseModel = await _getprofileStaticData();
@@ -106,5 +113,6 @@ class FirebaseHelper extends GetxController{
     streetNosheryAccountSettingFirebaseModel = await _getAccountSettingStaticData();
     streetNosheryAddressFirebaseModel = await _getAddressStaticData();
     streetNosheryReviewFirebaseModel = await _getReviewStaticData();
+    streetNosheryHelpAndSupportFirebaseModel = await _getHelpStaticData();
   }
 }
