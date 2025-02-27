@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:street_noshery/common/common_images.dart';
+import 'package:street_noshery/common/common_response.dart';
 import 'package:street_noshery/firebase/firebase_helper.dart';
+import 'package:street_noshery/onboarding/enums/street_noshery_onboarding_status_enums.dart';
+import 'package:street_noshery/onboarding/providers/street_noshery_onboarding_providers.dart';
 import 'package:street_noshery/routes/app_pages.dart';
 
 class StreetNosheryOnboardingController extends GetxController {
@@ -37,6 +40,9 @@ class StreetNosheryOnboardingController extends GetxController {
   late AnimationController controller;
   late Animation<double> animation;
   final fireBaseContentHandler = Get.isRegistered<FirebaseHelper>() ? Get.find<FirebaseHelper>() : Get.put(FirebaseHelper());
+  final onboardingAPI = StreetNosheryOnboardingProviders;
+  final isOtpSent = false.obs;
+  final isOtpVerify = false.obs;
 
   @override
   void onInit() async {
@@ -144,10 +150,17 @@ class StreetNosheryOnboardingController extends GetxController {
   Future<bool> sendOTP(BuildContext context ) async {
     startOtpTimer();
     /* 
-    TODO: OTP send API call
     TODO: Error handling bottomsheet
      */
-    return true;
+    try {
+      ApiResponse response = await StreetNosheryOnboardingProviders.generateOtp(mobileNumber: contactNumber.value, objective: StreetNosheryOnboardingEnums.MOBILE_VERIFICATION);
+      if(response.data != null) {
+        isOtpSent.value = true;
+      }
+      return isOtpSent.value;
+    } catch (e) {
+      return isOtpSent.value;
+    }
   }
 
   void disposeTimer() {
@@ -170,10 +183,17 @@ class StreetNosheryOnboardingController extends GetxController {
 
   Future<bool> validateOtp() async {
     /* 
-    TODO: OTP validate API call
     TODO: Error handling bottomsheet
      */
-    return true;
+    try {
+      ApiResponse response = await StreetNosheryOnboardingProviders.verifyotp(mobileNumber: contactNumber.value, objective: StreetNosheryOnboardingEnums.MOBILE_VERIFICATION, otp: otp.value);
+      if(response.data != null) {
+        isOtpVerify.value = true;
+      }
+      return isOtpVerify.value;
+    } catch (e) {
+      return isOtpVerify.value;
+    }
   }
 
   void storeMobileNumberInHive() {
