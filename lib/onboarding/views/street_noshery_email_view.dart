@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
+import 'package:street_noshery/routes/app_pages.dart';
 
 class StreetNosheryEmailPassCodeView extends GetView<StreetNosheryOnboardingController> {
   const StreetNosheryEmailPassCodeView({super.key});
@@ -19,8 +21,11 @@ class StreetNosheryEmailPassCodeView extends GetView<StreetNosheryOnboardingCont
                       !controller.isPasswordEmpty.value &&
                       controller.isEmailValid.value &&
                       !controller.isEmailEmpty.value)
-                  ? () {
-                      controller.saveEmailDetails();
+                  ? () async {
+                    showLoader(context);
+                    await controller.saveEmailDetails();
+                    hideLoader(context);
+                    Get.toNamed(Routes.onboardingUserDetails);
                     }
                   : null,
               backgroundColor: (controller.isPasswordValid.value &&
@@ -101,6 +106,7 @@ class StreetNosheryEmailPassCodeView extends GetView<StreetNosheryOnboardingCont
                       ),
                       keyboardType: TextInputType.emailAddress,
                       onChanged: (value) {
+                        controller.emailController.text = value;
                         controller.validateEmail(email: value);
                       },
                     )),
@@ -158,6 +164,7 @@ class StreetNosheryEmailPassCodeView extends GetView<StreetNosheryOnboardingCont
                         )),
                     keyboardType: TextInputType.emailAddress,
                     onChanged: (value) {
+                      controller.passwordController.text = value;
                       controller.isPasswordValid.value =
                           controller.validatepass(password: value);
                     },

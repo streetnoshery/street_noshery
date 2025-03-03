@@ -87,6 +87,7 @@ class _CustomFoodLoaderState extends State<CustomFoodLoader>
 
 // Function to show the loader
 void showLoader(BuildContext context) {
+  if (!context.mounted) return;
   Navigator.push(
     context,
     PageRouteBuilder(
@@ -97,6 +98,7 @@ void showLoader(BuildContext context) {
 }
 
 void hideLoader(BuildContext context) {
+  if (!context.mounted) return;
   if (Navigator.canPop(context)) {
     Navigator.pop(context); // Close the loader if it's open
   }

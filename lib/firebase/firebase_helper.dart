@@ -10,16 +10,28 @@ import 'package:street_noshery/firebase/firebase_model/street_noshery_home_page_
 import 'package:street_noshery/firebase/firebase_model/street_noshery_menu_static_data.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_profile_static_data.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_review_static_data.model.dart';
+import 'package:street_noshery/firebase/firebase_model/street_noshery_shops_firebase_model.dart';
 
-class FirebaseHelper extends GetxController{
-  StreetNosheryHomePageFireBaseModel streetNosheryHomePageFireBaseModel = StreetNosheryHomePageFireBaseModel();
-  StreetNosheryProfileFireBaseModel streetNosheryProfileFireBaseModel = StreetNosheryProfileFireBaseModel();
-  StreetNosheryMenuFirebaseModel streetNosheryMenuFireBasemodel = StreetNosheryMenuFirebaseModel();
-  StreetNosheryCartFirebaseStaticDataModel streetNosheryCartFirebaseModel = StreetNosheryCartFirebaseStaticDataModel();
-  NotificationSettings streetNosheryAccountSettingFirebaseModel = NotificationSettings();
-  StreetNosheryFirebaseModel streetNosheryAddressFirebaseModel = StreetNosheryFirebaseModel();
-  StreetNosheryReviewFirebaseModel streetNosheryReviewFirebaseModel = StreetNosheryReviewFirebaseModel();
-  StreetNosheryHelpAndSupportFirebasemodel streetNosheryHelpAndSupportFirebaseModel = StreetNosheryHelpAndSupportFirebasemodel();
+class FirebaseHelper extends GetxController {
+  StreetNosheryHomePageFireBaseModel streetNosheryHomePageFireBaseModel =
+      StreetNosheryHomePageFireBaseModel();
+  StreetNosheryProfileFireBaseModel streetNosheryProfileFireBaseModel =
+      StreetNosheryProfileFireBaseModel();
+  StreetNosheryMenuFirebaseModel streetNosheryMenuFireBasemodel =
+      StreetNosheryMenuFirebaseModel();
+  StreetNosheryCartFirebaseStaticDataModel streetNosheryCartFirebaseModel =
+      StreetNosheryCartFirebaseStaticDataModel();
+  NotificationSettings streetNosheryAccountSettingFirebaseModel =
+      NotificationSettings();
+  StreetNosheryFirebaseModel streetNosheryAddressFirebaseModel =
+      StreetNosheryFirebaseModel();
+  StreetNosheryReviewFirebaseModel streetNosheryReviewFirebaseModel =
+      StreetNosheryReviewFirebaseModel();
+  StreetNosheryHelpAndSupportFirebasemodel
+      streetNosheryHelpAndSupportFirebaseModel =
+      StreetNosheryHelpAndSupportFirebasemodel();
+  List<StreetNosheryShopsModelShop> streetNosheryShopsFirebaseData = [];
+
 
   @override
   void onInit() async {
@@ -44,20 +56,36 @@ class FirebaseHelper extends GetxController{
     }
   }
 
-  static Future getData(String collectionName, String docName) async {
+  static Future getData(String collectionName, [String? docName]) async {
     try {
-      final DocumentSnapshot snapshot = await FirebaseFirestore.instance
-          .collection(collectionName)
-          .doc(docName)
-          .get();
-      
-      if (snapshot.exists) {
-        final data = snapshot.data() as Map<String, dynamic>?;
-        log(data.toString());
-        return data;
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+      if (docName != null && docName.isNotEmpty) {
+        // Fetch a single document
+        final DocumentSnapshot snapshot =
+            await firestore.collection(collectionName).doc(docName).get();
+
+        if (snapshot.exists) {
+          final data = snapshot.data() as Map<String, dynamic>?;
+          log(data.toString());
+          return data; // Return a list with a single document
+        } else {
+          print("Document does not exist");
+          return null;
+        }
       } else {
-        print("Document does not exist");
-        return null;
+        // Fetch all documents in the collection
+        final QuerySnapshot snapshot =
+            await firestore.collection(collectionName).get();
+        final List<Map<String, dynamic>> documents = snapshot.docs
+            .map((doc) => {
+                  "id": doc.id,
+                  ...doc.data() as Map<String, dynamic>
+                }) // Add doc ID
+            .toList();
+
+        log(documents.toString());
+        return documents;
       }
     } catch (e) {
       print("Error fetching data: $e");
@@ -66,53 +94,82 @@ class FirebaseHelper extends GetxController{
   }
 
   Future<StreetNosheryHomePageFireBaseModel> _getHomeStaticData() async {
-    final streetNosheryHomeStaticData = await getData("appConfig", "street_noshery_home_page");
-    return StreetNosheryHomePageFireBaseModel.fromJson(streetNosheryHomeStaticData);
+    final streetNosheryHomeStaticData =
+        await getData("appConfig", "street_noshery_home_page");
+    return StreetNosheryHomePageFireBaseModel.fromJson(
+        streetNosheryHomeStaticData);
   }
 
   Future<StreetNosheryProfileFireBaseModel> _getprofileStaticData() async {
-    final streetNosheryHomeStaticData = await getData("appConfig", "street_noshery_profile");
-    return StreetNosheryProfileFireBaseModel.fromJson(streetNosheryHomeStaticData);
+    final streetNosheryHomeStaticData =
+        await getData("appConfig", "street_noshery_profile");
+    return StreetNosheryProfileFireBaseModel.fromJson(
+        streetNosheryHomeStaticData);
   }
 
   Future<StreetNosheryMenuFirebaseModel> _getMenuStaticData() async {
-    final streetNosheryHomeStaticData = await getData("appConfig", "street_noshery_menu");
+    final streetNosheryHomeStaticData =
+        await getData("appConfig", "street_noshery_menu");
     return StreetNosheryMenuFirebaseModel.fromJson(streetNosheryHomeStaticData);
   }
 
   Future<StreetNosheryCartFirebaseStaticDataModel> _getCartStaticData() async {
-    final streetNosheryHomeStaticData = await getData("appConfig", "street_noshery_cart");
-    return StreetNosheryCartFirebaseStaticDataModel.fromJson(streetNosheryHomeStaticData);
+    final streetNosheryHomeStaticData =
+        await getData("appConfig", "street_noshery_cart");
+    return StreetNosheryCartFirebaseStaticDataModel.fromJson(
+        streetNosheryHomeStaticData);
   }
-  
+
   Future<NotificationSettings> _getAccountSettingStaticData() async {
-    final streetNosheryHomeStaticData = await getData("appConfig", "street_noshery_account_setting");
+    final streetNosheryHomeStaticData =
+        await getData("appConfig", "street_noshery_account_setting");
     return NotificationSettings.fromJson(streetNosheryHomeStaticData);
   }
-  
+
   Future<StreetNosheryFirebaseModel> _getAddressStaticData() async {
-    final streetNosheryHomeStaticData = await getData("appConfig", "street_noshery_address");
+    final streetNosheryHomeStaticData =
+        await getData("appConfig", "street_noshery_address");
     return StreetNosheryFirebaseModel.fromJson(streetNosheryHomeStaticData);
   }
 
   Future<StreetNosheryReviewFirebaseModel> _getReviewStaticData() async {
-    final streetNosheryHomeStaticData = await getData("appConfig", "street_noshery_review");
-    return StreetNosheryReviewFirebaseModel.fromJson(streetNosheryHomeStaticData);
+    final streetNosheryHomeStaticData =
+        await getData("appConfig", "street_noshery_review");
+    return StreetNosheryReviewFirebaseModel.fromJson(
+        streetNosheryHomeStaticData);
   }
 
   Future<StreetNosheryHelpAndSupportFirebasemodel> _getHelpStaticData() async {
-    final streetNosheryHomeStaticData = await getData("appConfig", "street_noshery_help");
-    return StreetNosheryHelpAndSupportFirebasemodel.fromJson(streetNosheryHomeStaticData);
+    final streetNosheryHomeStaticData =
+        await getData("appConfig", "street_noshery_help");
+    return StreetNosheryHelpAndSupportFirebasemodel.fromJson(
+        streetNosheryHomeStaticData);
+  }
+
+  Future<List<StreetNosheryShopsModelShop>> _getServicableAddresses() async {
+    final streetNosheryHomeStaticData = await getData("shops");
+    // Parsing a list of JSON objects into a Dart List
+
+    return parseShops(streetNosheryHomeStaticData);
+  }
+
+  // Parsing a list of JSON objects into a Dart List
+  List<StreetNosheryShopsModelShop> parseShops(List<dynamic> jsonList) {
+    return jsonList
+        .map((json) => StreetNosheryShopsModelShop.fromJson(json))
+        .toList();
   }
 
   Future<void> _setStaticData() async {
     streetNosheryHomePageFireBaseModel = await _getHomeStaticData();
     streetNosheryProfileFireBaseModel = await _getprofileStaticData();
     streetNosheryMenuFireBasemodel = await _getMenuStaticData();
-    streetNosheryCartFirebaseModel =  await _getCartStaticData();
-    streetNosheryAccountSettingFirebaseModel = await _getAccountSettingStaticData();
+    streetNosheryCartFirebaseModel = await _getCartStaticData();
+    streetNosheryAccountSettingFirebaseModel =
+        await _getAccountSettingStaticData();
     streetNosheryAddressFirebaseModel = await _getAddressStaticData();
     streetNosheryReviewFirebaseModel = await _getReviewStaticData();
     streetNosheryHelpAndSupportFirebaseModel = await _getHelpStaticData();
+    streetNosheryShopsFirebaseData = await _getServicableAddresses();
   }
 }

@@ -17,7 +17,7 @@ class StreetNosheryUserAddressController extends GetxController {
 
   @override
   void onReady() {
-    selectedAddress.value = selectedAddress.value.isNotEmpty ? selectedAddress.value : onboardingController.address.value;
+    // selectedAddress.value = selectedAddress.value.isNotEmpty ? selectedAddress.value : onboardingController.address.value;
     phoneNumber.value = profileController.contactNumber.value.isNotEmpty ? profileController.contactNumber.value : onboardingController.contactNumber.value;
   }
 }

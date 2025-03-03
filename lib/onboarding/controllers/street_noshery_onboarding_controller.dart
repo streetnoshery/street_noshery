@@ -3,29 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:street_noshery/common/common_images.dart';
+import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_response.dart';
 import 'package:street_noshery/firebase/firebase_helper.dart';
+import 'package:street_noshery/firebase/firebase_model/street_noshery_shops_firebase_model.dart';
 import 'package:street_noshery/onboarding/enums/street_noshery_onboarding_status_enums.dart';
+import 'package:street_noshery/onboarding/models/street_noshery_create_user_data_model.dart';
+import 'package:street_noshery/onboarding/models/street_noshery_onboarding_user_data_model.dart';
 import 'package:street_noshery/onboarding/providers/street_noshery_onboarding_providers.dart';
 import 'package:street_noshery/routes/app_pages.dart';
 
 class StreetNosheryOnboardingController extends GetxController {
   final allImages = CommonImages();
+  final fireBaseContentHandler = Get.isRegistered<FirebaseHelper>()
+      ? Get.find<FirebaseHelper>()
+      : Get.put(FirebaseHelper());
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final userName = "".obs;
-  final address = "".obs;
+  final address = StreetNosheryShopAddress().obs;
   final isUserDetailsValid = false.obs;
-  final List<String> items = [
-      "Jaipur",
-      "Bangalore",
-      "Mumbai"
-    ];
+  List<StreetNosheryShopsModelShop> get items => fireBaseContentHandler.streetNosheryShopsFirebaseData;
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController otpController = TextEditingController();
   final otp = "".obs;
-  final selectedCountryCode = "+91".obs;  // Default country code
+  final selectedCountryCode = "+91".obs; // Default country code
   final contactNumber = "".obs;
   final isEmailEmpty = true.obs;
   final isEmailValid = true.obs;
@@ -39,10 +42,12 @@ class StreetNosheryOnboardingController extends GetxController {
   Timer? timer;
   late AnimationController controller;
   late Animation<double> animation;
-  final fireBaseContentHandler = Get.isRegistered<FirebaseHelper>() ? Get.find<FirebaseHelper>() : Get.put(FirebaseHelper());
   final onboardingAPI = StreetNosheryOnboardingProviders;
   final isOtpSent = false.obs;
   final isOtpVerify = false.obs;
+  final isUserRegister = false.obs;
+
+  Rx<StreetNosheryUser> streetNosheryUserData = StreetNosheryUser().obs;
 
   @override
   void onInit() async {
@@ -57,14 +62,15 @@ class StreetNosheryOnboardingController extends GetxController {
 
   void getHiveData() async {
     await Future.delayed(const Duration(seconds: 2)); // Add 2-second delay
-    String mobileNumber = box.get('mobileNumber', defaultValue: 'No username found');
-    if(mobileNumber == "No username found") {
+    String mobileNumber =
+        box.get('mobileNumber', defaultValue: 'No username found');
+    if (mobileNumber == "No username found") {
       /* TODO: 1 
         Go to form mobile number screen for login
       */
-      Get.toNamed(Routes.mobileView);
-    }
-    else{
+      await onboardingStates();
+    } else {
+      contactNumber.value = mobileNumber;
       await onboardingStates();
     }
   }
@@ -80,22 +86,22 @@ class StreetNosheryOnboardingController extends GetxController {
       isEmailEmpty.value = true;
       isEmailValid.value = true;
     }
-    if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$').hasMatch(email ?? "")) {
+    if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+        .hasMatch(email ?? "")) {
       isEmailEmpty.value = false;
       isEmailValid.value = false;
-    }
-    else{
+    } else {
       isEmailValid.value = true;
     }
   }
 
   bool validatepass({String? password}) {
-    if (password == null ||  password.isEmpty) {
+    if (password == null || password.isEmpty) {
       isPasswordEmpty.value = true;
       return false;
     }
     isPasswordEmpty.value = false;
-    if ((password.length)< 8 || (password.length) > 10) {
+    if ((password.length) < 8 || (password.length) > 10) {
       return false;
     }
     if (!RegExp(r'[a-z]').hasMatch(password)) {
@@ -114,16 +120,16 @@ class StreetNosheryOnboardingController extends GetxController {
   }
 
   void isValidDetails() {
-    if(address.isNotEmpty && userName.isNotEmpty) {
+    if ((address.value.firstLine?.isNotEmpty ?? false) && userName.isNotEmpty) {
       isUserDetailsValid.value = true;
-    }
-    else {
+    } else {
       isUserDetailsValid.value = false;
     }
   }
 
   bool isMobileNumberValid() {
-    if(selectedCountryCode.value == "+91" && contactNumber.value.length == 10) {
+    if (selectedCountryCode.value == "+91" &&
+        contactNumber.value.length == 10) {
       return true;
     }
     return false;
@@ -133,12 +139,12 @@ class StreetNosheryOnboardingController extends GetxController {
     isUserDetailsValid.value = false;
     nameController.text = "";
     userName.value = "";
-    address.value = "";
+    address.value = StreetNosheryShopAddress();
   }
 
   void resetMobileNumber() {
     phoneController.text = "";
-    selectedCountryCode.value = "+91";  // Default country code
+    selectedCountryCode.value = "+91"; // Default country code
     contactNumber.value = "";
   }
 
@@ -147,18 +153,23 @@ class StreetNosheryOnboardingController extends GetxController {
     otp.value = "";
   }
 
-  Future<bool> sendOTP(BuildContext context ) async {
+  Future<bool> sendOTP(BuildContext context) async {
     startOtpTimer();
     /* 
     TODO: Error handling bottomsheet
      */
     try {
-      ApiResponse response = await StreetNosheryOnboardingProviders.generateOtp(mobileNumber: contactNumber.value, objective: StreetNosheryOnboardingEnums.MOBILE_VERIFICATION);
-      if(response.data != null) {
+      showLoader(context);
+      ApiResponse response = await StreetNosheryOnboardingProviders.generateOtp(
+          mobileNumber: contactNumber.value,
+          objective: StreetNosheryOnboardingEnums.MOBILE_VERIFICATION);
+      if (response.data != null) {
         isOtpSent.value = true;
       }
+      hideLoader(context);
       return isOtpSent.value;
     } catch (e) {
+      hideLoader(context);
       return isOtpSent.value;
     }
   }
@@ -181,17 +192,21 @@ class StreetNosheryOnboardingController extends GetxController {
     });
   }
 
-  Future<bool> validateOtp() async {
+  Future<bool> validateOtp(BuildContext context) async {
     /* 
     TODO: Error handling bottomsheet
      */
     try {
-      ApiResponse response = await StreetNosheryOnboardingProviders.verifyotp(mobileNumber: contactNumber.value, objective: StreetNosheryOnboardingEnums.MOBILE_VERIFICATION, otp: otp.value);
-      if(response.data != null) {
+      ApiResponse response = await StreetNosheryOnboardingProviders.verifyotp(
+          mobileNumber: contactNumber.value,
+          objective: StreetNosheryOnboardingEnums.MOBILE_VERIFICATION,
+          otp: otp.value);
+      if (response.data != null) {
         isOtpVerify.value = true;
       }
       return isOtpVerify.value;
     } catch (e) {
+      hideLoader(context);
       return isOtpVerify.value;
     }
   }
@@ -200,37 +215,68 @@ class StreetNosheryOnboardingController extends GetxController {
     box.put("mobileNumber", contactNumber.value);
   }
 
+  Future<void> savemobileDetails() async {
+    var data = StreetNosheryCreateuserDatamodel();
+    data.mobileNumber = contactNumber.value;
+    data.countryCode = selectedCountryCode.value;
+    await createUser(data);
+    disposeTimer();
+    storeMobileNumberInHive();
+  }
+
   Future<void> saveEmailDetails() async {
-    /* 
-    TODO: save email details API
-    TODO: Error handling bottomsheet
-     */
-    Get.toNamed(Routes.onboardingUserDetails);
+    var data = StreetNosheryCreateuserDatamodel();
+    data.email = emailController.text;
+    data.password = passwordController.text;
+    await createUser(data);
   }
 
   Future<void> saveuserDetails() async {
-    /* 
-    TODO: save user details API
-    TODO: Error handling bottomsheet
-     */
-    Get.toNamed(Routes.home);
+    var data = StreetNosheryCreateuserDatamodel();
+    data.userName = userName.value;
+    data.address = address.value;
+    await createUser(data);
   }
 
   Future<void> onboardingStates() async {
-    /* 
-    TODO: Onboarding API call
-    TODO: Error handling bottomsheet
-     */
-    /*
-    1. StreetNosheryOnboardingEnums
-    2. StreetNosheryOnboardingEnums
-    3. StreetNosheryOnboardingEnums
-    */
-    /*
-    if(PI data validation success) {
-      Get.toNamed(Routes.home);
+    await getUser(contactNumber.value);
+    if (!isUserRegister.value) {
+      Get.toNamed(Routes.mobileView);
     }
-     */
-    Get.toNamed(Routes.home);
+    if (streetNosheryUserData.value.status == UserStatus.MOBILE_VERIFICATION) {
+      Get.toNamed(Routes.emailPassword);
+    } else if (streetNosheryUserData.value.status ==
+        UserStatus.EMAIL_VERIFICATION) {
+      Get.toNamed(Routes.onboardingUserDetails);
+    } else if (streetNosheryUserData.value.status ==
+        UserStatus.USER_DETAILS_VERIFICATION) {
+          Get.toNamed(Routes.home);
+    } else {
+      Get.toNamed(Routes.mobileView);
+    }
+  }
+
+  Future<void> getUser(String mobileNumber) async {
+    // TODO: error handling
+    try {
+      ApiResponse response =
+          await StreetNosheryOnboardingProviders.getUser(mobileNumber);
+      if (response.data != null) {
+        streetNosheryUserData.value = StreetNosheryUser.fromJson(response.data);
+        isUserRegister.value = true;
+      }
+    } catch (e) {
+    }
+  }
+
+  Future<void> createUser(StreetNosheryCreateuserDatamodel data) async {
+    try {
+      ApiResponse response =
+          await StreetNosheryOnboardingProviders.createUser(data);
+      if (response.data != null) {
+        streetNosheryUserData.value = StreetNosheryUser.fromJson(response.data);
+      }
+    } catch (e) {
+    }
   }
 }

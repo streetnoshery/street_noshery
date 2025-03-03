@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
+import 'package:street_noshery/onboarding/models/street_noshery_create_user_data_model.dart';
+import 'package:street_noshery/routes/app_pages.dart';
 
 class StreetNosheryMobileVerificationView
     extends GetView<StreetNosheryOnboardingController> {
@@ -17,11 +20,12 @@ class StreetNosheryMobileVerificationView
             child: FloatingActionButton(
               onPressed: (controller.otp.value.length == 6)
                   ? () async {
-                      final isOtpValid = await  controller.validateOtp();
-                      if(isOtpValid) {
-                        controller.disposeTimer();
-                        controller.storeMobileNumberInHive();
-                        await controller.onboardingStates();
+                      showLoader(context);
+                      final isOtpValid = await controller.validateOtp(context);
+                      if (isOtpValid) {
+                        controller.savemobileDetails();
+                        hideLoader(context);
+                        Get.toNamed(Routes.emailPassword);
                       }
                     }
                   : null,

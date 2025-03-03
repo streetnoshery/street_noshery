@@ -1,7 +1,11 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_loader.dart';
+import 'package:street_noshery/firebase/firebase_model/street_noshery_shops_firebase_model.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
+import 'package:street_noshery/onboarding/models/street_noshery_create_user_data_model.dart';
+import 'package:street_noshery/routes/app_pages.dart';
 
 class OnboardingUserDetails extends GetView<StreetNosheryOnboardingController> {
   const OnboardingUserDetails({super.key});
@@ -17,8 +21,11 @@ class OnboardingUserDetails extends GetView<StreetNosheryOnboardingController> {
             width: Get.width,
             child: FloatingActionButton(
               onPressed: controller.isUserDetailsValid.value
-                  ? () {
-                      controller.saveuserDetails();
+                  ? () async {
+                    showLoader(context);
+                    await controller.saveuserDetails();
+                    hideLoader(context);
+                    Get.toNamed(Routes.home);
                     }
                   : null,
               backgroundColor: controller.isUserDetailsValid.value
@@ -123,7 +130,10 @@ class OnboardingUserDetails extends GetView<StreetNosheryOnboardingController> {
                         ),
                       ),
                     ),
-                    items: controller.items, // List of items to display
+                    items: controller.items
+                        .map((item) =>
+                            "${item.shopAddress?.addressLine1}, ${item.shopAddress?.addressLine2}")
+                        .toList(), // Convert object to string
                     dropdownDecoratorProps: const DropDownDecoratorProps(
                       dropdownSearchDecoration: InputDecoration(
                         labelText: "Search the address",
@@ -132,7 +142,21 @@ class OnboardingUserDetails extends GetView<StreetNosheryOnboardingController> {
                       ),
                     ),
                     onChanged: (value) {
-                      controller.address.value = value ?? "";
+                      // Find the corresponding object from the list
+                      var selectedAddress = controller.items.firstWhere(
+                        (item) =>
+                            "${item.shopAddress?.addressLine1}, ${item.shopAddress?.addressLine2}" ==
+                            value,
+                        orElse: () => StreetNosheryShopsModelShop(),
+                      );
+
+                      if (selectedAddress.shopAddress != null) {
+                        controller.address.value = StreetNosheryShopAddress(
+                          firstLine: selectedAddress.shopAddress?.addressLine1,
+                          secondLine: selectedAddress.shopAddress?.addressLine2,
+                          shopId: int.parse(selectedAddress.shopAddress?.shopId ?? "0"),
+                        );
+                      }
                     },
                   ),
                 ),
