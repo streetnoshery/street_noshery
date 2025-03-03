@@ -24,7 +24,8 @@ class StreetNosheryOnboardingController extends GetxController {
   final userName = "".obs;
   final address = StreetNosheryShopAddress().obs;
   final isUserDetailsValid = false.obs;
-  List<StreetNosheryShopsModelShop> get items => fireBaseContentHandler.streetNosheryShopsFirebaseData;
+  List<StreetNosheryShopsModelShop> get items =>
+      fireBaseContentHandler.streetNosheryShopsFirebaseData;
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController otpController = TextEditingController();
   final otp = "".obs;
@@ -68,9 +69,10 @@ class StreetNosheryOnboardingController extends GetxController {
       /* TODO: 1 
         Go to form mobile number screen for login
       */
-      await onboardingStates();
+      Get.toNamed(Routes.mobileView);
     } else {
       contactNumber.value = mobileNumber;
+      await getUser(contactNumber.value);
       await onboardingStates();
     }
   }
@@ -221,7 +223,6 @@ class StreetNosheryOnboardingController extends GetxController {
     data.countryCode = selectedCountryCode.value;
     await createUser(data);
     disposeTimer();
-    storeMobileNumberInHive();
   }
 
   Future<void> saveEmailDetails() async {
@@ -239,10 +240,6 @@ class StreetNosheryOnboardingController extends GetxController {
   }
 
   Future<void> onboardingStates() async {
-    await getUser(contactNumber.value);
-    if (!isUserRegister.value) {
-      Get.toNamed(Routes.mobileView);
-    }
     if (streetNosheryUserData.value.status == UserStatus.MOBILE_VERIFICATION) {
       Get.toNamed(Routes.emailPassword);
     } else if (streetNosheryUserData.value.status ==
@@ -250,9 +247,7 @@ class StreetNosheryOnboardingController extends GetxController {
       Get.toNamed(Routes.onboardingUserDetails);
     } else if (streetNosheryUserData.value.status ==
         UserStatus.USER_DETAILS_VERIFICATION) {
-          Get.toNamed(Routes.home);
-    } else {
-      Get.toNamed(Routes.mobileView);
+      Get.toNamed(Routes.home);
     }
   }
 
@@ -265,8 +260,7 @@ class StreetNosheryOnboardingController extends GetxController {
         streetNosheryUserData.value = StreetNosheryUser.fromJson(response.data);
         isUserRegister.value = true;
       }
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   Future<void> createUser(StreetNosheryCreateuserDatamodel data) async {
@@ -276,7 +270,17 @@ class StreetNosheryOnboardingController extends GetxController {
       if (response.data != null) {
         streetNosheryUserData.value = StreetNosheryUser.fromJson(response.data);
       }
-    } catch (e) {
+    } catch (e) {}
+  }
+
+  Future<void> checkExistingUser(BuildContext context) async {
+    await getUser(contactNumber.value);
+    await onboardingStates();
+    if (!isUserRegister.value) {
+      savemobileDetails();
+      hideLoader(context);
+      Get.toNamed(Routes.emailPassword);
     }
+    storeMobileNumberInHive();
   }
 }

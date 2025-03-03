@@ -15,7 +15,8 @@ class StreetNosheryHomepageAppbar extends GetView<StreetNosheryHomeController>
 
   @override
   Widget build(BuildContext context) {
-    final name = controller.username.value;
+    return Obx(() {
+    final name = controller.getFirstName(controller.streetNosheryUser.value.userName ?? controller.onboardingController.userName.value);
     final colors = CommonTheme();
     return PreferredSize(
       preferredSize: const Size.fromHeight(80), // Set desired height here
@@ -41,7 +42,7 @@ class StreetNosheryHomepageAppbar extends GetView<StreetNosheryHomeController>
                   Get.toNamed(Routes.userAddress);
                 },
                 child: Text(
-                  "sumit kumaar godwan...",
+                  "${controller.streetNosheryUser.value.userName ?? controller.onboardingController.userName.value}...",
                   style: TextStyle(color: colors.textSecondary, fontSize: 12),
                 ),
               )
@@ -69,5 +70,6 @@ class StreetNosheryHomepageAppbar extends GetView<StreetNosheryHomeController>
         ],
       ),
     );
+    });
   }
 }

@@ -8,6 +8,7 @@ import 'package:street_noshery/home_page/enums/street_noshery_home_page_enums.da
 import 'package:street_noshery/home_page/models/favourite_food_model.dart';
 import 'package:street_noshery/menu/enums/street_noshery_menu_enums.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
+import 'package:street_noshery/onboarding/models/street_noshery_onboarding_user_data_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class StreetNosheryHomeController extends GetxController {
@@ -117,9 +118,14 @@ class StreetNosheryHomeController extends GetxController {
   StreetNosheryHelpAndSupportFirebasemodel
       get streetnosheryHelpAndSupportFirebaseModel => onboardingController
           .fireBaseContentHandler.streetNosheryHelpAndSupportFirebaseModel;
+  
 
+  Rx<StreetNosheryUser> streetNosheryUser = StreetNosheryUser().obs;
   @override
-  void onReady() {}
+  void onReady() {
+    streetNosheryUser.value = onboardingController.streetNosheryUserData.value;
+    super.onReady();
+  }
 
   void updateCart(Object itemName, num itemPrice, num dishId) {
     // Check if the item exists in the cart
@@ -230,5 +236,9 @@ class StreetNosheryHomeController extends GetxController {
     } catch (e) {
       print("Error launching email: $e");
     }
+  }
+
+  getFirstName(String name) {
+    return name.split(" ").first;
   }
 }

@@ -40,7 +40,26 @@ class StreetNosheryOnboardingProviders {
   static Future<ApiResponse> getUser(String mobileNumber) async {
     final response = {
   "state": "SUCCESS",
-  "status": 201
+  "status": 201,
+  "data": {
+    "_id": "67b1c09aaae1dc9d6cb101f4",
+    "mobileNumber": "8107748619",
+    "__v": 0,
+    "countryCode": "+91",
+    "createdAt": "2025-02-16T10:40:26.496Z",
+    "customerId": "STREET_NOSHERY_XL5VTH5U9WQ9PWOITIEV",
+    "status": "USER_DETAILS_VERIFICATION",
+    "updatedAt": "2025-02-27T17:22:14.256Z",
+    "email": "sumit@gmail.com",
+    "password": "Sumit@",
+    "address": {
+      "firstLine": "Sigma Tech Park",
+      "secondLine": "Bangalore",
+      "shopId": 1
+    },
+    "userName": "Sumit Kumar",
+    "isEmailNotificationEnable": true
+  }
 };
     // await api.request(
     //     apiUri: Uri.parse("https://www.example.com/index.html"),
