@@ -25,12 +25,12 @@ class BestSellerFoodItems extends StatelessWidget {
       child: InkWell(
         onDoubleTap: () {
           streetNosheryHomeController.removeFromCart(
-              favFoodData[index].itemName ?? "",
+              favFoodData[index].dishName ?? "",
               favFoodData[index].price as num);
           streetNosheryHomeController.updateCartAmount(
-              favFoodData[index].price ?? 0, UpdatePrice.add);
+              int.tryParse(favFoodData[index].price ?? "0") ?? 0, UpdatePrice.add);
           Fluttertoast.showToast(
-              msg: "${favFoodData[index].itemName} is removed from cart",
+              msg: "${favFoodData[index].dishName} is removed from cart",
               toastLength:
                   Toast.LENGTH_SHORT, // Duration: LENGTH_SHORT or LENGTH_LONG
               gravity: ToastGravity.BOTTOM, // Position: TOP, BOTTOM, CENTER
@@ -42,10 +42,10 @@ class BestSellerFoodItems extends StatelessWidget {
         },
         onTap: () {
           streetNosheryHomeController.updateCart(
-              favFoodData[index].itemName ?? "",
+              favFoodData[index].dishName ?? "",
               favFoodData[index].price as num, favFoodData[index].dishId as num);
           streetNosheryHomeController.updateCartAmount(
-              favFoodData[index].price ?? 0, UpdatePrice.add);
+              int.tryParse(favFoodData[index].price ?? "0") ?? 0, UpdatePrice.add);
           Get.toNamed(Routes.cart);
         },
         child: Card(
@@ -73,7 +73,7 @@ class BestSellerFoodItems extends StatelessWidget {
                 ),
                 Center(
                   child: Text(
-                    "${favFoodData[index].itemName}",
+                    "${favFoodData[index].dishName}",
                     style: const TextStyle(color: Colors.black, fontSize: 15),
                   ),
                 ),

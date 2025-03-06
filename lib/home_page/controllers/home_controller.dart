@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:street_noshery/common/common_images.dart';
+import 'package:street_noshery/common/common_response.dart';
 import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_help_static_data.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_home_page_static_data.model.dart';
 import 'package:street_noshery/home_page/enums/street_noshery_home_page_enums.dart';
 import 'package:street_noshery/home_page/models/favourite_food_model.dart';
+import 'package:street_noshery/home_page/models/street_noshery_menu_model.dart';
+import 'package:street_noshery/home_page/providers/street_noshery_home_page_provider.dart';
 import 'package:street_noshery/menu/enums/street_noshery_menu_enums.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
 import 'package:street_noshery/onboarding/models/street_noshery_onboarding_user_data_model.dart';
@@ -14,40 +19,21 @@ import 'package:url_launcher/url_launcher.dart';
 class StreetNosheryHomeController extends GetxController {
   final RxBool homeState = false.obs;
   final onboardingController = Get.find<StreetNosheryOnboardingController>();
-  List<FavouriteFood> bestSeller = [
-    FavouriteFood(
+
+  Rx<StreetNosheryMenu> menu = StreetNosheryMenu().obs; 
+  List<MenuItem> bestSeller = [
+    MenuItem(
         image: "assets/home/street_noshery_dark_green_logo.png",
-        itemName: "Dish Name",
-        price: 20,
+        dishName: "Dish Name",
+        price: "20",
         rating: 4.5,
         dishId: 1),
-    FavouriteFood(
+    MenuItem(
       image: "assets/home/street_noshery_dark_green_logo.png",
-      itemName: "Dish Name",
-      price: 20,
+      dishName: "Dish Name",
+      price: "20",
       rating: 4,
       dishId: 2,
-    ),
-    FavouriteFood(
-      image: "assets/home/street_noshery_dark_green_logo.png",
-      itemName: "Dish Name",
-      price: 2,
-      rating: 5,
-      dishId: 3,
-    ),
-    FavouriteFood(
-      image: "assets/home/street_noshery_dark_green_logo.png",
-      itemName: "Dish Name",
-      price: 20,
-      rating: 4.5,
-      dishId: 4,
-    ),
-    FavouriteFood(
-      image: "assets/home/street_noshery_dark_green_logo.png",
-      itemName: "Dish Name",
-      price: 20,
-      rating: 3.8,
-      dishId: 5,
     ),
   ];
 
@@ -121,9 +107,17 @@ class StreetNosheryHomeController extends GetxController {
   
 
   Rx<StreetNosheryUser> streetNosheryUser = StreetNosheryUser().obs;
+
   @override
-  void onReady() {
+  void onInit() {
+    super.onInit();
+  }
+
+  @override
+  void onReady() async{
     streetNosheryUser.value = onboardingController.streetNosheryUserData.value;
+    await getMenu(streetNosheryUser.value.address?.shopId ?? 1);
+    await getBestSeller(menu.value);
     super.onReady();
   }
 
@@ -240,5 +234,21 @@ class StreetNosheryHomeController extends GetxController {
 
   getFirstName(String name) {
     return name.split(" ").first;
+  }
+
+  Future<void> getMenu(int shopId) async{
+    try {
+      ApiResponse response = await StreetNosheryHomeProviders.getMenu(shopId: shopId);
+      if(response.data != null) {
+        menu.value = StreetNosheryMenu.fromJson(response.data);
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  getBestSeller(StreetNosheryMenu menu) {
+    menu.menu?.sort((a, b) => b.rating?.compareTo(a.rating ?? 0.0) ?? 0);
+    bestSeller = menu.menu?.take(5).toList() ?? [];
   }
 }
