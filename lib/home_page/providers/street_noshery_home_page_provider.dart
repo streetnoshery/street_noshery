@@ -18,14 +18,24 @@ class StreetNosheryHomeProviders {
             "image": "assets/home/street_noshery_dark_green_logo.png",
             "description": "Creamy tomato-based curry with paneer",
             "price": "250",
-            "rating": 4.8
+            "rating": 4.8,
+            "category": "food"
           },
           {
             "dishName": "Paneer Masala",
             "image": "assets/home/street_noshery_dark_green_logo.png",
             "description": "Creamy tomato-based curry with paneer",
             "price": "250",
-            "rating": 4.5
+            "rating": 4.5,
+            "category": "breakfast"
+          },
+          {
+            "dishName": "Paneer Masala",
+            "image": "assets/home/street_noshery_dark_green_logo.png",
+            "description": "Creamy tomato-based curry with paneer",
+            "price": "250",
+            "rating": 4.5,
+            "category": "liquid"
           }
         ],
         "updatedAt": "2025-02-16T12:16:46.984Z"

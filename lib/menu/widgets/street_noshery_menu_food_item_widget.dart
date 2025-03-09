@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:street_noshery/common/common_bottomsheet.dart';
-import 'package:street_noshery/home_page/models/favourite_food_model.dart';
+import 'package:street_noshery/home_page/models/street_noshery_menu_model.dart';
 import 'package:street_noshery/menu/controller/street_noshery_menu_controller.dart';
 import 'package:street_noshery/menu/enums/street_noshery_menu_enums.dart';
 import 'package:street_noshery/menu/widgets/street_noshery_menu_more_details_bottomsheet.dart';
 
 // ignore: must_be_immutable
 class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
-  FavouriteFood foodItem;
+  MenuItem foodItem;
   StreetnosheryMenuItems(
       {super.key, required this.foodItem});
 
@@ -45,7 +45,7 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
               width: Get.width *
                   0.4, // Specify width or wrap in Flexible if inside a limited space
               child: Text(
-                "${foodItem.itemName}",
+                "${foodItem.dishName}",
                 style: const TextStyle(
                     color: Colors.black,
                     fontSize: 20,
@@ -55,9 +55,9 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
             const SizedBox(
               height: 10,
             ),
-            const Text(
-              "\u20B9 Price",
-              style: TextStyle(color: Colors.black, fontSize: 15),
+            Text(
+              "\u20B9 ${foodItem.price}",
+              style: const TextStyle(color: Colors.black, fontSize: 15),
             ),
             const SizedBox(
               height: 10,
@@ -132,13 +132,13 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
                   InkWell(
                     onTap: () {
                       controller.homeController.removeFromCart(
-                          foodItem.itemName ?? {},
-                          foodItem.price?.toInt() ?? 0);
+                          foodItem.dishName ?? {},
+                          int.tryParse(foodItem.price ?? "0") ?? 0);
                       controller.homeController.updateCartAmount(
-                          foodItem.price?.toInt() ?? 0, UpdatePrice.removed);
+                          int.tryParse(foodItem.price ?? "0") ?? 0, UpdatePrice.removed);
                       controller.removeditems(foodItem.dishId);
                       Fluttertoast.showToast(
-                          msg: "${foodItem.itemName} is removed from cart",
+                          msg: "${foodItem.dishName} is removed from cart",
                           toastLength: Toast
                               .LENGTH_SHORT, // Duration: LENGTH_SHORT or LENGTH_LONG
                           gravity: ToastGravity
@@ -175,13 +175,13 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
                   InkWell(
                     onTap: () {
                       controller.homeController.updateCart(
-                          foodItem.itemName ?? {},
-                          foodItem.price?.toInt() ?? 0, foodItem.dishId as num);
+                          foodItem.dishName ?? {},
+                          int.tryParse(foodItem.price ?? "0") ?? 0, foodItem.dishId as num);
                       controller.homeController.updateCartAmount(
-                          foodItem.price?.toInt() ?? 0, UpdatePrice.add);
+                          int.tryParse(foodItem.price ?? "0")?? 0, UpdatePrice.add);
                       controller.updateItems(foodItem.dishId);
                       Fluttertoast.showToast(
-                          msg: "${foodItem.itemName} is added to cart",
+                          msg: "${foodItem.dishName} is added to cart",
                           toastLength: Toast
                               .LENGTH_SHORT, // Duration: LENGTH_SHORT or LENGTH_LONG
                           gravity: ToastGravity

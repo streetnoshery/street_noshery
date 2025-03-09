@@ -3,76 +3,77 @@ import 'package:street_noshery/common/common_images.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_menu_static_data.model.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
 import 'package:street_noshery/home_page/models/favourite_food_model.dart';
+import 'package:street_noshery/home_page/models/street_noshery_menu_model.dart';
 import 'package:street_noshery/menu/enums/street_noshery_menu_enums.dart';
 
 class StreetNosheryMenuController extends GetxController {
   final allImages = CommonImages();
 
-  List<FavouriteFood> food = [
-    FavouriteFood(
+  List<MenuItem> food = [
+    MenuItem(
         image: "assets/home/street_noshery_dark_green_logo.png",
-        itemName: "Dish Name",
-        price: 20,
+        dishName: "Dish Name",
+        price: "20",
         rating: 4.5,
         dishId: 1),
-    FavouriteFood(
+    MenuItem(
         image: "assets/home/street_noshery_dark_green_logo.png",
-        itemName: "Dish Name",
-        price: 20,
+        dishName: "Dish Name",
+        price: "20",
         rating: 4.5,
         dishId: 1),
-    FavouriteFood(
+    MenuItem(
         image: "assets/home/street_noshery_dark_green_logo.png",
-        itemName: "Dish Name",
-        price: 20,
+        dishName: "Dish Name",
+        price: "20",
         rating: 4.5,
         dishId: 1),
-    FavouriteFood(
+    MenuItem(
         image: "assets/home/street_noshery_dark_green_logo.png",
-        itemName: "Dish Name",
-        price: 20,
+        dishName: "Dish Name",
+        price: "20",
         rating: 4.5,
         dishId: 1)
   ];
 
-  List<FavouriteFood> drinkS = [
-    FavouriteFood(
+  List<MenuItem> drinkS = [
+    MenuItem(
         image: "assets/home/street_noshery_dark_green_logo.png",
-        itemName: "Dish Name 1",
-        price: 20,
+        dishName: "Dish Name 1",
+        price: "20",
         rating: 4.5,
         dishId: 1),
-    FavouriteFood(
+    MenuItem(
         image: "assets/home/street_noshery_dark_green_logo.png",
-        itemName: "Dish Name 2",
-        price: 20,
+        dishName: "Dish Name 2",
+        price: "20",
         rating: 4.5,
         dishId: 1),
-    FavouriteFood(
+    MenuItem(
         image: "assets/home/street_noshery_dark_green_logo.png",
-        itemName: "Dish Name 3",
-        price: 20,
+        dishName: "Dish Name 3",
+        price: "20",
         rating: 4.5,
         dishId: 1),
   ];
 
-  List<FavouriteFood> breakfast = [
-    FavouriteFood(
+  List<MenuItem> breakfast = [
+    MenuItem(
         image: "assets/home/street_noshery_dark_green_logo.png",
-        itemName: "Dish Name 1",
-        price: 20,
+        dishName: "Dish Name 1",
+        price: "20",
         rating: 4.5,
         dishId: 1),
-    FavouriteFood(
+    MenuItem(
         image: "assets/home/street_noshery_dark_green_logo.png",
-        itemName: "Dish Name 2",
-        price: 20,
+        dishName: "Dish Name 2",
+        price: "20",
         rating: 4.5,
         dishId: 1),
-    FavouriteFood(
+    MenuItem(
         image: "assets/home/street_noshery_dark_green_logo.png",
-        itemName: "Dish Name 3",
-        price: 20,
+        dishName: "Dish Name 3",
+        price: "20",
         rating: 4.5,
         dishId: 1),
   ];
@@ -83,9 +84,9 @@ class StreetNosheryMenuController extends GetxController {
   final isFooditemSelected = false.obs;
   final isDrinksSelected = false.obs;
   final isBreakfastSelected = false.obs;
-  final tempFoodArray = <FavouriteFood>[].obs;
-  final tempDrinks = <FavouriteFood>[].obs;
-  final tempBreakfast = <FavouriteFood>[].obs;
+  List<MenuItem> tempFoodArray = <MenuItem>[].obs;
+  List<MenuItem> tempDrinks = <MenuItem>[].obs;
+  List<MenuItem> tempBreakfast = <MenuItem>[].obs;
   StreetNosheryMenuFirebaseModel get streetNosheryMenuFirebaseStaticModel => homeController.onboardingController.fireBaseContentHandler.streetNosheryMenuFireBasemodel;
 
   @override
@@ -94,6 +95,9 @@ class StreetNosheryMenuController extends GetxController {
     tempFoodArray.assignAll(food);
     tempDrinks.assignAll(drinkS);
     tempBreakfast.assignAll(breakfast);
+    getBreakfast(homeController.menu.value);
+    getFood(homeController.menu.value);
+    getDrinks(homeController.menu.value);
     super.onReady();
   }
 
@@ -161,5 +165,17 @@ class StreetNosheryMenuController extends GetxController {
     removeFoodItemsNumber(dishId);
     removeDrinkItemsNumber(dishId);
     removeBreakfastItemsNumber(dishId);
+  }
+
+  getBreakfast(StreetNosheryMenu menu) {
+    tempBreakfast = menu.menu?.where((item) => item.category == "breakfast").toList() ?? [];
+  }
+
+  getFood(StreetNosheryMenu menu) {
+    tempFoodArray = menu.menu?.where((item) => item.category == "food").toList() ?? [];
+  }
+
+  getDrinks(StreetNosheryMenu menu){
+    tempDrinks = menu.menu?.where((item) => item.category == "liquid").toList() ?? [];
   }
 }

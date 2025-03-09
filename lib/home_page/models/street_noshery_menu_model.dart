@@ -10,7 +10,7 @@ class StreetNosheryMenu {
     this.shopId,
     this.createdAt,
     this.updatedAt,
-    this.menu,
+    this.menu
   });
 
   factory StreetNosheryMenu.fromJson(Map<String, dynamic> json) {
@@ -31,7 +31,7 @@ class StreetNosheryMenu {
       'shopId': shopId,
       'createdAt': createdAt?.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
-      'menu': menu?.map((item) => item.toJson()).toList(),
+      'menu': menu?.map((item) => item.toJson()).toList()
     };
   }
 }
@@ -43,6 +43,8 @@ class MenuItem {
   final double? rating;
   final String? image;
   final num? dishId;
+  final String? category;
+  num? dishCount;
 
   MenuItem({
     this.dishName,
@@ -50,7 +52,9 @@ class MenuItem {
     this.price,
     this.rating,
     this.image,
-    this.dishId
+    this.dishId,
+    this.category,
+    this.dishCount
   });
 
   factory MenuItem.fromJson(Map<String, dynamic> json) {
@@ -60,7 +64,9 @@ class MenuItem {
       price: json['price'] as String?,
       rating: (json['rating'] as num?)?.toDouble(),
       image: json['image'],
-      dishId: json['dishId']
+      dishId: json['dishId'],
+      category: json['category'],
+      dishCount: json['dishCount']
     );
   }
 
@@ -71,7 +77,9 @@ class MenuItem {
       'price': price,
       'rating': rating,
       'image': image,
-      'dishId': dishId
+      'dishId': dishId,
+      'category': category,
+      'dishCount': dishCount
     };
   }
 }

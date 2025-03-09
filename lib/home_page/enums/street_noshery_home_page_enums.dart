@@ -3,3 +3,9 @@ enum TabEnum {
   menu,
   cart
 }
+
+enum FoodCategoryType{
+  food,
+  breakfast,
+  drinks
+}

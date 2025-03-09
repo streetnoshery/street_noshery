@@ -286,7 +286,7 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                                       ),
                                     );
                                   },
-                                  itemCount: 2)
+                                  itemCount: controller.tempBreakfast.length)
                               : const SizedBox()
                         ],
                       ),
@@ -350,7 +350,7 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                                       ),
                                     );
                                   },
-                                  itemCount: controller.food.length)
+                                  itemCount: controller.tempFoodArray.length)
                               : const SizedBox()
                         ],
                       ),
@@ -412,7 +412,7 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                                       ),
                                     );
                                   },
-                                  itemCount: 2)
+                                  itemCount: controller.tempDrinks.length)
                               : const SizedBox()
                         ],
                       ),
