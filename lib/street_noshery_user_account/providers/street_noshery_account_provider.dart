@@ -3,8 +3,9 @@ import 'package:street_noshery/common/common_response.dart';
 
 final api = API();
 
-class StreetNosheryHomeProviders {
-  static Future<ApiResponse> getMenu({int? shopId}) async {
+class StreetNosheryUserAccountProviders {
+  static Future<ApiResponse> enableNotification(
+      {String? customerId, bool? isEnable}) async {
     final response = {
       "state": "SUCCESS",
       "status": 200,
@@ -47,10 +48,7 @@ class StreetNosheryHomeProviders {
     // await api.request(
     //     apiUri: Uri.parse("https://www.example.com/index.html"),
     //     method: "get",
-    //     queryParams: {
-    //       "shopId": shopId
-    //     }
-    //     );
+    //     payload: {"customerId": customerId, "isEnable": isEnable});
 
     return ApiResponse.fromJson(response);
   }

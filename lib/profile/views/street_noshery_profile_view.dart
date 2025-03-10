@@ -84,7 +84,7 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                     child: Text(
                       controller.userName.value.isNotEmpty
                           ? controller.userName.value
-                          : controller.onboardingController.userName.value,
+                          : controller.onboardingController.streetNosheryUserData.value.userName ?? "",
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -99,7 +99,7 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                     child: Text(
                       controller.contactNumber.value.isNotEmpty
                           ? controller.contactNumber.value
-                          : controller.onboardingController.contactNumber.value,
+                          : controller.onboardingController.streetNosheryUserData.value.mobileNumber ?? "",
                       style: TextStyle(
                         color: Colors.grey.shade600,
                         fontSize: 10,

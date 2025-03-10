@@ -107,30 +107,30 @@ class StreetNosheryUserAccountView
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          controller.accountSettingFirebaseModel.whatsApp ?? "WhatsApp",
-                          style: const TextStyle(
-                              color: Colors.black54,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Obx(() {
-                          return Switch(
-                            value: controller.isWhatsAppToggled.value,
-                            onChanged: (value) {
-                              controller.isWhatsAppToggled.value = value;
-                            },
-                            activeColor: colors.lightMossgreen,
-                          );
-                        })
-                      ],
-                    ),
-                    const Divider(
-                      thickness: 1,
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text(
+                    //       controller.accountSettingFirebaseModel.whatsApp ?? "WhatsApp",
+                    //       style: const TextStyle(
+                    //           color: Colors.black54,
+                    //           fontSize: 20,
+                    //           fontWeight: FontWeight.bold),
+                    //     ),
+                    //     Obx(() {
+                    //       return Switch(
+                    //         value: controller.isWhatsAppToggled.value,
+                    //         onChanged: (value) {
+                    //           controller.isWhatsAppToggled.value = value;
+                    //         },
+                    //         activeColor: colors.lightMossgreen,
+                    //       );
+                    //     })
+                    //   ],
+                    // ),
+                    // const Divider(
+                    //   thickness: 1,
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -146,6 +146,7 @@ class StreetNosheryUserAccountView
                             value: controller.isSMSToggled.value,
                             onChanged: (value) {
                               controller.isSMSToggled.value = value;
+                              controller.notification();
                             },
                             activeColor: colors.lightMossgreen,
                           );
