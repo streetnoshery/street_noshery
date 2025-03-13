@@ -1,6 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/street_noshery_user_address/controllers/street_noshery_user_address_controller.dart';
 
@@ -37,7 +38,9 @@ class StreetNosheryUserAddressView
                 ),
                 // Help button at the right
                 Text(
-                  controller.streetNosheryAddressFirebaseModel.title?.toUpperCase() ?? "ADDRESSES",
+                  controller.streetNosheryAddressFirebaseModel.title
+                          ?.toUpperCase() ??
+                      "ADDRESSES",
                   style: const TextStyle(color: Colors.black),
                 ),
               ],
@@ -60,18 +63,60 @@ class StreetNosheryUserAddressView
                     ),
                   ),
                 ),
-                items: controller.items, // List of items to display
-                dropdownDecoratorProps: DropDownDecoratorProps(
+                items: controller.items
+                    .map((item) =>
+                        "${item.shopAddress?.addressLine1}, ${item.shopAddress?.addressLine2}")
+                    .toList(), // Convert object to string
+                dropdownDecoratorProps: const DropDownDecoratorProps(
                   dropdownSearchDecoration: InputDecoration(
-                    labelText: controller.streetNosheryAddressFirebaseModel.searchAddress ?? "Search the address",
+                    labelText: "Search the address",
                     hintText: "Choose one",
-                    border: const OutlineInputBorder(),
+                    border: OutlineInputBorder(),
                   ),
                 ),
-                onChanged: (value) {
+                onSaved: (newValue) async {
+                },
+                onChanged: (value) async {
+                  // Find the corresponding object from the list
                   controller.selectedAddress.value = value ?? "";
+                  final items = controller.items;
+                  for (var item in items) {
+                    String formattedItem =
+                        "${item.shopAddress?.addressLine1}, ${item.shopAddress?.addressLine2}";
+
+                    if (value!.contains(formattedItem)) {
+                      controller.firstLine.value = item.shopAddress?.addressLine1 ?? "";
+                      controller.secondLine.value = item.shopAddress?.addressLine2 ?? "";
+                      controller.shopId.value = int.tryParse(item.shopAddress?.shopId ?? "0") ?? 0;
+                    }
+                  }
+                  showLoader(context);
+                  await controller.updateAddress();
+                  hideLoader(context);
                 },
               ),
+              // DropdownSearch<String>(
+              //   popupProps: const PopupProps.menu(
+              //     showSearchBox: true, // Enables the search box
+              //     searchFieldProps: TextFieldProps(
+              //       decoration: InputDecoration(
+              //         hintText: "Search here...",
+              //         border: OutlineInputBorder(),
+              //       ),
+              //     ),
+              //   ),
+              //   items: controller.items, // List of items to display
+              //   dropdownDecoratorProps: DropDownDecoratorProps(
+              //     dropdownSearchDecoration: InputDecoration(
+              //       labelText: controller.streetNosheryAddressFirebaseModel.searchAddress ?? "Search the address",
+              //       hintText: "Choose one",
+              //       border: const OutlineInputBorder(),
+              //     ),
+              //   ),
+              //   onChanged: (value) {
+
+              //   },
+              // ),
               const SizedBox(
                 height: 20,
               ),
@@ -79,7 +124,11 @@ class StreetNosheryUserAddressView
                 visible: controller.selectedAddress.isNotEmpty,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20),
-                  child: Text(controller.streetNosheryAddressFirebaseModel.savedAddress?.title?.toUpperCase() ?? "SAVED ADDRESS",
+                  child: Text(
+                      controller.streetNosheryAddressFirebaseModel.savedAddress
+                              ?.title
+                              ?.toUpperCase() ??
+                          "SAVED ADDRESS",
                       style:
                           TextStyle(color: Colors.grey.shade700, fontSize: 12)),
                 ),
@@ -94,12 +143,16 @@ class StreetNosheryUserAddressView
                   width: Get.width,
                   height: Get.height,
                   child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                         Text(controller.streetNosheryAddressFirebaseModel.savedAddress?.office?.toUpperCase() ??  "OFFICE",
+                        Text(
+                            controller.streetNosheryAddressFirebaseModel
+                                    .savedAddress?.office
+                                    ?.toUpperCase() ??
+                                "OFFICE",
                             style: const TextStyle(
                                 color: Colors.black54,
                                 fontSize: 15,
@@ -113,9 +166,19 @@ class StreetNosheryUserAddressView
                         const SizedBox(
                           height: 10,
                         ),
-                        Text(controller.streetNosheryAddressFirebaseModel.savedAddress?.phoneNumber ?? "Phone Number: ${controller.phoneNumber.value}",
-                            style: TextStyle(
-                                color: Colors.grey.shade700, fontSize: 12))
+                        Row(
+                          children: [
+                            Text(
+                                controller.streetNosheryAddressFirebaseModel
+                                        .savedAddress?.phoneNumber ??
+                                    "Phone Number:",
+                                style: TextStyle(
+                                    color: Colors.grey.shade700, fontSize: 12)),
+                            Text(controller.phoneNumber.value,
+                                style: const TextStyle(
+                                    color: Colors.black, fontSize: 12))
+                          ],
+                        )
                       ],
                     ),
                   ),

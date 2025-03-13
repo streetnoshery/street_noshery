@@ -12,6 +12,7 @@ import 'package:street_noshery/home_page/providers/street_noshery_home_page_prov
 import 'package:street_noshery/menu/enums/street_noshery_menu_enums.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
 import 'package:street_noshery/onboarding/models/street_noshery_onboarding_user_data_model.dart';
+import 'package:street_noshery/reviews/model/street_noshery_rating_review.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class StreetNosheryHomeController extends GetxController {
@@ -105,6 +106,7 @@ class StreetNosheryHomeController extends GetxController {
   
 
   Rx<StreetNosheryUser> streetNosheryUser = StreetNosheryUser().obs;
+  StreetNosheryShopRating ratings = StreetNosheryShopRating();
 
   @override
   void onInit() {
@@ -116,6 +118,7 @@ class StreetNosheryHomeController extends GetxController {
     streetNosheryUser.value = onboardingController.streetNosheryUserData.value;
     await getMenu(streetNosheryUser.value.address?.shopId ?? 1);
     await getBestSeller(menu.value);
+    await reviews();
     super.onReady();
   }
 
@@ -248,5 +251,16 @@ class StreetNosheryHomeController extends GetxController {
   getBestSeller(StreetNosheryMenu menu) {
     menu.menu?.sort((a, b) => b.rating?.compareTo(a.rating ?? 0.0) ?? 0);
     bestSeller = menu.menu?.take(5).toList() ?? [];
+  }
+
+  Future<void> reviews() async {
+    try {
+      ApiResponse response = await StreetNosheryHomeProviders.getReviews(shopId: streetNosheryUser.value.address?.shopId);
+      if(response.data != null) {
+        ratings = StreetNosheryShopRating.fromJson(response.data);
+      }
+    } catch (e) {
+      throw e;
+    }
   }
 }

@@ -3,8 +3,15 @@ import 'package:street_noshery/common/common_response.dart';
 
 final api = API();
 
-class StreetNosheryHomeProviders {
-  static Future<ApiResponse> getMenu({int? shopId}) async {
+class StreetNosheryAddressProviders {
+  static Future<ApiResponse> updateAddress(
+    {
+      String? firstLine,
+      String? secondLine,
+      num? shopId,
+      String? customerId
+    }
+  ) async {
     final response = {
       "state": "SUCCESS",
       "status": 200,
@@ -44,33 +51,15 @@ class StreetNosheryHomeProviders {
         "updatedAt": "2025-02-16T12:16:46.984Z"
       }
     };
-    // await api.request(
-    //     apiUri: Uri.parse("https://www.example.com/index.html"),
-    //     method: "get",
-    //     queryParams: {
-    //       "shopId": shopId
-    //     }
-    //     );
-
-    return ApiResponse.fromJson(response);
-  }
-
-  static Future<ApiResponse> getReviews({int? shopId}) async {
-    final response = {
-      "state": "SUCCESS",
-      "status": 200,
-      "data": {
-        "shopId": 3,
-        "totalRating": 5,
-        "ratingCount": 1,
-        "averageRating": 5
-      }
-    };
-
     await api.request(
         apiUri: Uri.parse("https://www.example.com/index.html"),
         method: "get",
-        queryParams: {"shopId": shopId});
+        payload: {
+          firstLine,
+          secondLine,
+          shopId,
+          customerId
+        });
 
     return ApiResponse.fromJson(response);
   }
