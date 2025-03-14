@@ -47,6 +47,7 @@ class StreetNosheryOnboardingController extends GetxController {
   final isOtpSent = false.obs;
   final isOtpVerify = false.obs;
   final isUserRegister = false.obs;
+  final customerId = "".obs;
 
   Rx<StreetNosheryUser> streetNosheryUserData = StreetNosheryUser().obs;
 
@@ -57,30 +58,25 @@ class StreetNosheryOnboardingController extends GetxController {
 
   @override
   void onReady() async {
-    getHiveData();
+    await getHiveData();
     super.onReady();
   }
 
-  void getHiveData() async {
+  Future<void> getHiveData() async {
     await Future.delayed(const Duration(seconds: 2)); // Add 2-second delay
     String mobileNumber =
-        box.get('mobileNumber', defaultValue: 'No username found');
-    if (mobileNumber == "No username found") {
+        box.get('mobileNumber', defaultValue: 'No mobile number found');
+    String customer = box.get('customerId', defaultValue: 'No customer found');
+    if (mobileNumber.isEmpty || mobileNumber == "No mobile number found" ||  customer.isEmpty || customer == "No customer found") {
       /* TODO: 1 
         Go to form mobile number screen for login
       */
       Get.toNamed(Routes.mobileView);
     } else {
       contactNumber.value = mobileNumber;
-      await getUser(contactNumber.value);
-      await onboardingStates();
+      customerId.value = customer;
+      await fireBaseContentHandler.userFirebaseData(customerId.value);
     }
-  }
-
-  Future<void> onboardingData() async {
-    /* 
-    TODO: API for user data
-     */
   }
 
   void validateEmail({String? email}) {
@@ -215,6 +211,7 @@ class StreetNosheryOnboardingController extends GetxController {
 
   void storeMobileNumberInHive() {
     box.put("mobileNumber", contactNumber.value);
+    box.put("customerId", customerId.value);
   }
 
   Future<void> savemobileDetails() async {
@@ -259,6 +256,7 @@ class StreetNosheryOnboardingController extends GetxController {
       if (response.data != null) {
         streetNosheryUserData.value = StreetNosheryUser.fromJson(response.data);
         isUserRegister.value = true;
+        customerId.value = streetNosheryUserData.value.customerId ?? "";
       }
     } catch (e) {}
   }
@@ -269,6 +267,7 @@ class StreetNosheryOnboardingController extends GetxController {
           await StreetNosheryOnboardingProviders.createUser(data);
       if (response.data != null) {
         streetNosheryUserData.value = StreetNosheryUser.fromJson(response.data);
+        customerId.value = streetNosheryUserData.value.customerId ?? "";
       }
     } catch (e) {}
   }
@@ -277,7 +276,7 @@ class StreetNosheryOnboardingController extends GetxController {
     await getUser(contactNumber.value);
     await onboardingStates();
     if (!isUserRegister.value) {
-      savemobileDetails();
+      await savemobileDetails();
       hideLoader(context);
       Get.toNamed(Routes.emailPassword);
     }

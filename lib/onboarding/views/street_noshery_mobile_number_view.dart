@@ -123,8 +123,8 @@ class StreetNosheryMobileNumberView
                                     width: 2.0), // On focus
                               )),
                           keyboardType: TextInputType.phone,
-                          onChanged: (contactNumner) {
-                            controller.contactNumber.value = contactNumner;
+                          onChanged: (contactNumber) {
+                            controller.contactNumber.value = contactNumber;
                           },
                         ),
                       ),

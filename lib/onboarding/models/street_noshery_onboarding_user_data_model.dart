@@ -7,10 +7,8 @@ class StreetNosheryUser {
   final String? mobileNumber;
   final int? version;
   final String? countryCode;
-  final DateTime? createdAt;
   final String? customerId;
   final UserStatus? status;
-  final DateTime? updatedAt;
   final String? email;
   final String? password;
   final Address? address;
@@ -22,10 +20,8 @@ class StreetNosheryUser {
     this.mobileNumber,
     this.version,
     this.countryCode,
-    this.createdAt,
     this.customerId,
     this.status,
-    this.updatedAt,
     this.email,
     this.password,
     this.address,
@@ -39,10 +35,8 @@ class StreetNosheryUser {
       mobileNumber: json['mobileNumber'] as String?,
       version: json['__v'] as int?,
       countryCode: json['countryCode'] as String?,
-      createdAt: json['createdAt'] != null ? DateTime.tryParse(json['createdAt']) : null,
       customerId: json['customerId'] as String?,
       status: userStatusFromString(json['status']),
-      updatedAt: json['updatedAt'] != null ? DateTime.tryParse(json['updatedAt']) : null,
       email: json['email'] as String?,
       password: json['password'] as String?,
       address: json['address'] != null ? Address.fromJson(json['address']) : null,
@@ -57,10 +51,8 @@ class StreetNosheryUser {
       'mobileNumber': mobileNumber,
       '__v': version,
       'countryCode': countryCode,
-      'createdAt': createdAt?.toIso8601String(),
       'customerId': customerId,
       'status': status,
-      'updatedAt': updatedAt?.toIso8601String(),
       'email': email,
       'password': password,
       'address': address?.toJson(),

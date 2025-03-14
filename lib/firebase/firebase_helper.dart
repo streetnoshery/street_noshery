@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_account_setting_static_data.model.dart';
@@ -11,6 +9,8 @@ import 'package:street_noshery/firebase/firebase_model/street_noshery_menu_stati
 import 'package:street_noshery/firebase/firebase_model/street_noshery_profile_static_data.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_review_static_data.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_shops_firebase_model.dart';
+import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
+import 'package:street_noshery/onboarding/models/street_noshery_onboarding_user_data_model.dart';
 
 class FirebaseHelper extends GetxController {
   StreetNosheryHomePageFireBaseModel streetNosheryHomePageFireBaseModel =
@@ -31,6 +31,7 @@ class FirebaseHelper extends GetxController {
       streetNosheryHelpAndSupportFirebaseModel =
       StreetNosheryHelpAndSupportFirebasemodel();
   List<StreetNosheryShopsModelShop> streetNosheryShopsFirebaseData = [];
+  StreetNosheryUser userData = StreetNosheryUser();
 
 
   @override
@@ -67,7 +68,6 @@ class FirebaseHelper extends GetxController {
 
         if (snapshot.exists) {
           final data = snapshot.data() as Map<String, dynamic>?;
-          log(data.toString());
           return data; // Return a list with a single document
         } else {
           print("Document does not exist");
@@ -84,12 +84,32 @@ class FirebaseHelper extends GetxController {
                 }) // Add doc ID
             .toList();
 
-        log(documents.toString());
         return documents;
       }
     } catch (e) {
       print("Error fetching data: $e");
       return null;
+    }
+  }
+
+  Future<void> listenToFirebase(String collectionName, String? documentName) async {
+    try {
+      FirebaseFirestore.instance
+        .collection(collectionName) // Firestore collection
+        .doc(documentName)   // Specific document
+        .snapshots()
+        .listen((snapshot) async {
+      if (snapshot.exists) {
+        userData = StreetNosheryUser.fromJson(snapshot.data() as Map<String, dynamic>);
+        final fireBaseContentHandler = Get.isRegistered<StreetNosheryOnboardingController>()
+      ? Get.find<StreetNosheryOnboardingController>()
+      : Get.put(StreetNosheryOnboardingController());
+      fireBaseContentHandler.streetNosheryUserData.value = userData;
+      await fireBaseContentHandler.onboardingStates();
+      }
+    });
+    } catch (e) {
+      throw e;
     }
   }
 
@@ -160,6 +180,10 @@ class FirebaseHelper extends GetxController {
         .toList();
   }
 
+  Future<void> _getUserData(String? documentName) async {
+    await listenToFirebase("customers", documentName);
+  }
+
   Future<void> _setStaticData() async {
     streetNosheryHomePageFireBaseModel = await _getHomeStaticData();
     streetNosheryProfileFireBaseModel = await _getprofileStaticData();
@@ -171,5 +195,9 @@ class FirebaseHelper extends GetxController {
     streetNosheryReviewFirebaseModel = await _getReviewStaticData();
     streetNosheryHelpAndSupportFirebaseModel = await _getHelpStaticData();
     streetNosheryShopsFirebaseData = await _getServicableAddresses();
+  }
+
+  Future<void> userFirebaseData(String documentName) async {
+    await _getUserData(documentName);
   }
 }

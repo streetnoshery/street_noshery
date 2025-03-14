@@ -107,23 +107,23 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Column(
+                                      const Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          const Text(
+                                          Text(
                                             "Office address cafe name",
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20),
                                           ),
-                                          Text(
-                                            "5-10 ${controller.streetNosheryMenuFirebaseStaticModel.appbar?.deliveryTimeMin ?? "mins"}",
-                                            style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 15),
-                                          )
+                                          // Text(
+                                          //   "5-10 ${controller.streetNosheryMenuFirebaseStaticModel.appbar?.deliveryTimeMin ?? "mins"}",
+                                          //   style: const TextStyle(
+                                          //       color: Colors.black,
+                                          //       fontSize: 15),
+                                          // )
                                         ],
                                       ),
                                       Padding(
@@ -162,9 +162,9 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                                                     const SizedBox(
                                                       width: 5,
                                                     ),
-                                                    const Text(
-                                                      "4",
-                                                      style: TextStyle(
+                                                    Text(
+                                                      "${controller.homeController.ratings.averageRating?.toInt()}",
+                                                      style: const TextStyle(
                                                           fontSize: 15,
                                                           color: Colors.white),
                                                     ),

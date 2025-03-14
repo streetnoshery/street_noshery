@@ -67,10 +67,10 @@ class StreetNosheryHomeProviders {
       }
     };
 
-    await api.request(
-        apiUri: Uri.parse("https://www.example.com/index.html"),
-        method: "get",
-        queryParams: {"shopId": shopId});
+    // await api.request(
+    //     apiUri: Uri.parse("https://www.example.com/index.html"),
+    //     method: "get",
+    //     queryParams: {"shopId": shopId});
 
     return ApiResponse.fromJson(response);
   }
