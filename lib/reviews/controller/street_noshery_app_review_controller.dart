@@ -10,6 +10,7 @@ import 'package:street_noshery/reviews/provider/street_noshery_review_providers.
 class StreetnosheryAppReviewController extends GetxController {
   final selectedStars = 0.obs;
   TextEditingController reviewController = TextEditingController();
+  final review = "".obs;
   final onboardingController = Get.find<StreetNosheryOnboardingController>();
   StreetNosheryReviewFirebaseModel get streetNosheryReviewFirebasemodel => onboardingController.fireBaseContentHandler.streetNosheryReviewFirebaseModel;
   StreetNosheryReviewmodel reviewmodel = StreetNosheryReviewmodel();

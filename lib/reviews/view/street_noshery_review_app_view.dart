@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/reviews/controller/street_noshery_app_review_controller.dart';
 
@@ -111,6 +112,9 @@ class StreetNosheryAppReviewView
                       ),
                       hintText: controller.streetNosheryReviewFirebasemodel.reviewPrefilled ?? "Write your review here...",
                     ),
+                    onChanged: (value) {
+                      controller.review.value = value;
+                    },
                   ),
                 ),
                 const SizedBox(height: 20,),
@@ -137,8 +141,10 @@ class StreetNosheryAppReviewView
                         ),
                       ),
                       InkWell(
-                        onTap: () {
-                          print("Post reviews");
+                        onTap: () async {
+                          showLoader(context);
+                          await controller.updateReview(controller.selectedStars.value,controller.review.value);
+                          hideLoader(context);
                         },
                         highlightColor: Colors.teal.shade200,
                         child: Container(
