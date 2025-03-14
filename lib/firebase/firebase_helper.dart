@@ -94,7 +94,7 @@ class FirebaseHelper extends GetxController {
 
   Future<void> listenToFirebase(String collectionName, String? documentName) async {
     try {
-      FirebaseFirestore.instance
+      await FirebaseFirestore.instance
         .collection(collectionName) // Firestore collection
         .doc(documentName)   // Specific document
         .snapshots()
@@ -105,7 +105,7 @@ class FirebaseHelper extends GetxController {
       ? Get.find<StreetNosheryOnboardingController>()
       : Get.put(StreetNosheryOnboardingController());
       fireBaseContentHandler.streetNosheryUserData.value = userData;
-      await fireBaseContentHandler.onboardingStates();
+      fireBaseContentHandler.isFirebaseDataChanged.value = true;
       }
     });
     } catch (e) {

@@ -51,15 +51,15 @@ class StreetNosheryAddressProviders {
         "updatedAt": "2025-02-16T12:16:46.984Z"
       }
     };
-    await api.request(
-        apiUri: Uri.parse("https://www.example.com/index.html"),
-        method: "get",
-        payload: {
-          firstLine,
-          secondLine,
-          shopId,
-          customerId
-        });
+    // await api.request(
+    //     apiUri: Uri.parse("https://www.example.com/index.html"),
+    //     method: "get",
+    //     payload: {
+    //       firstLine,
+    //       secondLine,
+    //       shopId,
+    //       customerId
+    //     });
 
     return ApiResponse.fromJson(response);
   }

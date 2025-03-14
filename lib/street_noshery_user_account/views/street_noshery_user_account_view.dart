@@ -143,10 +143,9 @@ class StreetNosheryUserAccountView
                         ),
                         Obx(() {
                           return Switch(
-                            value: controller.isSMSToggled.value,
+                            value: controller.homeController.onboardingController.streetNosheryUserData.value.isEmailNotificationEnable ?? true,
                             onChanged: (value) {
-                              controller.isSMSToggled.value = value;
-                              controller.notification();
+                              controller.notification(value);
                             },
                             activeColor: colors.lightMossgreen,
                           );

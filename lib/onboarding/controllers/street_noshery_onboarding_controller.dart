@@ -48,6 +48,7 @@ class StreetNosheryOnboardingController extends GetxController {
   final isOtpVerify = false.obs;
   final isUserRegister = false.obs;
   final customerId = "".obs;
+  final isFirebaseDataChanged = false.obs;
 
   Rx<StreetNosheryUser> streetNosheryUserData = StreetNosheryUser().obs;
 
@@ -76,6 +77,11 @@ class StreetNosheryOnboardingController extends GetxController {
       contactNumber.value = mobileNumber;
       customerId.value = customer;
       await fireBaseContentHandler.userFirebaseData(customerId.value);
+      await Future.delayed(const Duration(seconds: 2));
+      if(!isFirebaseDataChanged.value) {
+        await getUser(contactNumber.value);
+      }
+      await onboardingStates();
     }
   }
 
