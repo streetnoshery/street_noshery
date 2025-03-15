@@ -8,6 +8,7 @@ import 'package:street_noshery/firebase/firebase_model/street_noshery_home_page_
 import 'package:street_noshery/home_page/enums/street_noshery_home_page_enums.dart';
 import 'package:street_noshery/home_page/models/favourite_food_model.dart';
 import 'package:street_noshery/home_page/models/street_noshery_menu_model.dart';
+import 'package:street_noshery/home_page/models/street_noshery_past_orders_model.dart';
 import 'package:street_noshery/home_page/providers/street_noshery_home_page_provider.dart';
 import 'package:street_noshery/menu/enums/street_noshery_menu_enums.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
@@ -19,22 +20,8 @@ class StreetNosheryHomeController extends GetxController {
   final RxBool homeState = false.obs;
   final onboardingController = Get.find<StreetNosheryOnboardingController>();
 
-  Rx<StreetNosheryMenu> menu = StreetNosheryMenu().obs; 
-  List<MenuItem> bestSeller = [
-    MenuItem(
-        image: "assets/home/street_noshery_dark_green_logo.png",
-        dishName: "Dish Name",
-        price: "20",
-        rating: 4.5,
-        dishId: 1),
-    MenuItem(
-      image: "assets/home/street_noshery_dark_green_logo.png",
-      dishName: "Dish Name",
-      price: "20",
-      rating: 4,
-      dishId: 2,
-    ),
-  ];
+  Rx<StreetNosheryMenu> menu = StreetNosheryMenu().obs;
+  final bestSeller = <MenuItem>[].obs;
 
   List<FavouriteFood> recentlyBroughtFoodItems = [
     FavouriteFood(
@@ -103,10 +90,10 @@ class StreetNosheryHomeController extends GetxController {
   StreetNosheryHelpAndSupportFirebasemodel
       get streetnosheryHelpAndSupportFirebaseModel => onboardingController
           .fireBaseContentHandler.streetNosheryHelpAndSupportFirebaseModel;
-  
 
   Rx<StreetNosheryUser> streetNosheryUser = StreetNosheryUser().obs;
   StreetNosheryShopRating ratings = StreetNosheryShopRating();
+  List<StreetNosheryPastOrdersModel> pastOrders = [];
 
   @override
   void onInit() {
@@ -114,11 +101,12 @@ class StreetNosheryHomeController extends GetxController {
   }
 
   @override
-  void onReady() async{
+  void onReady() async {
     streetNosheryUser.value = onboardingController.streetNosheryUserData.value;
     await getMenu(streetNosheryUser.value.address?.shopId ?? 1);
     await getBestSeller(menu.value);
     await reviews();
+    await getPastOrders();
     super.onReady();
   }
 
@@ -237,10 +225,11 @@ class StreetNosheryHomeController extends GetxController {
     return name.split(" ").first;
   }
 
-  Future<void> getMenu(int shopId) async{
+  Future<void> getMenu(int shopId) async {
     try {
-      ApiResponse response = await StreetNosheryHomeProviders.getMenu(shopId: shopId);
-      if(response.data != null) {
+      ApiResponse response =
+          await StreetNosheryHomeProviders.getMenu(shopId: shopId);
+      if (response.data != null) {
         menu.value = StreetNosheryMenu.fromJson(response.data);
       }
     } catch (e) {
@@ -250,14 +239,29 @@ class StreetNosheryHomeController extends GetxController {
 
   getBestSeller(StreetNosheryMenu menu) {
     menu.menu?.sort((a, b) => b.rating?.compareTo(a.rating ?? 0.0) ?? 0);
-    bestSeller = menu.menu?.take(5).toList() ?? [];
+    bestSeller.value = menu.menu?.take(5).toList() ?? [];
   }
 
   Future<void> reviews() async {
     try {
-      ApiResponse response = await StreetNosheryHomeProviders.getReviews(shopId: streetNosheryUser.value.address?.shopId);
-      if(response.data != null) {
+      ApiResponse response = await StreetNosheryHomeProviders.getReviews(
+          shopId: streetNosheryUser.value.address?.shopId);
+      if (response.data != null) {
         ratings = StreetNosheryShopRating.fromJson(response.data);
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<void> getPastOrders() async {
+    try {
+      ApiResponse response = await StreetNosheryHomeProviders.getPastOrders(
+          customerId: streetNosheryUser.value.customerId);
+      if (response.data != null) {
+        pastOrders = (response.data as List)
+            .map((e) => StreetNosheryPastOrdersModel.fromJson(e))
+            .toList();
       }
     } catch (e) {
       throw e;

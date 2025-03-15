@@ -74,4 +74,96 @@ class StreetNosheryHomeProviders {
 
     return ApiResponse.fromJson(response);
   }
+
+  static Future<ApiResponse> getPastOrders({String? customerId}) async {
+    final response = {
+      "state": "SUCCESS",
+      "status": 200,
+      "data": [
+        {
+          "_id": "67be0757aae1dc9d6cb18c02",
+          "orderTrackId": "C8sshQFmgkiFxIWM",
+          "__v": 0,
+          "createdAt": "2025-02-25T18:09:27.342Z",
+          "customerId": "cust_12345",
+          "isOrderConfirmed": false,
+          "isOrderDelivered": true,
+          "isOrderInProgress": false,
+          "isOrderOutForDelivery": false,
+          "isOrderPlaced": true,
+          "isPaymentDone": false,
+          "isorderCancelled": false,
+          "orderItems": [
+            {
+              "dishName": "Paneer Butter Masala",
+              "description":
+                  "Delicious paneer cooked in a rich buttery tomato gravy.",
+              "price": "250",
+              "rating": 4.5,
+              "foodId": 101
+            },
+            {
+              "dishName": "Veg Biryani",
+              "description":
+                  "Aromatic basmati rice cooked with fresh vegetables and spices.",
+              "price": "200",
+              "rating": 4.7,
+              "foodId": 102
+            }
+          ],
+          "orderPlacedAt": "2025-02-25T18:09:27.340Z",
+          "orderStatus": "DELIVERED",
+          "paymentStatus": "INITIATED",
+          "shopId": "shop_67890",
+          "updatedAt": "2025-02-25T18:14:11.891Z",
+          "orderDeliveredAt": "2025-02-25T18:14:11.890Z"
+        },
+        {
+          "_id": "67d58d9037cd7d089f53556d",
+          "orderTrackId": "C8sshQFmgkiFxIWW",
+          "__v": 0,
+          "createdAt": "2025-02-25T18:09:27.342Z",
+          "customerId": "cust_12345",
+          "isOrderConfirmed": false,
+          "isOrderDelivered": true,
+          "isOrderInProgress": false,
+          "isOrderOutForDelivery": false,
+          "isOrderPlaced": true,
+          "isPaymentDone": false,
+          "isorderCancelled": false,
+          "orderItems": [
+            {
+              "dishName": "Paneer Butter Masala",
+              "description":
+                  "Delicious paneer cooked in a rich buttery tomato gravy.",
+              "price": "250",
+              "rating": 4.5,
+              "foodId": 101
+            },
+            {
+              "dishName": "Veg Biryani",
+              "description":
+                  "Aromatic basmati rice cooked with fresh vegetables and spices.",
+              "price": "200",
+              "rating": 4.7,
+              "foodId": 102
+            }
+          ],
+          "orderPlacedAt": "2025-02-25T18:09:27.340Z",
+          "orderStatus": "DELIVERED",
+          "paymentStatus": "INITIATED",
+          "shopId": "shop_67890",
+          "updatedAt": "2025-02-25T18:14:11.891Z",
+          "orderDeliveredAt": "2025-02-25T18:14:11.890Z"
+        }
+      ]
+    };
+
+    // await api.request(
+    //     apiUri: Uri.parse("https://www.example.com/index.html"),
+    //     method: "get",
+    //     queryParams: {"customerId": customerId});
+
+    return ApiResponse.fromJson(response);
+  }
 }

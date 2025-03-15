@@ -32,6 +32,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
         ),
         child: Obx(() {
           controller.homeState.value;
+          controller.bestSeller;
           // final percentange = controller.sale.value;
           return SingleChildScrollView(
             child: Column(
@@ -193,9 +194,6 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                         fontWeight: FontWeight.bold,
                         fontSize: 15),
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
                 ),
                 Container(
                   color: Colors.grey.shade100,
