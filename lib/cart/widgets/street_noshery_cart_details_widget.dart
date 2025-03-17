@@ -38,7 +38,7 @@ class StreetNosheryCartDetailsWidget
                       final cartItem =
                           controller.homeController.foodCartList[n];
                       final itemName =
-                          cartItem['itemName']; // Get the dish name
+                          cartItem['itemName'] as String; // Get the dish name
                       final count =
                           cartItem['count'] as num; // Get the quantity
                       final price = cartItem['price'] as num;
@@ -73,7 +73,7 @@ class StreetNosheryCartDetailsWidget
                                       onTap: () {
                                         controller.homeController
                                             .removeFromCart(
-                                                itemName ?? {}, price);
+                                                itemName, price);
                                         controller.homeController
                                             .updateCartAmount(price.toInt(),
                                                 UpdatePrice.removed);
@@ -104,7 +104,7 @@ class StreetNosheryCartDetailsWidget
                                     InkWell(
                                       onTap: () {
                                         controller.homeController
-                                            .updateCart(itemName ?? {}, price, dishId as num);
+                                            .updateCart(itemName, price.toString(), dishId as num);
                                         controller.homeController
                                             .updateCartAmount(
                                                 price.toInt(), UpdatePrice.add);

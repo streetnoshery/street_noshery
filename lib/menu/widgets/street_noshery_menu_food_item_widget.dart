@@ -132,7 +132,7 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
                   InkWell(
                     onTap: () {
                       controller.homeController.removeFromCart(
-                          foodItem.dishName ?? {},
+                          foodItem.dishName ?? "",
                           int.tryParse(foodItem.price ?? "0") ?? 0);
                       controller.homeController.updateCartAmount(
                           int.tryParse(foodItem.price ?? "0") ?? 0, UpdatePrice.removed);
@@ -175,8 +175,8 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
                   InkWell(
                     onTap: () {
                       controller.homeController.updateCart(
-                          foodItem.dishName ?? {},
-                          int.tryParse(foodItem.price ?? "0") ?? 0, foodItem.dishId as num);
+                          foodItem.dishName ?? "",
+                          foodItem.price ?? "0", foodItem.dishId as num);
                       controller.homeController.updateCartAmount(
                           int.tryParse(foodItem.price ?? "0")?? 0, UpdatePrice.add);
                       controller.updateItems(foodItem.dishId);

@@ -45,6 +45,7 @@ class MenuItem {
   final num? dishId;
   final String? category;
   num? dishCount;
+  final DateTime? dishOrderDate;
 
   MenuItem({
     this.dishName,
@@ -54,7 +55,8 @@ class MenuItem {
     this.image,
     this.dishId,
     this.category,
-    this.dishCount
+    this.dishCount,
+    this.dishOrderDate
   });
 
   factory MenuItem.fromJson(Map<String, dynamic> json) {
@@ -66,7 +68,8 @@ class MenuItem {
       image: json['image'],
       dishId: json['dishId'],
       category: json['category'],
-      dishCount: json['dishCount']
+      dishCount: json['dishCount'],
+      dishOrderDate: json['dishOrderDate']
     );
   }
 
@@ -79,7 +82,8 @@ class MenuItem {
       'image': image,
       'dishId': dishId,
       'category': category,
-      'dishCount': dishCount
+      'dishCount': dishCount,
+      'dishOrderDate': dishOrderDate
     };
   }
 }

@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:street_noshery/common/common_images.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_menu_static_data.model.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
-import 'package:street_noshery/home_page/models/favourite_food_model.dart';
 import 'package:street_noshery/home_page/models/street_noshery_menu_model.dart';
 import 'package:street_noshery/menu/enums/street_noshery_menu_enums.dart';
 
@@ -78,7 +77,7 @@ class StreetNosheryMenuController extends GetxController {
         dishId: 1),
   ];
 
-  RxList<FavouriteFood> menuList = <FavouriteFood>[].obs;
+  RxList<MenuItem> menuList = <MenuItem>[].obs;
   Rx<Menu> selectedFood = Menu.drinkS.obs;
   final homeController = Get.find<StreetNosheryHomeController>();
   final isFooditemSelected = false.obs;

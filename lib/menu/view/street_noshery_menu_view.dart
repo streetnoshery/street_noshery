@@ -443,17 +443,17 @@ Widget _buildListItems(BuildContext context, int index) {
       highlightColor: Colors.transparent,
       onDoubleTap: () {
         streetNosheryMenuController.homeController.removeFromCart(
-            favFoodData[index].itemName ?? "", favFoodData[index].price as num);
+            favFoodData[index].dishName ?? "", favFoodData[index].price as num);
         streetNosheryMenuController.homeController.updateCartAmount(
-            favFoodData[index].price ?? 0, UpdatePrice.removed);
+            int.tryParse(favFoodData[index].price ?? "0") ?? 0, UpdatePrice.removed);
       },
       onTap: () {
         streetNosheryMenuController.homeController.updateCart(
-            favFoodData[index].itemName ?? "",
-            favFoodData[index].price as num,
+            favFoodData[index].dishName ?? "",
+            favFoodData[index].price,
             favFoodData[index].dishId as num);
         streetNosheryMenuController.homeController
-            .updateCartAmount(favFoodData[index].price ?? 0, UpdatePrice.add);
+            .updateCartAmount(int.tryParse(favFoodData[index].price ?? "0") ?? 0, UpdatePrice.add);
         Get.toNamed(Routes.cart);
       },
       child: Card(
@@ -474,7 +474,7 @@ Widget _buildListItems(BuildContext context, int index) {
               Padding(
                 padding: const EdgeInsets.only(left: 15),
                 child: Text(
-                  "${favFoodData[index].itemName}",
+                  "${favFoodData[index].dishName}",
                   style: const TextStyle(color: Colors.black, fontSize: 15),
                 ),
               ),

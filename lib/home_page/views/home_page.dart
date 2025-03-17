@@ -195,21 +195,24 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                         fontSize: 15),
                   ),
                 ),
-                Container(
-                  color: Colors.grey.shade100,
-                  child: ListView.separated(
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        final foodList = controller.recentlyBroughtFoodItems;
-                        return StreetNosheryPastOrders(foodList: foodList, index: index);
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Divider(
-                          thickness: 0.5,
-                        );
-                      },
-                      itemCount: 2),
+                Visibility(
+                  visible: controller.recentlyBroughtFoodItems.isNotEmpty,
+                  child: Container(
+                    color: Colors.grey.shade100,
+                    child: ListView.separated(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          final foodList = controller.recentlyBroughtFoodItems;
+                          return StreetNosheryPastOrders(foodList: foodList, index: index);
+                        },
+                        separatorBuilder: (context, index) {
+                          return const Divider(
+                            thickness: 0.5,
+                          );
+                        },
+                        itemCount: 2),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,

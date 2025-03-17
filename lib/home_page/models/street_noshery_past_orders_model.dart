@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:street_noshery/home_page/models/street_noshery_menu_model.dart';
+
 class StreetNosheryPastOrdersModel {
   final String? id;
   final String? orderTrackId;
@@ -13,7 +15,7 @@ class StreetNosheryPastOrdersModel {
   final bool? isOrderPlaced;
   final bool? isPaymentDone;
   final bool? isOrderCancelled;
-  final List<OrderItem>? orderItems;
+  final List<MenuItem>? orderItems;
   final DateTime? orderPlacedAt;
   final String? orderStatus;
   final String? paymentStatus;
@@ -56,7 +58,7 @@ class StreetNosheryPastOrdersModel {
         isOrderPlaced: json['isOrderPlaced'] as bool?,
         isPaymentDone: json['isPaymentDone'] as bool?,
         isOrderCancelled: json['isOrderCancelled'] as bool?,
-        orderItems: (json['orderItems'] as List<dynamic>?)?.map((e) => OrderItem.fromJson(e)).toList(),
+        orderItems: (json['orderItems'] as List<dynamic>?)?.map((e) => MenuItem.fromJson(e)).toList(),
         orderPlacedAt: json['orderPlacedAt'] != null ? DateTime.parse(json['orderPlacedAt']) : null,
         orderStatus: json['orderStatus'] as String?,
         paymentStatus: json['paymentStatus'] as String?,

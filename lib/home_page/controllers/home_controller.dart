@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:street_noshery/common/common_images.dart';
@@ -6,7 +8,6 @@ import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_help_static_data.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_home_page_static_data.model.dart';
 import 'package:street_noshery/home_page/enums/street_noshery_home_page_enums.dart';
-import 'package:street_noshery/home_page/models/favourite_food_model.dart';
 import 'package:street_noshery/home_page/models/street_noshery_menu_model.dart';
 import 'package:street_noshery/home_page/models/street_noshery_past_orders_model.dart';
 import 'package:street_noshery/home_page/providers/street_noshery_home_page_provider.dart';
@@ -23,47 +24,7 @@ class StreetNosheryHomeController extends GetxController {
   Rx<StreetNosheryMenu> menu = StreetNosheryMenu().obs;
   final bestSeller = <MenuItem>[].obs;
 
-  List<FavouriteFood> recentlyBroughtFoodItems = [
-    FavouriteFood(
-      image: "assets/home/street_noshery_dark_green_logo.png",
-      itemName: "Dish Name",
-      price: 20,
-      rating: 4.5,
-      dishId: 1,
-      dateTime: "01-02-2025",
-    ),
-    FavouriteFood(
-      image: "assets/home/street_noshery_dark_green_logo.png",
-      itemName: "Dish Name",
-      price: 20,
-      rating: 4,
-      dishId: 2,
-      dateTime: "01-02-2025",
-    ),
-    FavouriteFood(
-      image: "assets/home/street_noshery_dark_green_logo.png",
-      itemName: "Dish Name",
-      price: 2,
-      rating: 5,
-      dishId: 3,
-      dateTime: "01-02-2025",
-    ),
-    FavouriteFood(
-      image: "assets/home/street_noshery_dark_green_logo.png",
-      itemName: "Dish Name",
-      price: 20,
-      rating: 4.5,
-      dishId: 4,
-      dateTime: "01-02-2025",
-    ),
-    FavouriteFood(
-      image: "assets/home/street_noshery_dark_green_logo.png",
-      itemName: "Dish Name",
-      price: 20,
-      rating: 3.8,
-      dishId: 5,
-      dateTime: "01-02-2025",
-    ),
+  List<MenuItem> recentlyBroughtFoodItems = [
   ];
 
   final allImages = CommonImages();
@@ -96,21 +57,22 @@ class StreetNosheryHomeController extends GetxController {
   List<StreetNosheryPastOrdersModel> pastOrders = [];
 
   @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() async {
+  void onInit() async {
     streetNosheryUser.value = onboardingController.streetNosheryUserData.value;
     await getMenu(streetNosheryUser.value.address?.shopId ?? 1);
     await getBestSeller(menu.value);
     await reviews();
     await getPastOrders();
+    assignPastOrders();
+    super.onInit();
+  }
+
+  @override
+  void onReady() async {
     super.onReady();
   }
 
-  void updateCart(Object itemName, num itemPrice, num dishId) {
+  void updateCart(String itemName, String? itemPrice, num dishId) {
     // Check if the item exists in the cart
     var existingItem = foodCartList.firstWhere(
       (cartItem) => cartItem['itemName'] == itemName,
@@ -126,7 +88,7 @@ class StreetNosheryHomeController extends GetxController {
       foodCartList.add({
         'itemName': itemName,
         'count': 1,
-        'price': itemPrice,
+        'price': int.tryParse(itemPrice ?? "0") ?? 0,
         'dishId': dishId
       });
     }
@@ -134,7 +96,7 @@ class StreetNosheryHomeController extends GetxController {
     foodCartList.refresh(); // Notify observers of the update
   }
 
-  void removeFromCart(Object itemName, num itemPrice) {
+  void removeFromCart(String itemName, num itemPrice) {
     var existingItem = foodCartList.firstWhere(
       (cartItem) => cartItem['itemName'] == itemName,
       orElse: () => {},
@@ -266,5 +228,29 @@ class StreetNosheryHomeController extends GetxController {
     } catch (e) {
       throw e;
     }
+  }
+
+  void assignPastOrders() {
+   Set<String?> existingDishes =
+      recentlyBroughtFoodItems.map((item) => item.dishName).toSet();
+
+  for (var order in pastOrders) {
+    final orderValue = order.orderItems;
+    for (var item in orderValue!) {
+      if (!existingDishes.contains(item.dishName)) {
+        recentlyBroughtFoodItems.add(MenuItem(
+          image: item.image, // Set an appropriate image
+          dishName: item.dishName,
+          price: item.price,
+          rating: item.rating,
+          dishId: item.dishId,
+          dishOrderDate: DateTime.now(),
+          description: item.description
+        ));
+        existingDishes.add(item.dishName);
+      }
+    }
+  }
+
   }
 }

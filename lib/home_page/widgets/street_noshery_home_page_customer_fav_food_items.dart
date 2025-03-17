@@ -43,7 +43,7 @@ class BestSellerFoodItems extends StatelessWidget {
         onTap: () {
           streetNosheryHomeController.updateCart(
               favFoodData[index].dishName ?? "",
-              favFoodData[index].price as num, favFoodData[index].dishId as num);
+              favFoodData[index].price, favFoodData[index].dishId as num);
           streetNosheryHomeController.updateCartAmount(
               int.tryParse(favFoodData[index].price ?? "0") ?? 0, UpdatePrice.add);
           Get.toNamed(Routes.cart);

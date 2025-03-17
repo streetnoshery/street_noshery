@@ -100,7 +100,9 @@ class StreetNosheryHomeProviders {
                   "Delicious paneer cooked in a rich buttery tomato gravy.",
               "price": "250",
               "rating": 4.5,
-              "foodId": 101
+              "foodId": 101,
+              "dishId": 1,
+              "image": "assets/home/street_noshery_dark_green_logo.png",
             },
             {
               "dishName": "Veg Biryani",
@@ -108,7 +110,9 @@ class StreetNosheryHomeProviders {
                   "Aromatic basmati rice cooked with fresh vegetables and spices.",
               "price": "200",
               "rating": 4.7,
-              "foodId": 102
+              "foodId": 102,
+              "dishId": 2,
+              "image": "assets/home/street_noshery_dark_green_logo.png"
             }
           ],
           "orderPlacedAt": "2025-02-25T18:09:27.340Z",
@@ -138,7 +142,8 @@ class StreetNosheryHomeProviders {
                   "Delicious paneer cooked in a rich buttery tomato gravy.",
               "price": "250",
               "rating": 4.5,
-              "foodId": 101
+              "foodId": 101,
+              "dishId": 1
             },
             {
               "dishName": "Veg Biryani",
@@ -146,7 +151,8 @@ class StreetNosheryHomeProviders {
                   "Aromatic basmati rice cooked with fresh vegetables and spices.",
               "price": "200",
               "rating": 4.7,
-              "foodId": 102
+              "foodId": 102,
+              "dishId": 2
             }
           ],
           "orderPlacedAt": "2025-02-25T18:09:27.340Z",
