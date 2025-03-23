@@ -150,6 +150,7 @@ class StreetNosheryOnboardingController extends GetxController {
     phoneController.text = "";
     selectedCountryCode.value = "+91"; // Default country code
     contactNumber.value = "";
+    isOtpSent.value = false;
   }
 
   void resetOtp() {

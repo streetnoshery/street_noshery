@@ -21,28 +21,35 @@ class API {
     }
 
     // Encrypt headers & payload
-    headers = encryption.encryptHeaders(headers ?? {});
-    String encryptedPayload = payload != null ? encryption.encryptData(payload) : '';
+    // headers = encryption.encryptHeaders(headers ?? {});
+    // String encryptedPayload = payload != null ? encryption.encryptData(payload) : '';
 
     http.Response response;
-    switch (method.toUpperCase()) {
-      case 'GET':
-        response = await http.get(apiUri, headers: headers);
-        break;
-      case 'POST':
-        response = await http.post(apiUri, headers: headers, body: encryptedPayload);
-        break;
-      case 'PUT':
-        response = await http.put(apiUri, headers: headers, body: encryptedPayload);
-        break;
-      case 'DELETE':
-        response = await http.delete(apiUri, headers: headers, body: encryptedPayload);
-        break;
-      default:
-        throw Exception('Unsupported HTTP method: $method');
-    }
+    try {
+      switch (method.toUpperCase()) {
+        case 'GET':
+          response = await http.get(apiUri, headers: headers);
+          break;
+        case 'POST':
+          response = await http.post(apiUri, headers: headers, body: payload);
+          break;
+        case 'PUT':
+          response = await http.put(apiUri, headers: headers, body: payload);
+          break;
+        case 'DELETE':
+          response = await http.delete(apiUri, headers: headers, body: payload);
+          break;
+        default:
+          throw Exception('Unsupported HTTP method: $method');
+      }
 
-    // 🔓 Decrypt the response
-    return encryption.decryptResponse(response.body);
+      print("Response Status Code: ${response.statusCode}");
+      print("Response Body: ${response.body}");
+
+      return encryption.decryptResponse(response.body);
+    } catch (e) {
+      print("API Request Error: $e");
+      return null;
+    }
   }
 }

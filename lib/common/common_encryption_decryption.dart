@@ -1,14 +1,11 @@
 import 'dart:convert';
 import 'package:encrypt/encrypt.dart';
 
+final Key key = Key.fromUtf8('sumitkumargodwansumitkumargodwan'); // 32-byte key for AES-256
+final IV iv = IV.fromUtf8('sumitkumargodwan'); // 16-byte static IV
 class CommonEncryptionDecryption {
-  final Key key = Key.fromUtf8('your-32-char-long-key-here'); // 32 characters for AES-256
-  final IV iv = IV.fromUtf8('16-characters-IV'); // 16 characters
 
-  final Encrypter encrypter;
-
-  CommonEncryptionDecryption() : encrypter = Encrypter(AES(Key.fromUtf8('your-32-char-long-key-here')));
-
+  final Encrypter encrypter = Encrypter(AES(key, mode: AESMode.cbc));
   /// Encrypt data (payload)
   String encryptData(dynamic data) {
     final encryptedPayload = encrypter.encrypt(json.encode(data), iv: iv);
@@ -29,9 +26,15 @@ class CommonEncryptionDecryption {
   dynamic decryptResponse(String encryptedResponse) {
     try {
       final Map<String, dynamic> decodedResponse = json.decode(encryptedResponse);
-      final String encryptedData = decodedResponse['data'];
+      final String encryptedDataString = decodedResponse['response'];
 
-      final decryptedData = encrypter.decrypt64(encryptedData, iv: iv);
+      // Convert the encrypted response from hex format
+      final Encrypted encryptedData = Encrypted.fromBase16(encryptedDataString);
+      print('encrypted Data: $encryptedData');
+      // Decrypt the response
+      // Decrypt the response
+      final String decryptedData = encrypter.decrypt(encryptedData, iv: iv);
+
       return json.decode(decryptedData); // Return as JSON
     } catch (e) {
       print('Decryption error: $e');
