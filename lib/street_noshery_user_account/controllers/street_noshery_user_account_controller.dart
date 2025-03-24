@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_response.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_account_setting_static_data.model.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
@@ -17,6 +18,7 @@ class StreetnosheryUserAccountController extends GetxController {
         isNotificationUpdated.value = true;
       }
     } catch (e) {
+      hideLoader();
       throw e;
     }
   }

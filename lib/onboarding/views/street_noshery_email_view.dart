@@ -22,9 +22,9 @@ class StreetNosheryEmailPassCodeView extends GetView<StreetNosheryOnboardingCont
                       controller.isEmailValid.value &&
                       !controller.isEmailEmpty.value)
                   ? () async {
-                    showLoader(context);
+                    showLoader();
                     await controller.saveEmailDetails();
-                    hideLoader(context);
+                    hideLoader();
                     Get.toNamed(Routes.onboardingUserDetails);
                     }
                   : null,

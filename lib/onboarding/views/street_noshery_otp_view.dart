@@ -18,10 +18,12 @@ class StreetNosheryMobileVerificationView
             child: FloatingActionButton(
               onPressed: (controller.otp.value.length == 6)
                   ? () async {
-                      showLoader(context);
-                      final isOtpValid = await controller.validateOtp(context);
+                      showLoader();
+                      final isOtpValid = await controller.validateOtp();
+                      hideLoader();
                       if (isOtpValid) {
-                        await controller.checkExistingUser(context);
+                        // TODO: Screen loader to be added
+                        await controller.checkExistingUser();
                       }
                     }
                   : null,

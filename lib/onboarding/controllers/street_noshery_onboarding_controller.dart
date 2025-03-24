@@ -164,17 +164,17 @@ class StreetNosheryOnboardingController extends GetxController {
     TODO: Error handling bottomsheet
      */
     try {
-      showLoader(context);
+      showLoader();
       ApiResponse response = await StreetNosheryOnboardingProviders.generateOtp(
           mobileNumber: contactNumber.value,
           objective: StreetNosheryOnboardingEnums.MOBILE_VERIFICATION);
       if (response.data != null) {
         isOtpSent.value = true;
       }
-      hideLoader(context);
+      hideLoader();
       return isOtpSent.value;
     } catch (e) {
-      hideLoader(context);
+      hideLoader();
       return isOtpSent.value;
     }
   }
@@ -197,7 +197,7 @@ class StreetNosheryOnboardingController extends GetxController {
     });
   }
 
-  Future<bool> validateOtp(BuildContext context) async {
+  Future<bool> validateOtp() async {
     /* 
     TODO: Error handling bottomsheet
      */
@@ -211,7 +211,7 @@ class StreetNosheryOnboardingController extends GetxController {
       }
       return isOtpVerify.value;
     } catch (e) {
-      hideLoader(context);
+      hideLoader();
       return isOtpVerify.value;
     }
   }
@@ -276,15 +276,16 @@ class StreetNosheryOnboardingController extends GetxController {
         streetNosheryUserData.value = StreetNosheryUser.fromJson(response.data);
         customerId.value = streetNosheryUserData.value.customerId ?? "";
       }
-    } catch (e) {}
+    } catch (e) {
+      hideLoader();
+    }
   }
 
-  Future<void> checkExistingUser(BuildContext context) async {
+  Future<void> checkExistingUser() async {
     await getUser(contactNumber.value);
     await onboardingStates();
     if (!isUserRegister.value) {
       await savemobileDetails();
-      hideLoader(context);
       Get.toNamed(Routes.emailPassword);
     }
     storeMobileNumberInHive();

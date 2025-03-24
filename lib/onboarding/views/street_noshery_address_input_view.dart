@@ -22,9 +22,9 @@ class OnboardingUserDetails extends GetView<StreetNosheryOnboardingController> {
             child: FloatingActionButton(
               onPressed: controller.isUserDetailsValid.value
                   ? () async {
-                    showLoader(context);
+                    showLoader();
                     await controller.saveuserDetails();
-                    hideLoader(context);
+                    hideLoader();
                     Get.toNamed(Routes.home);
                     }
                   : null,

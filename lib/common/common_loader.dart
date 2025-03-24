@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:street_noshery/common/common_images.dart';
+import 'package:street_noshery/main.dart';
 
 class FullPageLoader extends StatelessWidget {
   const FullPageLoader({super.key});
@@ -86,20 +87,23 @@ class _CustomFoodLoaderState extends State<CustomFoodLoader>
 }
 
 // Function to show the loader
-void showLoader(BuildContext context) {
-  if (!context.mounted) return;
-  Navigator.push(
-    context,
+void showLoader() {
+  final context = navigatorKey.currentContext;
+  if (context == null || !context.mounted) return;
+
+  navigatorKey.currentState?.push(
     PageRouteBuilder(
-      opaque: false, // Ensures transparency effect
-      pageBuilder: (context, _, __) => const FullPageLoader(),
+      opaque: false,
+      pageBuilder: (_, __, ___) => const FullPageLoader(),
     ),
   );
 }
 
-void hideLoader(BuildContext context) {
-  if (!context.mounted) return;
-  if (Navigator.canPop(context)) {
-    Navigator.pop(context); // Close the loader if it's open
+void hideLoader() {
+  final context = navigatorKey.currentContext;
+  if (context == null || !context.mounted) return;
+
+  if (navigatorKey.currentState?.canPop() ?? false) {
+    navigatorKey.currentState?.pop();
   }
 }

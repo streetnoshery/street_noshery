@@ -5,12 +5,13 @@ class API {
   final CommonEncryptionDecryption encryption = CommonEncryptionDecryption();
 
   Future<dynamic> request({
-    required Uri apiUri,
+    required String apiString,
     required String method,
     Map<String, String>? headers,
     dynamic payload,
     Map<String, dynamic>? queryParams,
   }) async {
+    var apiUri = Uri.parse(apiString);
     if (queryParams != null) {
       apiUri = Uri(
         scheme: apiUri.scheme,
@@ -38,6 +39,9 @@ class API {
           break;
         case 'DELETE':
           response = await http.delete(apiUri, headers: headers, body: payload);
+          break;
+        case 'PATCH':
+          response = await http.post(apiUri, headers: headers, body: payload);
           break;
         default:
           throw Exception('Unsupported HTTP method: $method');

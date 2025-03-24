@@ -142,9 +142,9 @@ class StreetNosheryAppReviewView
                       ),
                       InkWell(
                         onTap: () async {
-                          showLoader(context);
+                          showLoader();
                           await controller.updateReview(controller.selectedStars.value,controller.review.value);
-                          hideLoader(context);
+                          hideLoader();
                         },
                         highlightColor: Colors.teal.shade200,
                         child: Container(

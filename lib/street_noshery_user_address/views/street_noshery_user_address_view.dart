@@ -90,9 +90,9 @@ class StreetNosheryUserAddressView
                       controller.shopId.value = int.tryParse(item.shopAddress?.shopId ?? "0") ?? 0;
                     }
                   }
-                  showLoader(context);
+                  showLoader();
                   await controller.updateAddress();
-                  hideLoader(context);
+                  hideLoader();
                 },
               ),
               // DropdownSearch<String>(

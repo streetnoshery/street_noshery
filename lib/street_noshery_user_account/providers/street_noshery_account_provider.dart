@@ -1,55 +1,24 @@
 import 'package:street_noshery/common/common_api.dart';
+import 'package:street_noshery/common/common_host.dart';
 import 'package:street_noshery/common/common_response.dart';
 
 final api = API();
+final commonHost = StreetNosheryCommonHost();
 
 class StreetNosheryUserAccountProviders {
   static Future<ApiResponse> enableNotification(
       {String? customerId, bool? isEnable}) async {
-    final response = {
-      "state": "SUCCESS",
-      "status": 200,
-      "data": {
-        "_id": "67b1d6d6aae1dc9d6cb11226",
-        "shopId": 1,
-        "createdAt": "2025-02-16T12:15:18.243Z",
-        "menu": [
-          {
-            "dishName": "Paneer",
-            "image": "assets/home/street_noshery_dark_green_logo.png",
-            "description": "Creamy tomato-based curry with paneer",
-            "price": "250",
-            "rating": 4.8,
-            "category": "food",
-            "dishId": 1
-          },
-          {
-            "dishName": "Paneer Masala",
-            "image": "assets/home/street_noshery_dark_green_logo.png",
-            "description": "Creamy tomato-based curry with paneer",
-            "price": "250",
-            "rating": 4.5,
-            "category": "breakfast",
-            "dishId": 2
-          },
-          {
-            "dishName": "Paneer Masala",
-            "image": "assets/home/street_noshery_dark_green_logo.png",
-            "description": "Creamy tomato-based curry with paneer",
-            "price": "250",
-            "rating": 4.5,
-            "category": "liquid",
-            "dishId": 3
-          }
-        ],
-        "updatedAt": "2025-02-16T12:16:46.984Z"
-      }
-    };
-    // await api.request(
-    //     apiUri: Uri.parse("https://www.example.com/index.html"),
-    //     method: "get",
-    //     payload: {"customerId": customerId, "isEnable": isEnable});
+    try {
+      final String finalUrl =
+          commonHost.url(StreetNosheryUrls.enableNotification);
+      final response = await api.request(
+          apiString: finalUrl,
+          method: "post",
+          payload: {"customerId": customerId, "isEnable": isEnable});
 
-    return ApiResponse.fromJson(response);
+      return ApiResponse.fromJson(response);
+    } catch (e) {
+      rethrow;
+    }
   }
 }

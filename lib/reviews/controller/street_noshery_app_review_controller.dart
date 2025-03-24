@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_response.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_review_static_data.model.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
@@ -35,6 +36,7 @@ class StreetnosheryAppReviewController extends GetxController {
         reviewmodel = StreetNosheryReviewmodel.fromJson(response.data);
       }
     } catch (e) {
+      hideLoader();
       throw e;
     }
   }

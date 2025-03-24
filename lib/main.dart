@@ -6,6 +6,8 @@ import 'package:street_noshery/firebase_options.dart';
 import 'package:street_noshery/onboarding/views/street_noshery_first_view.dart';
 import 'package:street_noshery/routes/app_pages.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      navigatorKey: navigatorKey,
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

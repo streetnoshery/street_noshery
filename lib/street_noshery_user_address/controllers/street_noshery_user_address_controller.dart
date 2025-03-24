@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_response.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_address.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_shops_firebase_model.dart';
@@ -44,6 +45,7 @@ class StreetNosheryUserAddressController extends GetxController {
         isuserAddressUpdated.value = false;
       }
     } catch (e) {
+      hideLoader();
       throw e;
     }
   }
