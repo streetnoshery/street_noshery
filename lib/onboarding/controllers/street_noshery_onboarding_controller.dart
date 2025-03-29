@@ -12,6 +12,8 @@ import 'package:street_noshery/onboarding/models/street_noshery_create_user_data
 import 'package:street_noshery/onboarding/models/street_noshery_onboarding_user_data_model.dart';
 import 'package:street_noshery/onboarding/providers/street_noshery_onboarding_providers.dart';
 import 'package:street_noshery/routes/app_pages.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 class StreetNosheryOnboardingController extends GetxController {
   final allImages = CommonImages();
@@ -76,7 +78,8 @@ class StreetNosheryOnboardingController extends GetxController {
     } else {
       contactNumber.value = mobileNumber;
       customerId.value = customer;
-      await fireBaseContentHandler.userFirebaseData(customerId.value);
+      final hashMobileNUmber = hashMobileNumber(contactNumber.value);
+      await fireBaseContentHandler.userFirebaseData(hashMobileNUmber);
       await Future.delayed(const Duration(seconds: 2));
       if(!isFirebaseDataChanged.value) {
         await getUser(contactNumber.value);
@@ -290,4 +293,8 @@ class StreetNosheryOnboardingController extends GetxController {
     }
     storeMobileNumberInHive();
   }
+
+  String hashMobileNumber(String mobileNumber) {
+  return sha256.convert(utf8.encode(mobileNumber)).toString();
+}
 }

@@ -47,9 +47,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                 const SizedBox(
                   height: 20,
                 ),
-                Image.asset(
-                    controller
-                        .allImages.homePageBackgroundimage,
+                Image.asset(controller.allImages.homePageBackgroundimage,
                     height: Get.height * .30,
                     width: Get.width,
                     fit: BoxFit.fill),
@@ -60,143 +58,191 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                   thickness: 1.5,
                   color: colors.greySecondary,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
+                Visibility(
+                  visible:
+                            controller.streetNosheryUser.value.isRegisterForShop ??
+                                false,
+                  child: const Column(
                     children: [
-                      Column(
-                        children: [
-                          InkWell(
-                              onTap: () {
-                                controller.selectedTab.value =
-                                    TabEnum.home;
-                              },
-                              child: Text(
-                                controller.streetNosheryHomePageFirebaseModel.menuTab?.home ?? "Home",
-                                style: TextStyle(
-                                  color: colors.textPrimary,
-                                ),
-                              )),
-                          (controller.selectedTab.value ==
-                                  TabEnum.home)
-                              ? Container(
-                                  width: 50,
-                                  height: 5,
-                                  decoration: BoxDecoration(
-                                    color: colors.lightMossgreen,
-                                    borderRadius: const BorderRadius.all(Radius.circular(10))
-                                  ),
-                                )
-                              : const SizedBox()
-                        ],
+                      Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: Text("Orders",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15)),
                       ),
-                      Column(
-                        children: [
-                          InkWell(
-                              onTap: () {
-                                controller.selectedTab.value =
-                                    TabEnum.menu;
-                                Get.toNamed(Routes.menu);
-                              },
-                              child: Text(
-                                controller.streetNosheryHomePageFirebaseModel.menuTab?.menu ?? "Menu",
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                ),
-                              )),
-                          (controller.selectedTab.value ==
-                                  TabEnum.menu)
-                              ? Container(
-                                  width: 50,
-                                  height: 5,
-                                  decoration: BoxDecoration(
-                                    color: colors.lightMossgreen,
-                                    borderRadius: const BorderRadius.all(Radius.circular(10))
-                                  ),
-                                )
-                              : const SizedBox()
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          InkWell(
-                              onTap: () {
-                                controller.selectedTab.value =
-                                    TabEnum.cart;
-                                Get.toNamed(Routes.cart);
-                              },
-                              child: Text(
-                                controller.streetNosheryHomePageFirebaseModel.menuTab?.cart ?? "Cart",
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                ),
-                              )),
-                          (controller.selectedTab.value ==
-                                  TabEnum.cart)
-                              ? Container(
-                                  width: 50,
-                                  height: 5,
-                                  decoration: BoxDecoration(
-                                    color: colors.lightMossgreen,
-                                    borderRadius: const BorderRadius.all(Radius.circular(10))
-                                  ),
-                                )
-                              : const SizedBox()
-                        ],
-                      ),
+                      SizedBox(height: 20,),
+                      // TODO: All past orders List
                     ],
                   ),
                 ),
-                Divider(
-                  thickness: 1,
-                  color: colors.greySecondary,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    controller.streetNosheryHomePageFirebaseModel.homePageBestSeller?.title ?? "BestSeller",
-                    style: const TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontSize: 18,
-                        color: Colors.orangeAccent,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                SizedBox(
-                  height: 250,
-                  child: ScrollSnapList(
-                    itemBuilder: (context, index) {
-                      return BestSellerFoodItems(index: index);
-                    },
-                    itemCount: controller.bestSeller.length,
-                    itemSize: 150,
-                    onItemFocus: (index) {},
-                    dynamicItemSize: true,
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    controller.streetNosheryHomePageFirebaseModel.recentBrought?.title ?? "Recent brought",
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15),
+                
+                Visibility(
+                  visible:
+                      !(controller.streetNosheryUser.value.isRegisterForShop ??
+                          true),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Column(
+                          children: [
+                            InkWell(
+                                onTap: () {
+                                  controller.selectedTab.value = TabEnum.home;
+                                },
+                                child: Text(
+                                  controller.streetNosheryHomePageFirebaseModel
+                                          .menuTab?.home ??
+                                      "Home",
+                                  style: TextStyle(
+                                    color: colors.textPrimary,
+                                  ),
+                                )),
+                            (controller.selectedTab.value == TabEnum.home)
+                                ? Container(
+                                    width: 50,
+                                    height: 5,
+                                    decoration: BoxDecoration(
+                                        color: colors.lightMossgreen,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10))),
+                                  )
+                                : const SizedBox()
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            InkWell(
+                                onTap: () {
+                                  controller.selectedTab.value = TabEnum.menu;
+                                  Get.toNamed(Routes.menu);
+                                },
+                                child: Text(
+                                  controller.streetNosheryHomePageFirebaseModel
+                                          .menuTab?.menu ??
+                                      "Menu",
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                )),
+                            (controller.selectedTab.value == TabEnum.menu)
+                                ? Container(
+                                    width: 50,
+                                    height: 5,
+                                    decoration: BoxDecoration(
+                                        color: colors.lightMossgreen,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10))),
+                                  )
+                                : const SizedBox()
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            InkWell(
+                                onTap: () {
+                                  controller.selectedTab.value = TabEnum.cart;
+                                  Get.toNamed(Routes.cart);
+                                },
+                                child: Text(
+                                  controller.streetNosheryHomePageFirebaseModel
+                                          .menuTab?.cart ??
+                                      "Cart",
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                )),
+                            (controller.selectedTab.value == TabEnum.cart)
+                                ? Container(
+                                    width: 50,
+                                    height: 5,
+                                    decoration: BoxDecoration(
+                                        color: colors.lightMossgreen,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10))),
+                                  )
+                                : const SizedBox()
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Visibility(
-                  visible: controller.recentlyBroughtFoodItems.isNotEmpty,
+                  visible:
+                      !(controller.streetNosheryUser.value.isRegisterForShop ??
+                          true),
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: Divider(
+                      thickness: 1,
+                      color: colors.greySecondary,
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible:
+                      !(controller.streetNosheryUser.value.isRegisterForShop ??
+                          true),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
+                    child: Text(
+                      controller.streetNosheryHomePageFirebaseModel
+                              .homePageBestSeller?.title ??
+                          "BestSeller",
+                      style: const TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontSize: 18,
+                          color: Colors.orangeAccent,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible:
+                      !(controller.streetNosheryUser.value.isRegisterForShop ??
+                          true),
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: SizedBox(
+                      height: 250,
+                      child: ScrollSnapList(
+                        itemBuilder: (context, index) {
+                          return BestSellerFoodItems(index: index);
+                        },
+                        itemCount: controller.bestSeller.length,
+                        itemSize: 150,
+                        onItemFocus: (index) {},
+                        dynamicItemSize: true,
+                      ),
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible:
+                      !(controller.streetNosheryUser.value.isRegisterForShop ??
+                          true),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      controller.streetNosheryHomePageFirebaseModel
+                              .recentBrought?.title ??
+                          "Recent brought",
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: (controller.recentlyBroughtFoodItems.isNotEmpty &&
+                      !(controller.streetNosheryUser.value.isRegisterForShop ??
+                          true)),
                   child: Container(
                     color: Colors.grey.shade100,
                     child: ListView.separated(
@@ -204,7 +250,8 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           final foodList = controller.recentlyBroughtFoodItems;
-                          return StreetNosheryPastOrders(foodList: foodList, index: index);
+                          return StreetNosheryPastOrders(
+                              foodList: foodList, index: index);
                         },
                         separatorBuilder: (context, index) {
                           return const Divider(

@@ -14,6 +14,7 @@ class StreetNosheryUser {
   final Address? address;
   final String? userName;
   final bool? isEmailNotificationEnable;
+  final bool? isRegisterForShop;
 
   StreetNosheryUser({
     this.id,
@@ -27,6 +28,7 @@ class StreetNosheryUser {
     this.address,
     this.userName,
     this.isEmailNotificationEnable,
+    this.isRegisterForShop
   });
 
   factory StreetNosheryUser.fromJson(Map<String, dynamic> json) {
@@ -42,6 +44,7 @@ class StreetNosheryUser {
       address: json['address'] != null ? Address.fromJson(json['address']) : null,
       userName: json['userName'] as String?,
       isEmailNotificationEnable: json['isEmailNotificationEnable'] as bool?,
+      isRegisterForShop: json['isRegisterForShop'] as bool?
     );
   }
 
@@ -58,6 +61,7 @@ class StreetNosheryUser {
       'address': address?.toJson(),
       'userName': userName,
       'isEmailNotificationEnable': isEmailNotificationEnable,
+      'isRegisterForShop': isRegisterForShop
     };
   }
 }
