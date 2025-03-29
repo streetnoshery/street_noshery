@@ -24,8 +24,7 @@ class StreetNosheryHomeController extends GetxController {
   Rx<StreetNosheryMenu> menu = StreetNosheryMenu().obs;
   final bestSeller = <MenuItem>[].obs;
 
-  List<MenuItem> recentlyBroughtFoodItems = [
-  ];
+  List<MenuItem> recentlyBroughtFoodItems = [];
 
   final allImages = CommonImages();
   RxString username = "Sumit".obs;
@@ -62,12 +61,16 @@ class StreetNosheryHomeController extends GetxController {
   @override
   void onInit() async {
     streetNosheryUser.value = onboardingController.streetNosheryUserData.value;
-    await fetchOrders();
-    await getMenu(streetNosheryUser.value.address?.shopId ?? 1);
-    await getBestSeller(menu.value);
-    await reviews();
-    await getPastOrders();
-    assignPastOrders();
+    if (!(streetNosheryUser.value.isRegisterForShop ?? true)) {
+      await getMenu(streetNosheryUser.value.address?.shopId ?? 1);
+      await getBestSeller(menu.value);
+      await getPastOrders();
+      assignPastOrders();
+    }
+    else{
+      await fetchOrders();
+      await reviews();
+    }
     super.onInit();
   }
 
@@ -235,33 +238,32 @@ class StreetNosheryHomeController extends GetxController {
   }
 
   void assignPastOrders() {
-   Set<String?> existingDishes =
-      recentlyBroughtFoodItems.map((item) => item.dishName).toSet();
+    Set<String?> existingDishes =
+        recentlyBroughtFoodItems.map((item) => item.dishName).toSet();
 
-  for (var order in pastOrders) {
-    final orderValue = order.orderItems;
-    for (var item in orderValue!) {
-      if (!existingDishes.contains(item.dishName)) {
-        recentlyBroughtFoodItems.add(MenuItem(
-          image: item.image, // Set an appropriate image
-          dishName: item.dishName,
-          price: item.price,
-          rating: item.rating,
-          dishId: item.dishId,
-          dishOrderDate: DateTime.now(),
-          description: item.description
-        ));
-        existingDishes.add(item.dishName);
+    for (var order in pastOrders) {
+      final orderValue = order.orderItems;
+      for (var item in orderValue!) {
+        if (!existingDishes.contains(item.dishName)) {
+          recentlyBroughtFoodItems.add(MenuItem(
+              image: item.image, // Set an appropriate image
+              dishName: item.dishName,
+              price: item.price,
+              rating: item.rating,
+              dishId: item.dishId,
+              dishOrderDate: DateTime.now(),
+              description: item.description));
+          existingDishes.add(item.dishName);
+        }
       }
     }
   }
 
-  }
-
   Future<void> fetchOrders() async {
     try {
-      ApiResponse response = await StreetNosheryShopOrdersProviders.getOrder(shopId: streetNosheryUser.value.address?.shopId);
-      if(response.data != null) {
+      ApiResponse response = await StreetNosheryShopOrdersProviders.getOrder(
+          shopId: streetNosheryUser.value.address?.shopId);
+      if (response.data != null) {
         orders.value = (response.data as List)
             .map((e) => StreetNosheryShopOrders.fromJson(e))
             .toList();
@@ -274,8 +276,12 @@ class StreetNosheryHomeController extends GetxController {
 
   Future<void> updateOrder(String? orderTrackId, String? status) async {
     try {
-      ApiResponse response = await StreetNosheryShopOrdersProviders.updateOrder(shopId: streetNosheryUser.value.address?.shopId, orderTrackId: orderTrackId, customerId: streetNosheryUser.value.customerId, status: status);
-      if(response.data != null) {    
+      ApiResponse response = await StreetNosheryShopOrdersProviders.updateOrder(
+          shopId: streetNosheryUser.value.address?.shopId,
+          orderTrackId: orderTrackId,
+          customerId: streetNosheryUser.value.customerId,
+          status: status);
+      if (response.data != null) {
         orders.value = (response.data as List)
             .map((e) => StreetNosheryShopOrders.fromJson(e))
             .toList();
@@ -287,18 +293,18 @@ class StreetNosheryHomeController extends GetxController {
 
   statusTobeUpdated(String status) {
     switch (status) {
-    case 'PLACED':
-      return 'CONFIRMED';
-    case 'CONFIRMED':
-      return 'OUT_FOR_DELIVERY';
-    case 'OUT_FOR_DELIVERY':
-      return 'DELIVERED';
-    case 'DELIVERED':
-      return null; // No further status update after delivery
-    case 'CANCELLED':
-      return "CANCELLED"; // Order is cancelled, no update needed
-    default:
-      return null; // Handle unknown statuses
-  }
+      case 'PLACED':
+        return 'CONFIRMED';
+      case 'CONFIRMED':
+        return 'OUT_FOR_DELIVERY';
+      case 'OUT_FOR_DELIVERY':
+        return 'DELIVERED';
+      case 'DELIVERED':
+        return null; // No further status update after delivery
+      case 'CANCELLED':
+        return "CANCELLED"; // Order is cancelled, no update needed
+      default:
+        return null; // Handle unknown statuses
+    }
   }
 }
