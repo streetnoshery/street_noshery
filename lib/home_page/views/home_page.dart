@@ -6,6 +6,7 @@ import 'package:street_noshery/home_page/controllers/home_controller.dart';
 import 'package:street_noshery/home_page/enums/street_noshery_home_page_enums.dart';
 import 'package:street_noshery/home_page/widgets/street_noshery_home_page_appbar_widget.dart';
 import 'package:street_noshery/home_page/widgets/street_noshery_home_page_customer_fav_food_items.dart';
+import 'package:street_noshery/orders/views/street_noshery_order_view.dart';
 import 'package:street_noshery/profile/views/street_noshery_profile_view.dart';
 import 'package:street_noshery/routes/app_pages.dart';
 
@@ -63,6 +64,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                             controller.streetNosheryUser.value.isRegisterForShop ??
                                 false,
                   child: const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
                         padding: EdgeInsets.only(left: 20),
@@ -70,10 +72,10 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 15)),
+                                fontSize: 15),),
                       ),
                       SizedBox(height: 20,),
-                      // TODO: All past orders List
+                      StreetNosheryOrderView()
                     ],
                   ),
                 ),

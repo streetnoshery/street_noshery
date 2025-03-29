@@ -240,21 +240,25 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
             const SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(controller.streetNosheryProfileFireBaseModel.body?.pastOrder?.toUpperCase() ?? "PAST ORDERS",
-                  style: TextStyle(color: Colors.grey.shade600, fontSize: 15)),
+            Visibility(
+              visible: !(controller.homeController.streetNosheryUser.value.isRegisterForShop ?? false),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(controller.streetNosheryProfileFireBaseModel.body?.pastOrder?.toUpperCase() ?? "PAST ORDERS",
+                    style: TextStyle(color: Colors.grey.shade600, fontSize: 15)),
+              ),
             ),
             const SizedBox(
               height: 10,
             ),
             Visibility(
-                visible: false,
+                visible: (controller.homeController.recentlyBroughtFoodItems.isEmpty && !(controller.homeController.streetNosheryUser.value.isRegisterForShop ?? false)),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(controller.streetNosheryProfileFireBaseModel.body?.emptyOrderTitle ?? "Order to removing your cravings"),
+                  child: Text(controller.streetNosheryProfileFireBaseModel.body?.emptyOrderTitle ?? "Order to remove your cravings"),
                 )),
             Visibility(
+              visible: !(controller.homeController.streetNosheryUser.value.isRegisterForShop ?? false),
               child: Container(
                 color: Colors.grey.shade100,
                 child: ListView.separated(
@@ -280,36 +284,39 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
             const SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: SizedBox(
-                width: Get.width,
-                child: ElevatedButton(
-                  onPressed: controller.homeController.foodCartList.isNotEmpty
-                      ? () {
-                          Get.toNamed(Routes.cart);
-                        }
-                      : null,
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor:
-                        controller.homeController.foodCartList.isNotEmpty
-                            ? Colors.white
-                            : Colors.black,
-                    backgroundColor:
-                        controller.homeController.foodCartList.isNotEmpty
-                            ? Colors.black
-                            : Colors.teal.shade400, // Text color
-                    elevation: 5, // Shadow depth
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 12), // Padding
-                    shape: RoundedRectangleBorder(
-                      // Rounded corners
-                      borderRadius: BorderRadius.circular(30),
+            Visibility(
+              visible: !(controller.homeController.streetNosheryUser.value.isRegisterForShop ?? false),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: SizedBox(
+                  width: Get.width,
+                  child: ElevatedButton(
+                    onPressed: controller.homeController.foodCartList.isNotEmpty
+                        ? () {
+                            Get.toNamed(Routes.cart);
+                          }
+                        : null,
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor:
+                          controller.homeController.foodCartList.isNotEmpty
+                              ? Colors.white
+                              : Colors.black,
+                      backgroundColor:
+                          controller.homeController.foodCartList.isNotEmpty
+                              ? Colors.black
+                              : Colors.teal.shade400, // Text color
+                      elevation: 5, // Shadow depth
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12), // Padding
+                      shape: RoundedRectangleBorder(
+                        // Rounded corners
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    controller.streetNosheryProfileFireBaseModel.primaryButtonTitle ?? "Cart >",
-                    style: const TextStyle(fontSize: 16), // Text style
+                    child: Text(
+                      controller.streetNosheryProfileFireBaseModel.primaryButtonTitle ?? "Cart >",
+                      style: const TextStyle(fontSize: 16), // Text style
+                    ),
                   ),
                 ),
               ),

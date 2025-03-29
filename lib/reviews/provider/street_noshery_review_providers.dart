@@ -25,16 +25,4 @@ class StreetNosheryReviewProviders {
       rethrow;
     }
   }
-
-  // TODO: Not used
-  static Future<ApiResponse> getReview(num? shopId) async {
-    try {
-      final String finalUrl = commonHost.url(StreetNosheryUrls.createReview);
-      final response =
-          await api.request(apiString: finalUrl, method: "post", queryParams: {"shopId": shopId});
-      return ApiResponse.fromJson(response);
-    } catch (e) {
-      rethrow;
-    }
-  }
 }

@@ -6,11 +6,11 @@ import 'package:street_noshery/orders/models/street_noshery_order_payload_model.
 final api = API();
 final commonHost = StreetNosheryCommonHost();
 
-class StreetNosheryUserAccountProviders {
+class StreetNosheryShopOrdersProviders {
   static Future<ApiResponse> orderFT({CustomerOrderModel? payload}) async {
     try {
       final String finalUrl =
-          commonHost.url(StreetNosheryUrls.enableNotification);
+          commonHost.url(StreetNosheryUrls.createOrderFT);
       final response = await api.request(
           apiString: finalUrl, method: "post", payload: payload);
 
@@ -24,15 +24,11 @@ class StreetNosheryUserAccountProviders {
       {String? orderTrackId, String? customerId, num? shopId}) async {
     try {
       final String finalUrl =
-          commonHost.url(StreetNosheryUrls.enableNotification);
+          commonHost.url(StreetNosheryUrls.createOrder);
       final response = await api.request(
           apiString: finalUrl,
           method: "post",
-          payload: {
-            orderTrackId,
-            customerId,
-            shopId
-          });
+          payload: {orderTrackId, customerId, shopId});
 
       return ApiResponse.fromJson(response);
     } catch (e) {
@@ -41,19 +37,18 @@ class StreetNosheryUserAccountProviders {
   }
 
   static Future<ApiResponse> updateOrder(
-      {String? orderTrackId, String? customerId, num? shopId, String? status}) async {
+      {String? orderTrackId,
+      String? customerId,
+      num? shopId,
+      String? status}) async {
     try {
       final String finalUrl =
-          commonHost.url(StreetNosheryUrls.enableNotification);
-      final response = await api.request(
+          commonHost.url(StreetNosheryUrls.updateOrder);
+      final response =
+      await api.request(
           apiString: finalUrl,
           method: "patch",
-          payload: {
-            orderTrackId,
-            customerId,
-            shopId,
-            status
-          });
+          payload: {orderTrackId, customerId, shopId, status});
 
       return ApiResponse.fromJson(response);
     } catch (e) {
@@ -61,12 +56,12 @@ class StreetNosheryUserAccountProviders {
     }
   }
 
-  static Future<ApiResponse> getOrder(
-      {num? shopId}) async {
+  static Future<ApiResponse> getOrder({num? shopId}) async {
     try {
       final String finalUrl =
-          commonHost.url(StreetNosheryUrls.enableNotification);
-      final response = await api.request(
+          commonHost.url(StreetNosheryUrls.getShopOrders);
+      final response = 
+      await api.request(
           apiString: finalUrl,
           method: "get",
           queryParams: {

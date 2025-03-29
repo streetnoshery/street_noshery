@@ -12,6 +12,8 @@ import 'package:street_noshery/home_page/providers/street_noshery_home_page_prov
 import 'package:street_noshery/menu/enums/street_noshery_menu_enums.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
 import 'package:street_noshery/onboarding/models/street_noshery_onboarding_user_data_model.dart';
+import 'package:street_noshery/orders/models/street_noshery_order_model.dart';
+import 'package:street_noshery/orders/providers/street_noshery_order_provider.dart';
 import 'package:street_noshery/reviews/model/street_noshery_rating_review.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -54,9 +56,13 @@ class StreetNosheryHomeController extends GetxController {
   StreetNosheryShopRating ratings = StreetNosheryShopRating();
   List<StreetNosheryPastOrdersModel> pastOrders = [];
 
+  final isOrderFetched = false.obs;
+  RxList orders = [].obs;
+
   @override
   void onInit() async {
     streetNosheryUser.value = onboardingController.streetNosheryUserData.value;
+    await fetchOrders();
     await getMenu(streetNosheryUser.value.address?.shopId ?? 1);
     await getBestSeller(menu.value);
     await reviews();
@@ -250,5 +256,49 @@ class StreetNosheryHomeController extends GetxController {
     }
   }
 
+  }
+
+  Future<void> fetchOrders() async {
+    try {
+      ApiResponse response = await StreetNosheryShopOrdersProviders.getOrder(shopId: streetNosheryUser.value.address?.shopId);
+      if(response.data != null) {
+        orders.value = (response.data as List)
+            .map((e) => StreetNosheryShopOrders.fromJson(e))
+            .toList();
+        isOrderFetched.value = true;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> updateOrder(String? orderTrackId, String? status) async {
+    try {
+      ApiResponse response = await StreetNosheryShopOrdersProviders.updateOrder(shopId: streetNosheryUser.value.address?.shopId, orderTrackId: orderTrackId, customerId: streetNosheryUser.value.customerId, status: status);
+      if(response.data != null) {    
+        orders.value = (response.data as List)
+            .map((e) => StreetNosheryShopOrders.fromJson(e))
+            .toList();
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  statusTobeUpdated(String status) {
+    switch (status) {
+    case 'PLACED':
+      return 'CONFIRMED';
+    case 'CONFIRMED':
+      return 'OUT_FOR_DELIVERY';
+    case 'OUT_FOR_DELIVERY':
+      return 'DELIVERED';
+    case 'DELIVERED':
+      return null; // No further status update after delivery
+    case 'CANCELLED':
+      return "CANCELLED"; // Order is cancelled, no update needed
+    default:
+      return null; // Handle unknown statuses
+  }
   }
 }

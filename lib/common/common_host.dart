@@ -17,8 +17,10 @@ class StreetNosheryUrls {
   static const String enableNotification = "customer/enable-notification";
   static const String getMenu = "menu";
   static const String getPastOrders = "order";
-  static const String createOrder = "order/create/ft";
+  static const String createOrderFT = "order/create/ft";
+  static const String createOrder = "order/create";
   static const String updateOrder = "order/update";
+  static const String getShopOrders = "order/order-by-shopId";
   static const String updateAddress = "customer/update-address";
   static const String createReview = "review/create";
   static const String getReview = "review";
