@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:street_noshery/common/common_images.dart';
 import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_cart_static_data.model.dart';
@@ -24,6 +25,24 @@ class StreetNosheryCartController extends GetxController {
   StreetNosheryCartFirebaseStaticDataModel get streetNosheryFirebasemodel =>
       homeController.onboardingController.fireBaseContentHandler
           .streetNosheryCartFirebaseModel;
+  final Razorpay _razorpay = Razorpay();
+
+  var options = {
+    'key': 'rzp_test_7RoefomgUxd2EJ',
+    'amount': 5,
+    'currency': "INR",
+    'name': 'Acme Corp.',
+    'description': 'Fine T-Shirt',
+    'prefill': {'contact': '8107748619', 'email': 'sumitgod510@gmail.com'}
+  };
+
+  @override
+  void onInit() {
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    super.onInit();
+  }
 
   @override
   void onReady() {
@@ -100,5 +119,29 @@ class StreetNosheryCartController extends GetxController {
           '${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}';
     }
     update();
+  }
+
+  Future<void> placeOrder() async {
+    _razorpay.open(options);
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    // Do something when payment succeeds
+    print("razorpay payment success");
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Do something when payment fails
+    print("razorpay payment failed");
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet was selected
+  }
+
+  @override
+  void dispose() {
+    _razorpay.clear(); // Removes all listeners
+    super.dispose();
   }
 }
