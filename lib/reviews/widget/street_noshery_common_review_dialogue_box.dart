@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
 
 class ReviewPopup extends GetView<StreetNosheryHomeController> {
-  const ReviewPopup({super.key});
+  final List<num> foodIds;
+  const ReviewPopup({super.key, required this.foodIds});
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +73,14 @@ class ReviewPopup extends GetView<StreetNosheryHomeController> {
           ),
           ElevatedButton(
             onPressed: (controller.shouldReviewButtonEnable(review))
-                ? () {
-                    controller.submitReviews(review, context);
+                ? () async {
+                    showLoader();
+                    await controller.submitReviews(
+                        review: review,
+                        context: context,
+                        rating: controller.selectedStars.value,
+                        foodIds: foodIds);
+                    hideLoader();
                   }
                 : null,
             child: Text(

@@ -15,7 +15,6 @@ import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_
 import 'package:street_noshery/onboarding/models/street_noshery_onboarding_user_data_model.dart';
 import 'package:street_noshery/orders/models/street_noshery_order_model.dart';
 import 'package:street_noshery/orders/providers/street_noshery_order_provider.dart';
-import 'package:street_noshery/reviews/model/street_noshery_rating_review.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class StreetNosheryHomeController extends GetxController {
@@ -57,6 +56,7 @@ class StreetNosheryHomeController extends GetxController {
 
   final isOrderFetched = false.obs;
   RxList orders = [].obs;
+  final isFoodReviewUpdated = false.obs;
 
   @override
   void onInit() async {
@@ -134,7 +134,7 @@ class StreetNosheryHomeController extends GetxController {
     }
   }
 
-  Future<void> submitReviews(String? review, BuildContext context) async {
+  Future<void> submitReviews({required BuildContext context,required num rating, String? review, required List<num> foodIds}) async {
     final colors = CommonTheme();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -147,10 +147,22 @@ class StreetNosheryHomeController extends GetxController {
     );
     boxReviewController.text = "";
     selectedStars.value = 0;
+    await updateFoodReview(rating: rating, foodIds: foodIds);
     Get.back();
     /*
     TODO: Review API
      */
+  }
+
+  Future<void> updateFoodReview({required num rating, String? review, required List<num> foodIds}) async {
+    try {
+      ApiResponse response = await StreetNosheryHomeProviders.updateFoodReview(rating: rating, foodIds: foodIds, shopId: streetNosheryUser.value.address?.shopId?.toInt() ?? 1);
+      if(response.data != null) {
+        isFoodReviewUpdated.value = true;
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 
   bool shouldReviewButtonEnable(String? review) {
@@ -249,6 +261,15 @@ class StreetNosheryHomeController extends GetxController {
       updateCart(menu.dishName ?? "", menu.price, menu.foodId as num);
       updateCartAmount(int.tryParse(menu.price ?? "0") ?? 0, UpdatePrice.add);
     }
+  }
+
+  List<num> foodIds(List<MenuItem> menuList) {
+    List<num> foodIds = [];
+    for(var menu in menuList) {
+      foodIds.add(menu.foodId!);
+    }
+
+    return foodIds;
   }
 
   Future<void> fetchOrders() async {

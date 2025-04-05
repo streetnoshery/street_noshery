@@ -427,10 +427,11 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
               Flexible(
                 child: InkWell(
                   onTap: () {
+                    List<num> foodIds = controller.foodIds(foodList[index].orderItems ?? []);
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return const ReviewPopup();
+                        return ReviewPopup(foodIds: foodIds);
                       },
                     );
                   },
