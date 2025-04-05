@@ -7,8 +7,6 @@ import 'package:street_noshery/menu/controller/street_noshery_menu_controller.da
 import 'package:street_noshery/menu/widgets/street_noshery_menu_food_item_widget.dart';
 import 'package:street_noshery/routes/app_pages.dart';
 
-import '../enums/street_noshery_menu_enums.dart';
-
 class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
   const StreetNosheryMenuView({super.key});
 
@@ -163,7 +161,7 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                                                       width: 5,
                                                     ),
                                                     Text(
-                                                      "${controller.homeController.ratings.averageRating?.toInt()}",
+                                                      "${controller.ratings.averageRating?.toInt()}",
                                                       style: const TextStyle(
                                                           fontSize: 15,
                                                           color: Colors.white),
@@ -441,19 +439,8 @@ Widget _buildListItems(BuildContext context, int index) {
     child: InkWell(
       splashColor: Colors.transparent, // Removes the splash color
       highlightColor: Colors.transparent,
-      onDoubleTap: () {
-        streetNosheryMenuController.homeController.removeFromCart(
-            favFoodData[index].dishName ?? "", favFoodData[index].price as num);
-        streetNosheryMenuController.homeController.updateCartAmount(
-            int.tryParse(favFoodData[index].price ?? "0") ?? 0, UpdatePrice.removed);
-      },
       onTap: () {
-        streetNosheryMenuController.homeController.updateCart(
-            favFoodData[index].dishName ?? "",
-            favFoodData[index].price,
-            favFoodData[index].dishId as num);
-        streetNosheryMenuController.homeController
-            .updateCartAmount(int.tryParse(favFoodData[index].price ?? "0") ?? 0, UpdatePrice.add);
+        streetNosheryMenuController.homeController.addAllItemsToCart(favFoodData[index].orderItems ?? []);
         Get.toNamed(Routes.cart);
       },
       child: Card(
@@ -465,7 +452,7 @@ Widget _buildListItems(BuildContext context, int index) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.asset(
-                favFoodData[index].image ?? "",
+                favFoodData[index].orderItems?[0].image ?? "",
                 fit: BoxFit.cover,
               ),
               const SizedBox(
@@ -474,7 +461,7 @@ Widget _buildListItems(BuildContext context, int index) {
               Padding(
                 padding: const EdgeInsets.only(left: 15),
                 child: Text(
-                  "${favFoodData[index].dishName}",
+                  streetNosheryMenuController.homeController.getPastOrderDetails(favFoodData[index].orderItems ??[]).title,
                   style: const TextStyle(color: Colors.black, fontSize: 15),
                 ),
               ),
@@ -487,7 +474,7 @@ Widget _buildListItems(BuildContext context, int index) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "${favFoodData[index].price}",
+                      streetNosheryMenuController.homeController.getPastOrderDetails(favFoodData[index].orderItems ??[]).price ?? "",
                       style:
                           TextStyle(color: Colors.grey.shade600, fontSize: 15),
                     ),
@@ -496,7 +483,7 @@ Widget _buildListItems(BuildContext context, int index) {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "${favFoodData[index].rating}",
+                          "${streetNosheryMenuController.homeController.getPastOrderDetails(favFoodData[index].orderItems ??[]).rating}",
                           style: const TextStyle(fontSize: 15),
                         ),
                         const SizedBox(

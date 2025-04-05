@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:street_noshery/common/common_images.dart';
+import 'package:street_noshery/common/common_response.dart';
 import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_cart_static_data.model.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
 import 'package:street_noshery/menu/controller/street_noshery_menu_controller.dart';
+import 'package:street_noshery/orders/providers/street_noshery_order_provider.dart';
 
 class StreetNosheryCartController extends GetxController {
   final homeController = Get.find<StreetNosheryHomeController>();
@@ -122,6 +124,14 @@ class StreetNosheryCartController extends GetxController {
   }
 
   Future<void> placeOrder() async {
+    try{
+      ApiResponse response = await StreetNosheryShopOrdersProviders.orderFT();
+      if(response.data != null) {
+        
+      }
+    }catch(error) {
+      rethrow;
+    }
     _razorpay.open(options);
   }
 

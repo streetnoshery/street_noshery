@@ -6,6 +6,7 @@ import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_help_static_data.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_home_page_static_data.model.dart';
 import 'package:street_noshery/home_page/enums/street_noshery_home_page_enums.dart';
+import 'package:street_noshery/home_page/models/favourite_food_model.dart';
 import 'package:street_noshery/home_page/models/street_noshery_menu_model.dart';
 import 'package:street_noshery/home_page/models/street_noshery_past_orders_model.dart';
 import 'package:street_noshery/home_page/providers/street_noshery_home_page_provider.dart';
@@ -24,7 +25,7 @@ class StreetNosheryHomeController extends GetxController {
   Rx<StreetNosheryMenu> menu = StreetNosheryMenu().obs;
   final bestSeller = <MenuItem>[].obs;
 
-  List<MenuItem> recentlyBroughtFoodItems = [];
+  List<StreetNosheryPastOrdersModel> recentlyBroughtFoodItems = [];
 
   final allImages = CommonImages();
   RxString username = "Sumit".obs;
@@ -52,7 +53,6 @@ class StreetNosheryHomeController extends GetxController {
           .fireBaseContentHandler.streetNosheryHelpAndSupportFirebaseModel;
 
   Rx<StreetNosheryUser> streetNosheryUser = StreetNosheryUser().obs;
-  StreetNosheryShopRating ratings = StreetNosheryShopRating();
   List<StreetNosheryPastOrdersModel> pastOrders = [];
 
   final isOrderFetched = false.obs;
@@ -66,10 +66,8 @@ class StreetNosheryHomeController extends GetxController {
       await getBestSeller(menu.value);
       await getPastOrders();
       assignPastOrders();
-    }
-    else{
+    } else {
       await fetchOrders();
-      await reviews();
     }
     super.onInit();
   }
@@ -211,18 +209,6 @@ class StreetNosheryHomeController extends GetxController {
     bestSeller.value = menu.menu?.take(5).toList() ?? [];
   }
 
-  Future<void> reviews() async {
-    try {
-      ApiResponse response = await StreetNosheryHomeProviders.getReviews(
-          shopId: streetNosheryUser.value.address?.shopId);
-      if (response.data != null) {
-        ratings = StreetNosheryShopRating.fromJson(response.data);
-      }
-    } catch (e) {
-      throw e;
-    }
-  }
-
   Future<void> getPastOrders() async {
     try {
       ApiResponse response = await StreetNosheryHomeProviders.getPastOrders(
@@ -238,24 +224,30 @@ class StreetNosheryHomeController extends GetxController {
   }
 
   void assignPastOrders() {
-    Set<String?> existingDishes =
-        recentlyBroughtFoodItems.map((item) => item.dishName).toSet();
+    recentlyBroughtFoodItems = pastOrders;
+  }
 
-    for (var order in pastOrders) {
-      final orderValue = order.orderItems;
-      for (var item in orderValue!) {
-        if (!existingDishes.contains(item.dishName)) {
-          recentlyBroughtFoodItems.add(MenuItem(
-              image: item.image, // Set an appropriate image
-              dishName: item.dishName,
-              price: item.price,
-              rating: item.rating,
-              dishId: item.dishId,
-              dishOrderDate: DateTime.now(),
-              description: item.description));
-          existingDishes.add(item.dishName);
-        }
-      }
+  PastOrderDetailsResponse getPastOrderDetails(List<MenuItem> menuList) {
+    var response = PastOrderDetailsResponse(title: '', rating: 0, price: "0");
+    var price = 0;
+    for (var pastOrderMenu in menuList) {
+      response.title += (pastOrderMenu.dishName ?? "");
+      response.rating += pastOrderMenu.rating?.toInt() ?? 0;
+      price += num.tryParse(pastOrderMenu.price.toString())?.toInt() ?? 0;
+    }
+
+    if (response.title.length > 20) {
+      response.title = '${response.title.substring(0, 20)}...';
+    }
+    response.rating = (response.rating / menuList.length).toInt();
+    response.price = price.toString();
+    return response;
+  }
+
+  void addAllItemsToCart(List<MenuItem> menuList) {
+    for (var menu in menuList) {
+      updateCart(menu.dishName ?? "", menu.price, menu.foodId as num);
+      updateCartAmount(int.tryParse(menu.price ?? "0") ?? 0, UpdatePrice.add);
     }
   }
 

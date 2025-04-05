@@ -24,8 +24,6 @@ class StreetnosheryAppReviewController extends GetxController {
 
   @override
   void onInit() async {
-    await homeController.reviews();
-    selectedStars.value = homeController.ratings.averageRating?.toInt() ?? 0;
     super.onInit();
   }
 

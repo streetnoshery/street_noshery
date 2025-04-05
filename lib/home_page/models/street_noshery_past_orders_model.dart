@@ -19,7 +19,7 @@ class StreetNosheryPastOrdersModel {
   final DateTime? orderPlacedAt;
   final String? orderStatus;
   final String? paymentStatus;
-  final String? shopId;
+  final num? shopId;
   final DateTime? updatedAt;
   final DateTime? orderDeliveredAt;
 
@@ -62,7 +62,7 @@ class StreetNosheryPastOrdersModel {
         orderPlacedAt: json['orderPlacedAt'] != null ? DateTime.parse(json['orderPlacedAt']) : null,
         orderStatus: json['orderStatus'] as String?,
         paymentStatus: json['paymentStatus'] as String?,
-        shopId: json['shopId'] as String?,
+        shopId: json['shopId'] as num?,
         updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
         orderDeliveredAt: json['orderDeliveredAt'] != null ? DateTime.parse(json['orderDeliveredAt']) : null,
       );

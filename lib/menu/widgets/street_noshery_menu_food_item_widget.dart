@@ -136,7 +136,7 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
                           int.tryParse(foodItem.price ?? "0") ?? 0);
                       controller.homeController.updateCartAmount(
                           int.tryParse(foodItem.price ?? "0") ?? 0, UpdatePrice.removed);
-                      controller.removeditems(foodItem.dishId);
+                      controller.removeditems(foodItem.foodId);
                       Fluttertoast.showToast(
                           msg: "${foodItem.dishName} is removed from cart",
                           toastLength: Toast
@@ -176,10 +176,10 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
                     onTap: () {
                       controller.homeController.updateCart(
                           foodItem.dishName ?? "",
-                          foodItem.price ?? "0", foodItem.dishId as num);
+                          foodItem.price ?? "0", foodItem.foodId as num);
                       controller.homeController.updateCartAmount(
                           int.tryParse(foodItem.price ?? "0")?? 0, UpdatePrice.add);
-                      controller.updateItems(foodItem.dishId);
+                      controller.updateItems(foodItem.foodId);
                       Fluttertoast.showToast(
                           msg: "${foodItem.dishName} is added to cart",
                           toastLength: Toast

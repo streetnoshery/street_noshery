@@ -42,7 +42,7 @@ class MenuItem {
   final String? price;
   final double? rating;
   final String? image;
-  final num? dishId;
+  final num? foodId;
   final String? category;
   num? dishCount;
   final DateTime? dishOrderDate;
@@ -53,7 +53,7 @@ class MenuItem {
     this.price,
     this.rating,
     this.image,
-    this.dishId,
+    this.foodId,
     this.category,
     this.dishCount,
     this.dishOrderDate
@@ -66,7 +66,7 @@ class MenuItem {
       price: json['price'] as String?,
       rating: (json['rating'] as num?)?.toDouble(),
       image: json['image'],
-      dishId: json['dishId'],
+      foodId: json['foodId'],
       category: json['category'],
       dishCount: json['dishCount'],
       dishOrderDate: json['dishOrderDate']
@@ -80,7 +80,7 @@ class MenuItem {
       'price': price,
       'rating': rating,
       'image': image,
-      'dishId': dishId,
+      'foodId': foodId,
       'category': category,
       'dishCount': dishCount,
       'dishOrderDate': dishOrderDate

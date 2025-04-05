@@ -3,9 +3,8 @@ import 'package:get/get.dart';
 import 'package:street_noshery/common/common_date_format.dart';
 import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
-import 'package:street_noshery/home_page/models/street_noshery_menu_model.dart';
+import 'package:street_noshery/home_page/models/street_noshery_past_orders_model.dart';
 import 'package:street_noshery/reviews/widget/street_noshery_common_review_dialogue_box.dart';
-import 'package:street_noshery/menu/enums/street_noshery_menu_enums.dart';
 import 'package:street_noshery/profile/controllers/street_noshery_profile_controller.dart';
 import 'package:street_noshery/routes/app_pages.dart';
 
@@ -333,7 +332,7 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
 
 // ignore: must_be_immutable
 class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
-  List<MenuItem> foodList;
+  List<StreetNosheryPastOrdersModel> foodList;
   int index;
   StreetNosheryPastOrders(
       {super.key, required this.foodList, required this.index});
@@ -349,13 +348,13 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
           Row(
             children: [
               Text(
-                foodList[index].dishName ?? "",
+                 controller.getPastOrderDetails(foodList[index].orderItems ?? []).title,
                 style: TextStyle(color: Colors.grey.shade900, fontSize: 15),
               ),
               const SizedBox(
                 width: 10,
               ),
-              Text("${foodList[index].rating}",
+              Text("${controller.getPastOrderDetails(foodList[index].orderItems ?? []).rating}",
                   style: TextStyle(color: Colors.grey.shade900, fontSize: 15)),
               const SizedBox(
                 width: 5,
@@ -366,36 +365,36 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
                 size: 18, // Icon size
               ),
               const Spacer(),
-              Obx(() {
-                return Visibility(
-                  visible: false,
-                  child: IconButton(
-                    icon: Icon(
-                      (controller.isFavorite.value && controller.tappedFoodId.value == foodList[index].dishId?.toInt())
-                          ? Icons.favorite
-                          : Icons.favorite_border,
-                      color: (controller.isFavorite.value && controller.tappedFoodId.value == foodList[index].dishId?.toInt())
-                          ? colors.darkLeafGreen
-                          : Colors.grey,
-                      size: 18,
-                    ),
-                    onPressed: () {
-                      if(controller.tappedFoodId.value == foodList[index].dishId?.toInt()) {
-                        controller.isFavorite.value = !controller.isFavorite.value;
-                      }
-                      else if(controller.tappedFoodId.value != foodList[index].dishId?.toInt()) {
-                        controller.isFavorite.value = true;
-                      }
-                      controller.tappedFoodId.value = foodList[index].dishId?.toInt() ?? 0;
-                      controller.updateFavoriteFood();
-                    },
-                  ),
-                );
-              })
+              // Obx(() {
+              //   return Visibility(
+              //     visible: false,
+              //     child: IconButton(
+              //       icon: Icon(
+              //         (controller.isFavorite.value && controller.tappedFoodId.value == foodList[index].dishId?.toInt())
+              //             ? Icons.favorite
+              //             : Icons.favorite_border,
+              //         color: (controller.isFavorite.value && controller.tappedFoodId.value == foodList[index].dishId?.toInt())
+              //             ? colors.darkLeafGreen
+              //             : Colors.grey,
+              //         size: 18,
+              //       ),
+              //       onPressed: () {
+              //         if(controller.tappedFoodId.value == foodList[index].dishId?.toInt()) {
+              //           controller.isFavorite.value = !controller.isFavorite.value;
+              //         }
+              //         else if(controller.tappedFoodId.value != foodList[index].dishId?.toInt()) {
+              //           controller.isFavorite.value = true;
+              //         }
+              //         controller.tappedFoodId.value = foodList[index].dishId?.toInt() ?? 0;
+              //         controller.updateFavoriteFood();
+              //       },
+              //     ),
+              //   );
+              // })
             ],
           ),
           Text(
-            DateFormatter().orderDateFormat(foodList[index].dishOrderDate),
+            DateFormatter().orderDateFormat(foodList[index].orderPlacedAt),
             style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
           ),
           const SizedBox(
@@ -406,12 +405,7 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
               Flexible(
                 child: InkWell(
                   onTap: () {
-                    controller.updateCart(
-                        foodList[index].dishName ?? "",
-                        foodList[index].price,
-                        foodList[index].dishId as num);
-                    controller.updateCartAmount(
-                        int.tryParse(foodList[index].price ?? "0") ?? 0, UpdatePrice.add);
+                    controller.addAllItemsToCart(foodList[index].orderItems ?? []);
                     Get.toNamed(Routes.cart);
                   },
                   child: Container(
