@@ -25,4 +25,5 @@ class StreetNosheryUrls {
   static const String createReview = "review/create";
   static const String getReview = "review";
   static const String updateFoodReview = "review/create-food-review";
+  static const String orderStatus = "order/status";
 }

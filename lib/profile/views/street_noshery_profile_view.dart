@@ -365,6 +365,12 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
                 size: 18, // Icon size
               ),
               const Spacer(),
+              InkWell(
+                onTap: () {
+                  
+                },
+                child: const Text(">", style: TextStyle(color: Colors.black, fontSize: 20),)
+                )
               // Obx(() {
               //   return Visibility(
               //     visible: false,
