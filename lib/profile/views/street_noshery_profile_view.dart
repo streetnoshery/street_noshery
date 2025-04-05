@@ -367,7 +367,7 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
               const Spacer(),
               InkWell(
                 onTap: () {
-                  
+                  Get.toNamed(Routes.orderTracking);
                 },
                 child: const Text(">", style: TextStyle(color: Colors.black, fontSize: 20),)
                 )

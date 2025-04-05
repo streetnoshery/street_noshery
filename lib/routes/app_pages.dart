@@ -10,6 +10,8 @@ import 'package:street_noshery/onboarding/views/street_noshery_address_input_vie
 import 'package:street_noshery/onboarding/views/street_noshery_email_view.dart';
 import 'package:street_noshery/onboarding/views/street_noshery_mobile_number_view.dart';
 import 'package:street_noshery/onboarding/views/street_noshery_otp_view.dart';
+import 'package:street_noshery/order_tracking/binding/street_noshery_order_tracking_binding.dart';
+import 'package:street_noshery/order_tracking/view/street_noshery_order_tracking.dart';
 import 'package:street_noshery/profile/views/street_noshery_profile_view.dart';
 import 'package:street_noshery/profile/widgets/street_noshery_help_widget.dart';
 import 'package:street_noshery/profile/widgets/street_noshery_profile_edit_widget.dart';
@@ -82,6 +84,10 @@ class Pages {
     GetPage(
       name: _Pages.help, 
       page: () => const StreetNosheryHelp(),
-      binding: StreetNosheryHomeBinding())
+      binding: StreetNosheryHomeBinding()),
+    GetPage(
+      name: _Pages.orderTracking, 
+      page: () => const StreetNosheryOrdertrackingView(),
+      binding: StreetNosheryOrderTrackingBinding())
   ];
 }

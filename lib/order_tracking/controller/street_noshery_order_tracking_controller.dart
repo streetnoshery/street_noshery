@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_images.dart';
 import 'package:street_noshery/common/common_response.dart';
 import 'package:street_noshery/order_tracking/model/street_noshery_order_tracking_status_response_model.dart';
 import 'package:street_noshery/order_tracking/provider/street_noshery_order_tracking_provider.dart';
@@ -6,7 +7,8 @@ import 'package:street_noshery/order_tracking/provider/street_noshery_order_trac
 class StreetNosheryOrderTrackingController extends GetxController{
 
   final isOrderStatusResponseSuccess = false.obs;
-  Rx<OrderTrackingData> orderTrackingData = OrderTrackingData().obs; 
+  Rx<OrderTrackingData> orderTrackingData = OrderTrackingData().obs;
+  final allImages = CommonImages();
 
   @override
   void onReady() async {

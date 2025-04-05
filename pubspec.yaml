@@ -50,6 +50,7 @@ dependencies:
   url_launcher: ^6.3.1
   crypto: ^3.0.3
   razorpay_flutter: 1.4.0
+  timeline_tile: ^2.0.0
 
 dev_dependencies:
   flutter_test:

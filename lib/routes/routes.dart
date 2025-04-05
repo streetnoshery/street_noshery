@@ -16,6 +16,7 @@ class Routes {
   static const editUserprofile = _Pages.editUserprofile;
   static const reviewApp = _Pages.reviewApp;
   static const help = _Pages.help;
+  static const orderTracking = _Pages.orderTracking;
 }
 
 abstract class _Pages {
@@ -35,4 +36,5 @@ abstract class _Pages {
   static const editUserprofile = "/street-noshery-edit-user-profile";
   static const reviewApp = "/street-noshery-review-app";
   static const help = "/street-noshery-help";
+  static const orderTracking = "/street-noshery-order-tracking";
 }
