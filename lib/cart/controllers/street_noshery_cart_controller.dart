@@ -138,11 +138,13 @@ class StreetNosheryCartController extends GetxController {
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     // Do something when payment succeeds
     print("razorpay payment success");
+    Get.back();
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
     // Do something when payment fails
     print("razorpay payment failed");
+    Get.back();
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
