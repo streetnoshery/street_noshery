@@ -5,19 +5,19 @@ import 'package:street_noshery/order_tracking/model/street_noshery_order_trackin
 import 'package:street_noshery/order_tracking/provider/street_noshery_order_tracking_provider.dart';
 
 class StreetNosheryOrderTrackingController extends GetxController{
-
+  final arguments = Get.arguments;
   final isOrderStatusResponseSuccess = false.obs;
   Rx<OrderTrackingData> orderTrackingData = OrderTrackingData().obs;
   final allImages = CommonImages();
 
   @override
   void onReady() async {
-
+    await getOrderTrackingStatus();
   }
 
-  Future<void> getOrderTrackingStatus(String orderTrackId) async {
+  Future<void> getOrderTrackingStatus() async {
     try {
-      ApiResponse response = await StreetNosheryOrderTrackingProvider.getOrderStatus(orderTrackId);
+      ApiResponse response = await StreetNosheryOrderTrackingProvider.getOrderStatus(arguments['orderTrackId']);
       if(response.data != null) {
         orderTrackingData.value = OrderTrackingData.fromJson(response.data);
         isOrderStatusResponseSuccess.value = true;
@@ -26,4 +26,6 @@ class StreetNosheryOrderTrackingController extends GetxController{
       rethrow;
     }
   }
+
+
 }

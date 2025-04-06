@@ -1,3 +1,5 @@
+import 'package:street_noshery/order_tracking/enum/street_noshery_order_tracking_enum.dart';
+
 class OrderTrackingModel {
   final String? state;
   final int? status;
@@ -87,7 +89,7 @@ class Flags {
 
 class StatusStack {
   final String? id;
-  final String? status;
+  final STATUS? status;
   final String? title;
   final String? timeStamp;
 
@@ -96,7 +98,12 @@ class StatusStack {
   factory StatusStack.fromJson(Map<String, dynamic> json) {
     return StatusStack(
       id: json['id'] as String?,
-      status: json['status'] as String?,
+      status: json['status'] != null
+          ? STATUS.values.firstWhere(
+              (e) => e.name.toLowerCase() == (json['status'] as String).toLowerCase(),
+              orElse: () => STATUS.UNKNOWN,
+            )
+          : null,
       title: json['title'] as String?,
       timeStamp: json['timeStamp'] as String?,
     );
