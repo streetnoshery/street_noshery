@@ -369,7 +369,10 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
                 onTap: () {
                   Get.toNamed(Routes.orderTracking, arguments: {'orderTrackId': foodList[index].orderTrackId,});
                 },
-                child: const Text(">", style: TextStyle(color: Colors.black, fontSize: 20),)
+                child: const Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(">", style: TextStyle(color: Colors.black, fontSize: 20),),
+                )
                 )
               // Obx(() {
               //   return Visibility(

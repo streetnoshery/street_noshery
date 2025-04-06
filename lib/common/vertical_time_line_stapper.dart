@@ -31,6 +31,7 @@ class StreetNosheryTimeLineTile extends StatelessWidget {
                   iconStyle: IconStyle(
                     iconData: timeLineStapper.timeLine[index].indicatorIcon, // Use any icon you want here
                     color: timeLineStapper.timeLine[index].iconColor,
+                    fontSize: 15
                   ),
                 ),
                 endChild: Padding(

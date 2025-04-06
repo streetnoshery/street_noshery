@@ -21,21 +21,21 @@ class StreetNosheryOrderTrackingProvider {
           "statusStack": [
             {
               "id": "orderPlaced",
-              "status": "IN_PROGRESS",
+              "status": "SUCCESS",
               "title": "Order placed",
-              // "timeStamp": "2025-03-28T17:13:56.513Z"
+              "timeStamp": "2025-03-28T17:13:56.513Z"
             },
             {
               "id": "outForDelivery",
-              "status": "NOT_INITIATED",
+              "status": "SUCCESS",
               "title": "Out for delivery",
-              // "timeStamp": "2025-03-28T17:15:14.682Z"
+              "timeStamp": "2025-03-28T17:15:14.682Z"
             },
             {
               "id": "delivered",
-              "status": "NOT_INITIATED",
+              "status": "success",
               "title": "Delivered",
-              // "timeStamp": "2025-03-29T11:36:38.103Z"
+              "timeStamp": "2025-03-29T11:36:38.103Z"
             }
           ],
           "paymentStatus": "SUCCESS",

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:street_noshery/common/common_date_format.dart';
 import 'package:street_noshery/common/vertical_time_line_stapper.dart';
 import 'package:street_noshery/common/vertivcal_time_line_common_class.dart';
@@ -16,11 +15,17 @@ class StreetNosheryOrdertrackingView
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            "Track your order",
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 20, top: 60),
+              padding: const EdgeInsets.only(left: 20, top: 30),
               child: Image.asset(controller.allImages.streetNosheryLogo,
                   height: 80, width: 80, fit: BoxFit.fill),
             ),
@@ -51,7 +56,8 @@ class StreetNosheryOrdertrackingView
       timeLineList.add(tile);
     }
 
-    return StreetNosheryTimeLineModel(timeLine: timeLineList, height: 100);
+    return StreetNosheryTimeLineModel(
+        timeLine: timeLineList, height: 100, padding: 30);
   }
 
   Color getIndicatorColor(STATUS? status) {
@@ -59,7 +65,7 @@ class StreetNosheryOrdertrackingView
       case STATUS.NOT_INITIATED:
         return Colors.grey;
       case STATUS.IN_PROGRESS:
-        return Colors.yellow;
+        return Colors.yellow.shade700;
       case STATUS.SUCCESS:
         return Colors.green.shade600;
       default:
@@ -72,7 +78,7 @@ class StreetNosheryOrdertrackingView
       case STATUS.NOT_INITIATED:
         return Icons.access_time;
       case STATUS.IN_PROGRESS:
-        return Icons.access_time_filled;
+        return Icons.access_time_filled_rounded;
       case STATUS.SUCCESS:
         return Icons.done;
       default:
