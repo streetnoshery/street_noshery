@@ -5,6 +5,7 @@ import 'package:street_noshery/cart/widgets/street_noshery_cart_details_widget.d
 import 'package:street_noshery/cart/widgets/street_noshery_cart_saving_corner_widget.dart';
 import 'package:street_noshery/cart/widgets/street_noshery_payment_list_widget.dart';
 import 'package:street_noshery/cart/widgets/street_noshery_service_type_widget.dart';
+import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/home_page/enums/street_noshery_home_page_enums.dart';
 
@@ -27,9 +28,11 @@ class StreetNosheryCartView extends GetView<StreetNosheryCartController> {
                 foregroundColor: Colors.white, // Text color
               ),
               onPressed: controller.homeController.foodCartList.isNotEmpty
-                  ? () {
+                  ? () async {
                       print('Save button pressed');
-                      // controller.
+                      showLoader();
+                      await controller.placeOrder();
+                      hideLoader();
                     }
                   : null,
               child: Text(controller.streetNosheryFirebasemodel.primaryCTA ?? 'Pay'),
@@ -57,7 +60,7 @@ class StreetNosheryCartView extends GetView<StreetNosheryCartController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.only(top: 30, bottom: 20),
                         child: IconButton(
                           icon:
                               const Icon(Icons.arrow_back, color: Colors.black),

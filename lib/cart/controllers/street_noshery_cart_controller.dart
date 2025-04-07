@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:street_noshery/cart/model/street_noshery_create_order_model.dart';
 import 'package:street_noshery/common/common_images.dart';
+import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_response.dart';
 import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_cart_static_data.model.dart';
@@ -28,6 +30,8 @@ class StreetNosheryCartController extends GetxController {
       homeController.onboardingController.fireBaseContentHandler
           .streetNosheryCartFirebaseModel;
   final Razorpay _razorpay = Razorpay();
+  Rx<OrderData> orderData = OrderData().obs;
+  final isOrderCreated = false.obs;
 
   var options = {
     'key': 'rzp_test_7RoefomgUxd2EJ',
@@ -124,21 +128,40 @@ class StreetNosheryCartController extends GetxController {
   }
 
   Future<void> placeOrder() async {
+    _razorpay.open(options);
+  }
+
+  Future<void> createFT() async {
     try{
       ApiResponse response = await StreetNosheryShopOrdersProviders.orderFT();
       if(response.data != null) {
-        
+        orderData.value = OrderData.fromJson(response.data);
       }
     }catch(error) {
       rethrow;
     }
-    _razorpay.open(options);
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+  Future<void> createOrder() async {
+    try{
+      ApiResponse response = await StreetNosheryShopOrdersProviders.createOrder();
+      if(response.data != null) {
+        orderData.value = OrderData.fromJson(response.data);
+        isOrderCreated.value = true;
+      }
+    }catch(error) {
+      rethrow;
+    }
+  }
+
+  Future<void> _handlePaymentSuccess(PaymentSuccessResponse response) async {
     // Do something when payment succeeds
     print("razorpay payment success");
-    Get.back();
+    showLoader();
+    await createFT();
+    await createOrder();
+    hideLoader();
+    homeController.switchToHome();
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {

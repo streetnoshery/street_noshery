@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:street_noshery/common/common_date_format.dart';
+import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
 import 'package:street_noshery/orders/models/street_noshery_order_model.dart';
 
@@ -59,10 +60,12 @@ class OrderView extends GetView<StreetNosheryHomeController> {
             children: [
               Flexible(
                 child: InkWell(
-                  onTap: () {
+                  onTap: () async {
                     final orderTrackId = order?.orderTrackId;
                     final getStatus = controller.statusTobeUpdated(order?.orderStatus ?? "");
-                    controller.updateOrder(orderTrackId, getStatus);
+                    showLoader();
+                    await controller.updateOrder(orderTrackId, getStatus);
+                    hideLoader();
                   },
                   child: Container(
                     padding:
@@ -82,10 +85,12 @@ class OrderView extends GetView<StreetNosheryHomeController> {
               ),
               Flexible(
                 child: InkWell(
-                  onTap: () {
+                  onTap: () async {
                     final orderTrackId = order?.orderTrackId;
                     const getStatus = "CANCELLED";
+                    showLoader();
                     controller.updateOrder(orderTrackId, getStatus);
+                    hideLoader();
                   },
                   child: Container(
                     padding:

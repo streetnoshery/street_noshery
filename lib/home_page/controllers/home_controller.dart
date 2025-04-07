@@ -15,6 +15,7 @@ import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_
 import 'package:street_noshery/onboarding/models/street_noshery_onboarding_user_data_model.dart';
 import 'package:street_noshery/orders/models/street_noshery_order_model.dart';
 import 'package:street_noshery/orders/providers/street_noshery_order_provider.dart';
+import 'package:street_noshery/routes/app_pages.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class StreetNosheryHomeController extends GetxController {
@@ -319,5 +320,9 @@ class StreetNosheryHomeController extends GetxController {
       default:
         return null; // Handle unknown statuses
     }
+  }
+
+  switchToHome() {
+    Get.until((route) => route.settings.name == Routes.home);
   }
 }
