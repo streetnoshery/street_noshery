@@ -31,7 +31,7 @@ class StreetNosheryOnboardingProviders {
       String? otp}) async {
     try {
       final String finalUrl = commonHost.url(StreetNosheryUrls.verifyOtp);
-      final response = {"state":"SUCCESS","status":201,"data":"ok"};
+      final response = {"state": "SUCCESS", "status": 201, "data": "ok"};
       // await api.request(
       //     apiString: finalUrl,
       //     method: "post",
@@ -52,25 +52,25 @@ class StreetNosheryOnboardingProviders {
       final String finalUrl = commonHost.url(StreetNosheryUrls.getUser);
       final response = {
         "state": "SUCCESS",
-        "status": 200,
+        "status": 201,
         "data": {
+          "_id": "67f3c8a49ce2a84ed79bfe1f",
+          "mobileNumber": "8107748619",
+          "__v": 0,
+          "countryCode": "+91",
+          "createdAt": "2025-04-07T12:44:20.061Z",
+          "customerId": "STREET_NOSHERY_Q9TQEDQMJZ80H85HANQN",
+          "isEmailNotificationEnable": true,
+          "isRegisterForShop": false,
+          "status": "USER_DETAILS_VERIFICATION",
+          "updatedAt": "2025-04-07T12:48:34.457Z",
+          "email": "sumitgod510@gmail.com",
+          "password": "Sumit@1062",
           "address": {
             "firstLine": "Sigma Tech Park",
             "secondLine": "Bangalore",
             "shopId": 1
           },
-          "_id": "67e40e954489a7f21678a932",
-          "mobileNumber": "8310627564",
-          "__v": 0,
-          "countryCode": "+91",
-          "createdAt": "2025-03-26T14:26:29.790Z",
-          "customerId": "STREET_NOSHERY_DJ9Q0M3N848PUAJF5PL5",
-          "isEmailNotificationEnable": false,
-          "isRegisterForShop": false,
-          "status": "USER_DETAILS_VERIFICATION",
-          "updatedAt": "2025-03-26T14:35:57.424Z",
-          "email": "Sumitgod510@gmail.com",
-          "password": "Sumitgod510@gmail.com",
           "userName": "Sumit Kumar Godwan"
         }
       };
@@ -92,8 +92,31 @@ class StreetNosheryOnboardingProviders {
       StreetNosheryCreateuserDatamodel data) async {
     try {
       final String finalUrl = commonHost.url(StreetNosheryUrls.createUser);
-      final response =
-          await api.request(apiString: finalUrl, method: "post", payload: data);
+      final response = {
+        "state": "SUCCESS",
+        "status": 201,
+        "data": {
+          "_id": "67f3c8a49ce2a84ed79bfe1f",
+          "mobileNumber": "8107748619",
+          "__v": 0,
+          "countryCode": "+91",
+          "createdAt": "2025-04-07T12:44:20.061Z",
+          "customerId": "STREET_NOSHERY_Q9TQEDQMJZ80H85HANQN",
+          "isEmailNotificationEnable": true,
+          "isRegisterForShop": false,
+          "status": "USER_DETAILS_VERIFICATION",
+          "updatedAt": "2025-04-07T12:48:34.457Z",
+          "email": "sumitgod510@gmail.com",
+          "password": "Sumit@1062",
+          "address": {
+            "firstLine": "Sigma Tech Park",
+            "secondLine": "Bangalore",
+            "shopId": 1
+          },
+          "userName": "Sumit Kumar Godwan"
+        }
+      };
+      // await api.request(apiString: finalUrl, method: "post", payload: data);
 
       return ApiResponse.fromJson(response);
     } catch (e) {

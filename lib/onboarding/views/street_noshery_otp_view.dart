@@ -22,8 +22,9 @@ class StreetNosheryMobileVerificationView
                       final isOtpValid = await controller.validateOtp();
                       hideLoader();
                       if (isOtpValid) {
-                        // TODO: Screen loader to be added
+                        showLoader();
                         await controller.checkExistingUser();
+                        hideLoader();
                       }
                     }
                   : null,

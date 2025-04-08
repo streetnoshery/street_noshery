@@ -51,7 +51,7 @@ class OnboardingUserDetails extends GetView<StreetNosheryOnboardingController> {
               children: [
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                      const EdgeInsets.only(top: 30, bottom: 20, left: 10),
                   child: IconButton(
                     padding: const EdgeInsets.only(top: 30),
                     icon: const Icon(Icons.arrow_back, color: Colors.black),

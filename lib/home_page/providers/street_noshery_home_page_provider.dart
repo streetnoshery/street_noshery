@@ -54,7 +54,7 @@ class StreetNosheryHomeProviders {
         "state": "SUCCESS",
         "status": 200,
         "data": {
-          "shopId": 3,
+          "shopId": 1,
           "totalRating": 5,
           "ratingCount": 1,
           "averageRating": 5
@@ -70,14 +70,27 @@ class StreetNosheryHomeProviders {
   }
 
   static Future<ApiResponse> updateFoodReview(
-      {required List<num> foodIds,required int shopId, required num rating}) async {
+      {required List<num> foodIds,
+      required int shopId,
+      required num rating}) async {
     try {
       final String finalUrl =
           commonHost.url(StreetNosheryUrls.updateFoodReview);
-      final response = await api.request(
-          apiString: finalUrl,
-          method: "post",
-          payload: {"shopId": shopId, "stars": rating, "foodId": foodIds});
+      final response = {
+        "state": "SUCCESS",
+        "status": 201,
+        "data": {
+          "acknowledged": true,
+          "modifiedCount": 1,
+          "upsertedId": null,
+          "upsertedCount": 0,
+          "matchedCount": 1
+        }
+      };
+      // await api.request(
+      //     apiString: finalUrl,
+      //     method: "post",
+      //     payload: {"shopId": shopId, "stars": rating, "foodId": foodIds});
 
       return ApiResponse.fromJson(response);
     } catch (e) {
@@ -93,80 +106,45 @@ class StreetNosheryHomeProviders {
         "status": 200,
         "data": [
           {
-            "_id": "67be0757aae1dc9d6cb18c02",
-            "orderTrackId": "C8sshQFmgkiFxIWM",
+            "_id": "67f3db1e9ce2a84ed79c053c",
+            "orderTrackId": "114Pq4NMpEMRW9kX",
             "__v": 0,
-            "createdAt": "2025-02-25T18:09:27.342Z",
-            "customerId": "cust_12345",
-            "isOrderConfirmed": false,
+            "createdAt": "2025-04-07T14:03:10.901Z",
+            "customerId": "STREET_NOSHERY_Q9TQEDQMJZ80H85HANQN",
+            "isOrderConfirmed": true,
             "isOrderDelivered": true,
+            "isOrderFailed": false,
             "isOrderInProgress": false,
             "isOrderOutForDelivery": false,
             "isOrderPlaced": true,
-            "isPaymentDone": false,
+            "isPaymentDone": true,
             "isorderCancelled": false,
             "orderItems": [
               {
                 "dishName": "Paneer Butter Masala",
                 "description":
-                    "Delicious paneer cooked in a rich buttery tomato gravy.",
+                    "A rich and creamy tomato-based curry with paneer.",
                 "price": "250",
-                "rating": 4.5,
+                "rating": 4,
                 "foodId": 101
               },
               {
-                "dishName": "Veg Biryani",
+                "dishName": "Garlic Naan",
                 "description":
-                    "Aromatic basmati rice cooked with fresh vegetables and spices.",
-                "price": "200",
-                "rating": 4.7,
+                    "Soft Indian bread topped with garlic and butter.",
+                "price": "50",
+                "rating": 5,
                 "foodId": 102
               }
             ],
-            "orderPlacedAt": "2025-02-25T18:09:27.340Z",
+            "orderPlacedAt": "2025-04-07T14:03:10.900Z",
             "orderStatus": "DELIVERED",
-            "paymentStatus": "INITIATED",
+            "paymentAmount": "NaN",
+            "paymentStatus": "SUCCESS",
             "shopId": 1,
-            "updatedAt": "2025-02-25T18:14:11.891Z",
-            "orderDeliveredAt": "2025-02-25T18:14:11.890Z"
-          },
-          {
-            "_id": "67d58d9037cd7d089f53556d",
-            "orderTrackId": "C8sshQFmgkiFxIWM",
-            "__v": 0,
-            "createdAt": "2025-02-25T18:09:27.342Z",
-            "customerId": "cust_12345",
-            "isOrderConfirmed": false,
-            "isOrderDelivered": true,
-            "isOrderInProgress": false,
-            "isOrderOutForDelivery": false,
-            "isOrderPlaced": true,
-            "isPaymentDone": false,
-            "isorderCancelled": false,
-            "orderItems": [
-              {
-                "dishName": "Paneer Butter Masala",
-                "description":
-                    "Delicious paneer cooked in a rich buttery tomato gravy.",
-                "price": "250",
-                "rating": 4.5,
-                "foodId": 101
-              },
-              {
-                "dishName": "Veg Biryani",
-                "description":
-                    "Aromatic basmati rice cooked with fresh vegetables and spices.",
-                "price": "200",
-                "rating": 4.7,
-                "foodId": 102
-              }
-            ],
-            "orderPlacedAt": "2025-02-25T18:09:27.340Z",
-            "orderStatus": "DELIVERED",
-            "paymentStatus": "INITIATED",
-            "shopId": 1,
-            "updatedAt": "2025-02-25T18:14:11.891Z",
-            "orderDeliveredAt": "2025-02-25T18:14:11.890Z"
+            "updatedAt": "2025-04-07T14:20:52.765Z",
+            "orderConfirmedAt": "2025-04-07T14:16:01.199Z",
+            "orderDeliveredAt": "2025-04-07T14:20:52.764Z"
           }
         ]
       };

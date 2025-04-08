@@ -29,18 +29,18 @@ class StreetNosheryHelp extends GetView<StreetNosheryHomeController> {
               style: TextStyle(fontSize: 15, color: colors.greySecondary),
             ),
             const SizedBox(height: 20),
-            ListTile(
-              leading: Icon(Icons.phone, color: colors.darkLeafGreen),
-              title: Text('${controller.streetnosheryHelpAndSupportFirebaseModel.body?.callUs ?? "Call Us:" }+91 98765 43210'),
-              onTap: () {
-                // Implement call functionality
-              },
-            ),
+            // ListTile(
+            //   leading: Icon(Icons.phone, color: colors.darkLeafGreen),
+            //   title: Text('${controller.streetnosheryHelpAndSupportFirebaseModel.body?.callUs ?? "Call Us:" }+91 98765 43210'),
+            //   onTap: () {
+            //     // Implement call functionality
+            //   },
+            // ),
             ListTile(
               leading: Icon(Icons.email, color: colors.darkLeafGreen),
               title: const Text('support@yourapp.com'),
               onTap: () {
-                controller.sendEmail('sumitgod510@gmail.com');
+                controller.sendEmail('sumitgod510@gmail.com');  //TODO: should add shop email ID
               },
             ),
             const SizedBox(height: 20),

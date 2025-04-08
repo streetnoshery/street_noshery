@@ -95,6 +95,7 @@ class StreetNosheryMenuController extends GetxController {
 
   @override
   void onReady() async {
+    // TODO: Screen shimer loader
     await reviews();
     menuList.assignAll(homeController.recentlyBroughtFoodItems);
     tempFoodArray.assignAll(food);

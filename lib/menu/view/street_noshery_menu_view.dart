@@ -69,7 +69,7 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          padding: const EdgeInsets.only(top: 30, bottom: 20),
                           child: Row(
                             children: [
                               IconButton(

@@ -148,18 +148,18 @@ class StreetNosheryUserAddressView
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                            controller.streetNosheryAddressFirebaseModel
-                                    .savedAddress?.office
-                                    ?.toUpperCase() ??
-                                "OFFICE",
-                            style: const TextStyle(
-                                color: Colors.black54,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold)),
-                        const SizedBox(
-                          height: 5,
-                        ),
+                        // Text(
+                        //     controller.streetNosheryAddressFirebaseModel
+                        //             .savedAddress?.office
+                        //             ?.toUpperCase() ??
+                        //         "OFFICE",
+                        //     style: const TextStyle(
+                        //         color: Colors.black54,
+                        //         fontSize: 15,
+                        //         fontWeight: FontWeight.bold)),
+                        // const SizedBox(
+                        //   height: 5,
+                        // ),
                         Text("${controller.selectedAddress}",
                             style: TextStyle(
                                 color: Colors.grey.shade700, fontSize: 12)),

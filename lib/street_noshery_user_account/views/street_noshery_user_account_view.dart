@@ -144,7 +144,7 @@ class StreetNosheryUserAccountView
                         ),
                         Obx(() {
                           return Switch(
-                            value: controller.homeController.onboardingController.streetNosheryUserData.value.isEmailNotificationEnable ?? true,
+                            value: controller.homeController.streetNosheryUser.value.isEmailNotificationEnable ?? true,
                             onChanged: (value) async {
                               showLoader();
                               await controller.notification(value);

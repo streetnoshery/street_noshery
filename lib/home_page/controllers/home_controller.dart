@@ -136,6 +136,7 @@ class StreetNosheryHomeController extends GetxController {
   }
 
   Future<void> submitReviews({required BuildContext context,required num rating, String? review, required List<num> foodIds}) async {
+    await updateFoodReview(rating: rating, foodIds: foodIds);
     final colors = CommonTheme();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -148,7 +149,6 @@ class StreetNosheryHomeController extends GetxController {
     );
     boxReviewController.text = "";
     selectedStars.value = 0;
-    await updateFoodReview(rating: rating, foodIds: foodIds);
     Get.back();
     /*
     TODO: Review API

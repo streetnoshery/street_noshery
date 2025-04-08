@@ -137,7 +137,7 @@ class StreetNosheryAppReviewView
                               color: Colors.grey.shade400
                             )
                           ),
-                          child: Text(controller.streetNosheryReviewFirebasemodel.secondaryCta ?? "Cancel", style: TextStyle(color: Colors.black),),
+                          child: Text(controller.streetNosheryReviewFirebasemodel.secondaryCta ?? "Cancel", style: const TextStyle(color: Colors.black),),
                         ),
                       ),
                       InkWell(
@@ -145,6 +145,7 @@ class StreetNosheryAppReviewView
                           showLoader();
                           await controller.updateReview(controller.selectedStars.value,controller.review.value);
                           hideLoader();
+                          Get.back();
                         },
                         highlightColor: Colors.teal.shade200,
                         child: Container(
@@ -156,7 +157,7 @@ class StreetNosheryAppReviewView
                               color: Colors.grey.shade400
                             )
                           ),
-                          child: Text(controller.streetNosheryReviewFirebasemodel.primaryCta ?? "Post", style: TextStyle(color: Colors.black),),
+                          child: Text(controller.streetNosheryReviewFirebasemodel.primaryCta ?? "Post", style: const TextStyle(color: Colors.black),),
                         ),
                       )
                     ],
