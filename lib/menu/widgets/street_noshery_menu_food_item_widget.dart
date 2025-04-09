@@ -75,7 +75,7 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
                   width: 2,
                 ),
                 Text(
-                  "4",
+                  "${foodItem.rating ?? 0}",
                   style: TextStyle(fontSize: 15, color: Colors.green.shade800),
                 ),
                 const SizedBox(

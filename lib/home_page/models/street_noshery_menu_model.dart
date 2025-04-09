@@ -44,6 +44,7 @@ class MenuItem {
   final String? image; // Menu Item
   final num? foodId; // Menu Item
   final String? category; // Menu Item
+  num? ratingCount;
   num? count; // Other use for count total select same dish
 
   MenuItem({
@@ -54,7 +55,8 @@ class MenuItem {
     this.image,
     this.foodId,
     this.category,
-    this.count
+    this.count,
+    this.ratingCount
   });
 
   factory MenuItem.fromJson(Map<String, dynamic> json) {
@@ -67,6 +69,7 @@ class MenuItem {
       foodId: json['foodId'],
       category: json['category'],
       count: json['count'],
+      ratingCount: json['ratingCount']
     );
   }
 
@@ -79,7 +82,8 @@ class MenuItem {
       'image': image,
       'foodId': foodId,
       'category': category,
-      'count': count
+      'count': count,
+      'ratingCount': ratingCount
     };
   }
 }

@@ -239,9 +239,10 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                     ),
                   ),
                   Visibility(
-                    visible: !(controller
-                            .streetNosheryUser.value.isRegisterForShop ??
-                        true),
+                    visible: (controller.recentlyBroughtFoodItems.isNotEmpty &&
+                        !(controller
+                                .streetNosheryUser.value.isRegisterForShop ??
+                            true)),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Text(

@@ -49,7 +49,7 @@ class StreetNosheryCartDetailsWidget
                         children: [
                           Flexible(
                             child: Text(
-                              "$itemName",
+                              itemName,
                               style: const TextStyle(
                                   color: Colors.black, fontSize: 15),
                             ),
@@ -119,7 +119,7 @@ class StreetNosheryCartDetailsWidget
                                 width: 20,
                               ),
                               Text(
-                                "\u20B9 ${price?.toInt() ?? 0 * (count?.toInt() ?? 0)}",
+                                "\u20B9 ${(price?.toInt() ?? 0) * (count?.toInt() ?? 0)}",
                                 style: const TextStyle(color: Colors.black),
                               )
                             ],

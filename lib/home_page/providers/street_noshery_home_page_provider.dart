@@ -107,55 +107,7 @@ class StreetNosheryHomeProviders {
       final String finalUrl = commonHost.url(StreetNosheryUrls.getPastOrders);
       final response = {
         "state": "SUCCESS",
-        "status": 200,
-        "data": [
-          {
-            "_id": "67f6cb689ce2a84ed79c0d6e",
-            "orderTrackId": "vXI3OZw53DZyggN1",
-            "__v": 0,
-            "createdAt": "2025-04-09T19:32:56.601Z",
-            "customerId": "STREET_NOSHERY_Q9TQEDQMJZ80H85HANQN",
-            "isOrderConfirmed": true,
-            "isOrderDelivered": true,
-            "isOrderFailed": false,
-            "isOrderInProgress": false,
-            "isOrderOutForDelivery": true,
-            "isOrderPlaced": true,
-            "isPaymentDone": true,
-            "isorderCancelled": false,
-            "orderItems": [
-              {
-                "dishName": "Paneer Butter Masala",
-                "description":
-                    "A rich and creamy tomato-based curry with paneer.",
-                "price": "250",
-                "rating": 4,
-                "foodId": 170263,
-                "count": 1
-              },
-              {
-                "dishName": "Garlic Naan",
-                "description":
-                    "Soft Indian bread topped with garlic and butter.",
-                "price": "50",
-                "rating": 5,
-                "foodId": 639167,
-                "count": 2
-              }
-            ],
-            "orderPlacedAt": "2025-04-09T19:32:56.600Z",
-            "orderStatus": "DELIVERED",
-            "paymentAmount": "350",
-            "paymentId": "RRCNJIRUNSC_KJDCNJD",
-            "paymentStatus": "SUCCESS",
-            "razorpayOrderId": "RRCNJIRUNSC_KJDCNJD",
-            "shopId": 1,
-            "updatedAt": "2025-04-09T19:39:49.738Z",
-            "orderConfirmedAt": "2025-04-09T19:34:00.824Z",
-            "orderOutForDeliveryAt": "2025-04-09T19:38:41.928Z",
-            "orderDeliveredAt": "2025-04-09T19:39:49.736Z"
-          }
-        ]
+        "status": 200
       };
       // await api.request(
       //     apiString: finalUrl,

@@ -66,7 +66,9 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                                     end: Alignment.bottomRight,
                                   )),
                               child: Text(
-                                controller.streetNosheryProfileFireBaseModel.appbar?.help ?? "Help",
+                                controller.streetNosheryProfileFireBaseModel
+                                        .appbar?.help ??
+                                    "Help",
                                 style: const TextStyle(color: Colors.black),
                               ),
                             ),
@@ -84,7 +86,9 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                     child: Text(
                       controller.userName.value.isNotEmpty
                           ? controller.userName.value
-                          : controller.onboardingController.streetNosheryUserData.value.userName ?? "",
+                          : controller.onboardingController
+                                  .streetNosheryUserData.value.userName ??
+                              "",
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -99,7 +103,9 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                     child: Text(
                       controller.contactNumber.value.isNotEmpty
                           ? controller.contactNumber.value
-                          : controller.onboardingController.streetNosheryUserData.value.mobileNumber ?? "",
+                          : controller.onboardingController
+                                  .streetNosheryUserData.value.mobileNumber ??
+                              "",
                       style: TextStyle(
                         color: Colors.grey.shade600,
                         fontSize: 10,
@@ -117,7 +123,10 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                         Get.toNamed(Routes.editUserprofile);
                       },
                       child: Text(
-                        controller.streetNosheryProfileFireBaseModel.appbar?.editProfile?.toUpperCase() ?? "EDIT PROFILE",
+                        controller.streetNosheryProfileFireBaseModel.appbar
+                                ?.editProfile
+                                ?.toUpperCase() ??
+                            "EDIT PROFILE",
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 12,
@@ -127,6 +136,47 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                   ),
                 ),
               ],
+            ),
+          ),
+        ),
+        floatingActionButton: Visibility(
+          visible: !(controller
+                  .homeController.streetNosheryUser.value.isRegisterForShop ??
+              false),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 30),
+            child: SizedBox(
+              width: Get.width,
+              child: ElevatedButton(
+                onPressed: controller.homeController.foodCartList.isNotEmpty
+                    ? () {
+                        Get.toNamed(Routes.cart);
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  foregroundColor:
+                      controller.homeController.foodCartList.isNotEmpty
+                          ? Colors.white
+                          : Colors.black,
+                  backgroundColor:
+                      controller.homeController.foodCartList.isNotEmpty
+                          ? Colors.black
+                          : Colors.teal.shade400, // Text color
+                  elevation: 5, // Shadow depth
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 24, vertical: 12), // Padding
+                  shape: RoundedRectangleBorder(
+                    // Rounded corners
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                child: Text(
+                  controller.streetNosheryProfileFireBaseModel
+                          .primaryButtonTitle ??
+                      "Cart >",
+                  style: const TextStyle(fontSize: 16), // Text style
+                ),
+              ),
             ),
           ),
         ),
@@ -152,11 +202,15 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                         controller.streetNosheryProfileFireBaseModel.body?.accountSetting?.title ?? "My Account",
+                          controller.streetNosheryProfileFireBaseModel.body
+                                  ?.accountSetting?.title ??
+                              "My Account",
                           style: const TextStyle(color: Colors.black),
                         ),
                         Text(
-                          controller.streetNosheryProfileFireBaseModel.body?.accountSetting?.subTitle ?? "Settings",
+                          controller.streetNosheryProfileFireBaseModel.body
+                                  ?.accountSetting?.subTitle ??
+                              "Settings",
                           style: TextStyle(color: Colors.grey.shade600),
                         )
                       ],
@@ -186,11 +240,15 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                        controller.streetNosheryProfileFireBaseModel.body?.addressSetting?.title ?? "Address",
+                          controller.streetNosheryProfileFireBaseModel.body
+                                  ?.addressSetting?.title ??
+                              "Address",
                           style: const TextStyle(color: Colors.black),
                         ),
                         Text(
-                          controller.streetNosheryProfileFireBaseModel.body?.addressSetting?.subTitle ?? "Share, Edit & Add New Address",
+                          controller.streetNosheryProfileFireBaseModel.body
+                                  ?.addressSetting?.subTitle ??
+                              "Share, Edit & Add New Address",
                           style: TextStyle(color: Colors.grey.shade600),
                         )
                       ],
@@ -220,11 +278,15 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          controller.streetNosheryProfileFireBaseModel.body?.review?.title ??"Review",
+                          controller.streetNosheryProfileFireBaseModel.body
+                                  ?.review?.title ??
+                              "Review",
                           style: const TextStyle(color: Colors.black),
                         ),
                         Text(
-                          controller.streetNosheryProfileFireBaseModel.body?.review?.subTitle ?? "Share App Reviews",
+                          controller.streetNosheryProfileFireBaseModel.body
+                                  ?.review?.subTitle ??
+                              "Share App Reviews",
                           style: TextStyle(color: Colors.grey.shade600),
                         )
                       ],
@@ -240,24 +302,38 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
               height: 20,
             ),
             Visibility(
-              visible: !(controller.homeController.streetNosheryUser.value.isRegisterForShop ?? false),
+              visible: !(controller.homeController.streetNosheryUser.value
+                      .isRegisterForShop ??
+                  false),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(controller.streetNosheryProfileFireBaseModel.body?.pastOrder?.toUpperCase() ?? "PAST ORDERS",
-                    style: TextStyle(color: Colors.grey.shade600, fontSize: 15)),
+                child: Text(
+                    controller.streetNosheryProfileFireBaseModel.body?.pastOrder
+                            ?.toUpperCase() ??
+                        "PAST ORDERS",
+                    style:
+                        TextStyle(color: Colors.grey.shade600, fontSize: 15)),
               ),
             ),
             const SizedBox(
               height: 10,
             ),
             Visibility(
-                visible: (controller.homeController.recentlyBroughtFoodItems.isEmpty && !(controller.homeController.streetNosheryUser.value.isRegisterForShop ?? false)),
+                visible: (controller
+                        .homeController.recentlyBroughtFoodItems.isEmpty &&
+                    !(controller.homeController.streetNosheryUser.value
+                            .isRegisterForShop ??
+                        false)),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(controller.streetNosheryProfileFireBaseModel.body?.emptyOrderTitle ?? "Order to remove your cravings"),
+                  child: Text(controller.streetNosheryProfileFireBaseModel.body
+                          ?.emptyOrderTitle ??
+                      "Order to remove your cravings"),
                 )),
             Visibility(
-              visible: !(controller.homeController.streetNosheryUser.value.isRegisterForShop ?? false),
+              visible: !(controller.homeController.streetNosheryUser.value
+                      .isRegisterForShop ??
+                  false),
               child: Container(
                 color: Colors.grey.shade100,
                 child: ListView.separated(
@@ -282,43 +358,6 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
             ),
             const SizedBox(
               height: 20,
-            ),
-            Visibility(
-              visible: !(controller.homeController.streetNosheryUser.value.isRegisterForShop ?? false),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: SizedBox(
-                  width: Get.width,
-                  child: ElevatedButton(
-                    onPressed: controller.homeController.foodCartList.isNotEmpty
-                        ? () {
-                            Get.toNamed(Routes.cart);
-                          }
-                        : null,
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor:
-                          controller.homeController.foodCartList.isNotEmpty
-                              ? Colors.white
-                              : Colors.black,
-                      backgroundColor:
-                          controller.homeController.foodCartList.isNotEmpty
-                              ? Colors.black
-                              : Colors.teal.shade400, // Text color
-                      elevation: 5, // Shadow depth
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 12), // Padding
-                      shape: RoundedRectangleBorder(
-                        // Rounded corners
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: Text(
-                      controller.streetNosheryProfileFireBaseModel.primaryButtonTitle ?? "Cart >",
-                      style: const TextStyle(fontSize: 16), // Text style
-                    ),
-                  ),
-                ),
-              ),
             ),
             const SizedBox(
               height: 30,
@@ -348,13 +387,16 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
           Row(
             children: [
               Text(
-                 controller.getPastOrderDetails(foodList[index].orderItems ?? []).title,
+                controller
+                    .getPastOrderDetails(foodList[index].orderItems ?? [])
+                    .title,
                 style: TextStyle(color: Colors.grey.shade900, fontSize: 15),
               ),
               const SizedBox(
                 width: 10,
               ),
-              Text("${controller.getPastOrderDetails(foodList[index].orderItems ?? []).rating}",
+              Text(
+                  "${controller.getPastOrderDetails(foodList[index].orderItems ?? []).rating}",
                   style: TextStyle(color: Colors.grey.shade900, fontSize: 15)),
               const SizedBox(
                 width: 5,
@@ -366,14 +408,18 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
               ),
               const Spacer(),
               InkWell(
-                onTap: () {
-                  Get.toNamed(Routes.orderTracking, arguments: {'orderTrackId': foodList[index].orderTrackId,});
-                },
-                child: const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(">", style: TextStyle(color: Colors.black, fontSize: 20),),
-                )
-                )
+                  onTap: () {
+                    Get.toNamed(Routes.orderTracking, arguments: {
+                      'orderTrackId': foodList[index].orderTrackId,
+                    });
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                      ">",
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                  ))
               // Obx(() {
               //   return Visibility(
               //     visible: false,
@@ -414,7 +460,8 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
               Flexible(
                 child: InkWell(
                   onTap: () {
-                    controller.addAllItemsToCart(foodList[index].orderItems ?? []);
+                    controller
+                        .addAllItemsToCart(foodList[index].orderItems ?? []);
                     Get.toNamed(Routes.cart);
                   },
                   child: Container(
@@ -424,7 +471,10 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
                         border: Border.all(color: Colors.black),
                         color: Colors.white),
                     child: Text(
-                      controller.streetNosheryHomePageFirebaseModel.recentBrought?.reorder.toUpperCase() ?? "REORDER",
+                      controller.streetNosheryHomePageFirebaseModel
+                              .recentBrought?.reorder
+                              .toUpperCase() ??
+                          "REORDER",
                       style: const TextStyle(color: Colors.black, fontSize: 15),
                     ),
                   ),
@@ -436,7 +486,8 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
               Flexible(
                 child: InkWell(
                   onTap: () {
-                    List<num> foodIds = controller.foodIds(foodList[index].orderItems ?? []);
+                    List<num> foodIds =
+                        controller.foodIds(foodList[index].orderItems ?? []);
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -451,9 +502,12 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
                         border: Border.all(color: Colors.orangeAccent),
                         color: Colors.white),
                     child: Text(
-                      controller.streetNosheryHomePageFirebaseModel.recentBrought?.rate.toUpperCase() ?? "RATE ORDER",
-                      style:
-                          const TextStyle(color: Colors.orangeAccent, fontSize: 15),
+                      controller.streetNosheryHomePageFirebaseModel
+                              .recentBrought?.rate
+                              .toUpperCase() ??
+                          "RATE ORDER",
+                      style: const TextStyle(
+                          color: Colors.orangeAccent, fontSize: 15),
                     ),
                   ),
                 ),

@@ -193,43 +193,49 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      children: [
-                        Text(
-                          controller.streetNosheryMenuFirebaseStaticModel.recentBroughtTitle ?? "Recently Brought",
-                          style: const TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontSize: 18,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        const Text(
-                          "😋", // Yummy face emoji
-                          style: TextStyle(fontSize: 15),
-                        )
-                      ],
+                  Visibility(
+                    visible: controller.menuList.isNotEmpty,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        children: [
+                          Text(
+                            controller.streetNosheryMenuFirebaseStaticModel.recentBroughtTitle ?? "Recently Brought",
+                            style: const TextStyle(
+                                fontStyle: FontStyle.italic,
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          const Text(
+                            "😋", // Yummy face emoji
+                            style: TextStyle(fontSize: 15),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(
                     height: 30,
                   ),
-                  SizedBox(
-                    height: 250,
-                    child: ScrollSnapList(
-                      itemBuilder: _buildListItems,
-                      itemCount: controller.menuList.length,
-                      itemSize: 150,
-                      onItemFocus: (index) {},
-                      dynamicItemSize: true,
+                  Visibility(
+                    visible: controller.menuList.isNotEmpty,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 20.0),
+                      child: SizedBox(
+                        height: 250,
+                        child: ScrollSnapList(
+                          itemBuilder: _buildListItems,
+                          itemCount: controller.menuList.length,
+                          itemSize: 150,
+                          onItemFocus: (index) {},
+                          dynamicItemSize: true,
+                        ),
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
                   ),
                   Container(
                     color: Colors.white,
@@ -452,7 +458,7 @@ Widget _buildListItems(BuildContext context, int index) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.asset(
-                favFoodData[index].orderItems?[0].image ?? "",
+                streetNosheryMenuController.allImages.streetNosheryLogo,
                 fit: BoxFit.cover,
               ),
               const SizedBox(

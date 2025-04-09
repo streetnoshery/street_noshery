@@ -87,9 +87,7 @@ class StreetNosheryHomeController extends GetxController {
 
     if (existingItemIndex != -1) {
       // Item exists, increase the count
-      var currentItem = foodCartList[existingItemIndex];
-      foodCartList[existingItemIndex] =
-          MenuItem(count: (currentItem.count?.toInt() ?? 0) + 1);
+      foodCartList[existingItemIndex].count = (foodCartList[existingItemIndex].count ?? 0) + 1;
     } else {
       // If the item does not exist, add it with a count of 1
       foodCartList.add(MenuItem(
@@ -111,11 +109,9 @@ class StreetNosheryHomeController extends GetxController {
       (cartItem) => cartItem.dishName == itemName,
     );
 
-    if (existingItemIndex != -1) {
+    if ((foodCartList[existingItemIndex].count ?? 1) > 1) {
       // Reduce the quantity if the item exists
-      var currentItem = foodCartList[existingItemIndex];
-      foodCartList[existingItemIndex] =
-          MenuItem(count: (currentItem.count?.toInt() ?? 0) - 1);
+      foodCartList[existingItemIndex].count = (foodCartList[existingItemIndex].count ?? 0) - 1;
       } else {
         // If the count becomes 0 or less, remove the item
         foodCartList.remove(foodCartList[existingItemIndex]);

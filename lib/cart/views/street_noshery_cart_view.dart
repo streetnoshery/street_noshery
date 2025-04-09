@@ -60,7 +60,7 @@ class StreetNosheryCartView extends GetView<StreetNosheryCartController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 30, bottom: 20),
+                        padding: const EdgeInsets.only(top: 30),
                         child: IconButton(
                           icon:
                               const Icon(Icons.arrow_back, color: Colors.black),
