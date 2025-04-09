@@ -132,8 +132,7 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
                   InkWell(
                     onTap: () {
                       controller.homeController.removeFromCart(
-                          foodItem.dishName ?? "",
-                          int.tryParse(foodItem.price ?? "0") ?? 0);
+                          foodItem.dishName ?? "");
                       controller.homeController.updateCartAmount(
                           int.tryParse(foodItem.price ?? "0") ?? 0, UpdatePrice.removed);
                       controller.removeditems(foodItem.foodId);
@@ -161,10 +160,10 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
                     width: 10,
                   ),
                   Visibility(
-                    visible: (foodItem.dishCount ?? 0) > 0,
+                    visible: (foodItem.count ?? 0) > 0,
                     child: Center(
                       child: Text(
-                        "${foodItem.dishCount}",
+                        "${foodItem.count}",
                         style: const TextStyle(color: Colors.white, fontSize: 15),
                       ),
                     ),
@@ -174,11 +173,7 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
                   ),
                   InkWell(
                     onTap: () {
-                      controller.homeController.updateCart(
-                          foodItem.dishName ?? "",
-                          foodItem.price ?? "0", foodItem.foodId as num);
-                      controller.homeController.updateCartAmount(
-                          int.tryParse(foodItem.price ?? "0")?? 0, UpdatePrice.add);
+                      controller.homeController.addAllItemsToCart([foodItem]);
                       controller.updateItems(foodItem.foodId);
                       Fluttertoast.showToast(
                           msg: "${foodItem.dishName} is added to cart",

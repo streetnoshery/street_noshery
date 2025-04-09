@@ -9,7 +9,6 @@ import 'package:street_noshery/home_page/widgets/street_noshery_home_page_custom
 import 'package:street_noshery/orders/views/street_noshery_order_view.dart';
 import 'package:street_noshery/profile/views/street_noshery_profile_view.dart';
 import 'package:street_noshery/routes/app_pages.dart';
-import 'dart:io';
 
 class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
   const StreetNosheryHomePage({super.key});
@@ -19,7 +18,6 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
     final colors = CommonTheme();
     return WillPopScope(
       onWillPop: () async {
-        print("Over ride back behavior");
         return false;
       },
       child: Scaffold(

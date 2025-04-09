@@ -25,8 +25,7 @@ class BestSellerFoodItems extends StatelessWidget {
       child: InkWell(
         onDoubleTap: () {
           streetNosheryHomeController.removeFromCart(
-              favFoodData[index].dishName ?? "",
-              favFoodData[index].price as num);
+              favFoodData[index].dishName ?? "");
           streetNosheryHomeController.updateCartAmount(
               int.tryParse(favFoodData[index].price ?? "0") ?? 0, UpdatePrice.add);
           Fluttertoast.showToast(
@@ -41,11 +40,7 @@ class BestSellerFoodItems extends StatelessWidget {
               );
         },
         onTap: () {
-          streetNosheryHomeController.updateCart(
-              favFoodData[index].dishName ?? "",
-              favFoodData[index].price, favFoodData[index].foodId as num);
-          streetNosheryHomeController.updateCartAmount(
-              int.tryParse(favFoodData[index].price ?? "0") ?? 0, UpdatePrice.add);
+          streetNosheryHomeController.addAllItemsToCart([favFoodData[index]]);
           Get.toNamed(Routes.cart);
         },
         child: Card(

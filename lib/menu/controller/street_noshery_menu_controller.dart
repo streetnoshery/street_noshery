@@ -110,7 +110,7 @@ class StreetNosheryMenuController extends GetxController {
   void increaseFoodItemsNumber(num? dishId) {
     for (var dish in tempFoodArray) {
       if (dish.foodId == dishId) {
-        dish.dishCount = (dish.dishCount ?? 0) + 1; // Increase the dishCount
+        dish.count = (dish.count ?? 0) + 1; // Increase the dishCount
         break; // Exit loop once the match is found
       }
     }
@@ -119,7 +119,7 @@ class StreetNosheryMenuController extends GetxController {
   void removeFoodItemsNumber(num? dishId) {
     for (var dish in tempFoodArray) {
       if (dish.foodId == dishId) {
-        dish.dishCount = (dish.dishCount ?? 0) - 1; // Increase the dishCount
+        dish.count = (dish.count ?? 0) - 1; // Increase the dishCount
         break; // Exit loop once the match is found
       }
     }
@@ -128,7 +128,7 @@ class StreetNosheryMenuController extends GetxController {
   void increaseDrinkItemsNumber(num? dishId) {
     for (var dish in tempDrinks) {
       if (dish.foodId == dishId) {
-        dish.dishCount = (dish.dishCount ?? 0) + 1; // Increase the dishCount
+        dish.count = (dish.count ?? 0) + 1; // Increase the dishCount
         break; // Exit loop once the match is found
       }
     }
@@ -137,7 +137,7 @@ class StreetNosheryMenuController extends GetxController {
   void removeDrinkItemsNumber(num? dishId) {
     for (var dish in tempDrinks) {
       if (dish.foodId == dishId) {
-        dish.dishCount = (dish.dishCount ?? 0) - 1; // Increase the dishCount
+        dish.count = (dish.count ?? 0) - 1; // Increase the dishCount
         break; // Exit loop once the match is found
       }
     }
@@ -146,7 +146,7 @@ class StreetNosheryMenuController extends GetxController {
   void increasebreakFastItemsNumber(num? dishId) {
     for (var dish in tempBreakfast) {
       if (dish.foodId == dishId) {
-        dish.dishCount = (dish.dishCount ?? 0) + 1; // Increase the dishCount
+        dish.count = (dish.count ?? 0) + 1; // Increase the dishCount
         break; // Exit loop once the match is found
       }
     }
@@ -155,7 +155,7 @@ class StreetNosheryMenuController extends GetxController {
   void removeBreakfastItemsNumber(num? dishId) {
     for (var dish in tempBreakfast) {
       if (dish.foodId == dishId) {
-        dish.dishCount = (dish.dishCount ?? 0) - 1; // Increase the dishCount
+        dish.count = (dish.count ?? 0) - 1; // Increase the dishCount
         break; // Exit loop once the match is found
       }
     }

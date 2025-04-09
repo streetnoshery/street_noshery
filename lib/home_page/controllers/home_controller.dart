@@ -6,14 +6,14 @@ import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_help_static_data.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_home_page_static_data.model.dart';
 import 'package:street_noshery/home_page/enums/street_noshery_home_page_enums.dart';
-import 'package:street_noshery/home_page/models/favourite_food_model.dart';
 import 'package:street_noshery/home_page/models/street_noshery_menu_model.dart';
+import 'package:street_noshery/home_page/models/street_noshery_past_order_detail_model.dart';
 import 'package:street_noshery/home_page/models/street_noshery_past_orders_model.dart';
 import 'package:street_noshery/home_page/providers/street_noshery_home_page_provider.dart';
 import 'package:street_noshery/menu/enums/street_noshery_menu_enums.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
 import 'package:street_noshery/onboarding/models/street_noshery_onboarding_user_data_model.dart';
-import 'package:street_noshery/orders/models/street_noshery_order_model.dart';
+import 'package:street_noshery/orders/models/street_noshery_shop_order_model.dart';
 import 'package:street_noshery/orders/providers/street_noshery_order_provider.dart';
 import 'package:street_noshery/routes/app_pages.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -32,7 +32,8 @@ class StreetNosheryHomeController extends GetxController {
   RxInt sale = 0.obs;
   final selectedTab = TabEnum.home.obs;
 
-  RxList<Map<String, Object>> foodCartList = <Map<String, Object>>[].obs;
+  RxList<MenuItem> foodCartList = <MenuItem>[].obs;
+
   RxNum totalCartAmount = RxNum(0);
   TextEditingController boxReviewController = TextEditingController();
   final boxReview = "".obs;
@@ -78,47 +79,48 @@ class StreetNosheryHomeController extends GetxController {
     super.onReady();
   }
 
-  void updateCart(String itemName, String? itemPrice, num dishId) {
+  void updateCart(MenuItem cartData) {
     // Check if the item exists in the cart
-    var existingItem = foodCartList.firstWhere(
-      (cartItem) => cartItem['itemName'] == itemName,
-      orElse: () => {}, // Return null if not found
+    var existingItemIndex = foodCartList.indexWhere(
+      (cartItem) => cartItem.dishName == cartData.dishName,
     );
 
-    if (existingItem.isNotEmpty) {
-      // If the item exists, increase the quantity
-      int currentCount = existingItem['count'] as int? ?? 0;
-      existingItem['count'] = currentCount + 1;
+    if (existingItemIndex != -1) {
+      // Item exists, increase the count
+      var currentItem = foodCartList[existingItemIndex];
+      foodCartList[existingItemIndex] =
+          MenuItem(count: (currentItem.count?.toInt() ?? 0) + 1);
     } else {
       // If the item does not exist, add it with a count of 1
-      foodCartList.add({
-        'itemName': itemName,
-        'count': 1,
-        'price': int.tryParse(itemPrice ?? "0") ?? 0,
-        'dishId': dishId
-      });
+      foodCartList.add(MenuItem(
+        dishName: cartData.dishName,
+        description: cartData.description,
+        price: cartData.price ?? "0",
+        rating: cartData.rating,
+        image: cartData.image,
+        foodId: cartData.foodId,
+        category: cartData.category,
+        count: 1,
+      ));
     }
 
     foodCartList.refresh(); // Notify observers of the update
   }
 
-  void removeFromCart(String itemName, num itemPrice) {
-    var existingItem = foodCartList.firstWhere(
-      (cartItem) => cartItem['itemName'] == itemName,
-      orElse: () => {},
+  void removeFromCart(String itemName) {
+    var existingItemIndex = foodCartList.indexWhere(
+      (cartItem) => cartItem.dishName == itemName,
     );
 
-    if (existingItem.isNotEmpty) {
+    if (existingItemIndex != -1) {
       // Reduce the quantity if the item exists
-      int currentCount = existingItem['count'] as int? ?? 0;
-
-      if (currentCount > 1) {
-        existingItem['count'] = currentCount - 1;
+      var currentItem = foodCartList[existingItemIndex];
+      foodCartList[existingItemIndex] =
+          MenuItem(count: (currentItem.count?.toInt() ?? 0) - 1);
       } else {
         // If the count becomes 0 or less, remove the item
-        foodCartList.remove(existingItem);
+        foodCartList.remove(foodCartList[existingItemIndex]);
       }
-    }
 
     foodCartList.refresh();
   }
@@ -135,7 +137,11 @@ class StreetNosheryHomeController extends GetxController {
     }
   }
 
-  Future<void> submitReviews({required BuildContext context,required num rating, String? review, required List<num> foodIds}) async {
+  Future<void> submitReviews(
+      {required BuildContext context,
+      required num rating,
+      String? review,
+      required List<num> foodIds}) async {
     await updateFoodReview(rating: rating, foodIds: foodIds);
     final colors = CommonTheme();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -155,10 +161,14 @@ class StreetNosheryHomeController extends GetxController {
      */
   }
 
-  Future<void> updateFoodReview({required num rating, String? review, required List<num> foodIds}) async {
+  Future<void> updateFoodReview(
+      {required num rating, String? review, required List<num> foodIds}) async {
     try {
-      ApiResponse response = await StreetNosheryHomeProviders.updateFoodReview(rating: rating, foodIds: foodIds, shopId: streetNosheryUser.value.address?.shopId?.toInt() ?? 1);
-      if(response.data != null) {
+      ApiResponse response = await StreetNosheryHomeProviders.updateFoodReview(
+          rating: rating,
+          foodIds: foodIds,
+          shopId: streetNosheryUser.value.address?.shopId?.toInt() ?? 1);
+      if (response.data != null) {
         isFoodReviewUpdated.value = true;
       }
     } catch (e) {
@@ -259,14 +269,14 @@ class StreetNosheryHomeController extends GetxController {
 
   void addAllItemsToCart(List<MenuItem> menuList) {
     for (var menu in menuList) {
-      updateCart(menu.dishName ?? "", menu.price, menu.foodId as num);
+      updateCart(menu);
       updateCartAmount(int.tryParse(menu.price ?? "0") ?? 0, UpdatePrice.add);
     }
   }
 
   List<num> foodIds(List<MenuItem> menuList) {
     List<num> foodIds = [];
-    for(var menu in menuList) {
+    for (var menu in menuList) {
       foodIds.add(menu.foodId!);
     }
 

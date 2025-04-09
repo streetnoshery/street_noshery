@@ -90,32 +90,6 @@ class StreetNosheryPastOrdersModel {
       };
 }
 
-class OrderItem {
-  final String? dishName;
-  final String? description;
-  final String? price;
-  final double? rating;
-  final int? foodId;
-
-  OrderItem({this.dishName, this.description, this.price, this.rating, this.foodId});
-
-  factory OrderItem.fromJson(Map<String, dynamic> json) => OrderItem(
-        dishName: json['dishName'] as String?,
-        description: json['description'] as String?,
-        price: json['price'] as String?,
-        rating: (json['rating'] as num?)?.toDouble(),
-        foodId: json['foodId'] as int?,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'dishName': dishName,
-        'description': description,
-        'price': price,
-        'rating': rating,
-        'foodId': foodId,
-      };
-}
-
 StreetNosheryPastOrdersModel parseStreetNosheryPastOrders(String jsonString) {
   return StreetNosheryPastOrdersModel.fromJson(json.decode(jsonString));
 }

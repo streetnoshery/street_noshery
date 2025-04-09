@@ -37,15 +37,14 @@ class StreetNosheryMenu {
 }
 
 class MenuItem {
-  final String? dishName;
-  final String? description;
-  final String? price;
-  final double? rating;
-  final String? image;
-  final num? foodId;
-  final String? category;
-  num? dishCount;
-  final DateTime? dishOrderDate;
+  final String? dishName; // Menu Item
+  final String? description; // Menu Item
+  final String? price; // Menu Item
+  final double? rating; // Menu Item
+  final String? image; // Menu Item
+  final num? foodId; // Menu Item
+  final String? category; // Menu Item
+  num? count; // Other use for count total select same dish
 
   MenuItem({
     this.dishName,
@@ -55,8 +54,7 @@ class MenuItem {
     this.image,
     this.foodId,
     this.category,
-    this.dishCount,
-    this.dishOrderDate
+    this.count
   });
 
   factory MenuItem.fromJson(Map<String, dynamic> json) {
@@ -68,8 +66,7 @@ class MenuItem {
       image: json['image'],
       foodId: json['foodId'],
       category: json['category'],
-      dishCount: json['dishCount'],
-      dishOrderDate: json['dishOrderDate']
+      count: json['count'],
     );
   }
 
@@ -82,8 +79,7 @@ class MenuItem {
       'image': image,
       'foodId': foodId,
       'category': category,
-      'dishCount': dishCount,
-      'dishOrderDate': dishOrderDate
+      'count': count
     };
   }
 }

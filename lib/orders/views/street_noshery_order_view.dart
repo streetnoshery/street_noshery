@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:street_noshery/common/common_date_format.dart';
 import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
-import 'package:street_noshery/orders/models/street_noshery_order_model.dart';
+import 'package:street_noshery/orders/models/street_noshery_shop_order_model.dart';
 
 class StreetNosheryOrderView extends GetView<StreetNosheryHomeController> {
   const StreetNosheryOrderView({super.key});

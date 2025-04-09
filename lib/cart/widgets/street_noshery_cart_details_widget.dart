@@ -38,11 +38,11 @@ class StreetNosheryCartDetailsWidget
                       final cartItem =
                           controller.homeController.foodCartList[n];
                       final itemName =
-                          cartItem['itemName'] as String; // Get the dish name
+                          cartItem.dishName ?? ""; // Get the dish name
                       final count =
-                          cartItem['count'] as num; // Get the quantity
-                      final price = cartItem['price'] as num;
-                      final dishId = cartItem['dishId'];
+                          cartItem.count; // Get the quantity
+                      final price = num.tryParse(cartItem.price ?? "0");
+                      final foodId = cartItem.foodId;
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,11 +73,11 @@ class StreetNosheryCartDetailsWidget
                                       onTap: () {
                                         controller.homeController
                                             .removeFromCart(
-                                                itemName, price);
+                                                itemName);
                                         controller.homeController
-                                            .updateCartAmount(price.toInt(),
+                                            .updateCartAmount(price?.toInt() ?? 0,
                                                 UpdatePrice.removed);
-                                        controller.menuController.removeditems(dishId as num);
+                                        controller.menuController.removeditems(foodId as num);
                                       },
                                       child: const Padding(
                                         padding: EdgeInsets.all(5.0),
@@ -103,12 +103,7 @@ class StreetNosheryCartDetailsWidget
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        controller.homeController
-                                            .updateCart(itemName, price.toString(), dishId as num);
-                                        controller.homeController
-                                            .updateCartAmount(
-                                                price.toInt(), UpdatePrice.add);
-                                        controller.menuController.updateItems(dishId);
+                                        controller.homeController.addAllItemsToCart([cartItem]);
                                       },
                                       child: const Padding(
                                         padding: EdgeInsets.all(5.0),
@@ -124,7 +119,7 @@ class StreetNosheryCartDetailsWidget
                                 width: 20,
                               ),
                               Text(
-                                "\u20B9 ${price * count}",
+                                "\u20B9 ${price?.toInt() ?? 0 * (count?.toInt() ?? 0)}",
                                 style: const TextStyle(color: Colors.black),
                               )
                             ],

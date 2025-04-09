@@ -152,9 +152,7 @@ class StreetNosheryCartController extends GetxController {
     return CustomerOrderModel(
         customerId: homeController.streetNosheryUser.value.customerId ?? "",
         shopId: homeController.streetNosheryUser.value.address?.shopId ?? 1,
-        orderItems: homeController.foodCartList
-            .map((item) => OrderItemModel.fromJson(item))
-            .toList(),
+        orderItems: homeController.foodCartList,
         paymentId: paymentId.value,
         razorpayOrderId: orderId.value);
   }
