@@ -10,6 +10,7 @@ import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_cart_static_data.model.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
 import 'package:street_noshery/menu/controller/street_noshery_menu_controller.dart';
+import 'package:street_noshery/orders/models/street_noshery_order_payload_model.dart';
 import 'package:street_noshery/orders/providers/street_noshery_order_provider.dart';
 
 class StreetNosheryCartController extends GetxController {
@@ -32,6 +33,8 @@ class StreetNosheryCartController extends GetxController {
   final Razorpay _razorpay = Razorpay();
   Rx<OrderData> orderData = OrderData().obs;
   final isOrderCreated = false.obs;
+  final paymentId = "".obs;
+  final orderId = "".obs;
 
   var options = {
     'key': 'rzp_test_7RoefomgUxd2EJ',
@@ -132,24 +135,42 @@ class StreetNosheryCartController extends GetxController {
   }
 
   Future<void> createFT() async {
-    try{
-      ApiResponse response = await StreetNosheryShopOrdersProviders.orderFT();
-      if(response.data != null) {
+    try {
+      final orderPayload = getOrderPayload();
+      ApiResponse response =
+          await StreetNosheryShopOrdersProviders.orderFT(payload: orderPayload);
+      if (response.data != null) {
         orderData.value = OrderData.fromJson(response.data);
       }
-    }catch(error) {
+    } catch (error) {
+      hideLoader();
       rethrow;
     }
   }
 
+  CustomerOrderModel getOrderPayload() {
+    return CustomerOrderModel(
+        customerId: homeController.streetNosheryUser.value.customerId ?? "",
+        shopId: homeController.streetNosheryUser.value.address?.shopId ?? 1,
+        orderItems: homeController.foodCartList
+            .map((item) => OrderItemModel.fromJson(item))
+            .toList(),
+        paymentId: paymentId.value,
+        razorpayOrderId: orderId.value);
+  }
+
   Future<void> createOrder() async {
-    try{
-      ApiResponse response = await StreetNosheryShopOrdersProviders.createOrder();
-      if(response.data != null) {
+    try {
+      ApiResponse response = await StreetNosheryShopOrdersProviders.createOrder(
+          orderTrackId: orderData.value.orderTrackId,
+          customerId: homeController.streetNosheryUser.value.customerId,
+          shopId: homeController.streetNosheryUser.value.address?.shopId);
+      if (response.data != null) {
         orderData.value = OrderData.fromJson(response.data);
         isOrderCreated.value = true;
       }
-    }catch(error) {
+    } catch (error) {
+      hideLoader();
       rethrow;
     }
   }
@@ -157,6 +178,8 @@ class StreetNosheryCartController extends GetxController {
   Future<void> _handlePaymentSuccess(PaymentSuccessResponse response) async {
     // Do something when payment succeeds
     print("razorpay payment success");
+    paymentId.value = response.paymentId ?? "";
+    orderId.value = response.orderId ?? "";
     showLoader();
     await createFT();
     await createOrder();

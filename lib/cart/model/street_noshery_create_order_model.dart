@@ -36,6 +36,8 @@ class OrderData {
   final int? shopId;
   final DateTime? updatedAt;
   final DateTime? orderConfirmedAt;
+  final String? paymentId;
+  final String? razorpayOrderId;
 
   OrderData({
     this.id,
@@ -59,6 +61,8 @@ class OrderData {
     this.shopId,
     this.updatedAt,
     this.orderConfirmedAt,
+    this.paymentId,
+    this.razorpayOrderId
   });
 
   factory OrderData.fromJson(Map<String, dynamic> json) {
@@ -86,6 +90,8 @@ class OrderData {
       shopId: json['shopId'] as int?,
       updatedAt: json['updatedAt'] != null ? DateTime.tryParse(json['updatedAt']) : null,
       orderConfirmedAt: json['orderConfirmedAt'] != null ? DateTime.tryParse(json['orderConfirmedAt']) : null,
+      paymentId: json['paymentId'],
+      razorpayOrderId: json['razorpayOrderId']
     );
   }
 
@@ -106,6 +112,7 @@ class OrderItem {
   final String? price;
   final int? rating;
   final int? foodId;
+  final int? count;
 
   OrderItem({
     this.dishName,
@@ -113,6 +120,7 @@ class OrderItem {
     this.price,
     this.rating,
     this.foodId,
+    this.count
   });
 
   factory OrderItem.fromJson(Map<String, dynamic> json) {
@@ -122,6 +130,7 @@ class OrderItem {
       price: json['price'] as String?,
       rating: json['rating'] as int?,
       foodId: json['foodId'] as int?,
+      count: json['count'] as int?
     );
   }
 }
