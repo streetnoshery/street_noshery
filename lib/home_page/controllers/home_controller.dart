@@ -97,7 +97,6 @@ class StreetNosheryHomeController extends GetxController {
         description: cartData.description,
         price: cartData.price ?? "0",
         rating: cartData.rating,
-        image: cartData.image,
         foodId: cartData.foodId,
         category: cartData.category,
         count: 1,
