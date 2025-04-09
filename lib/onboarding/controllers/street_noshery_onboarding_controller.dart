@@ -205,6 +205,7 @@ class StreetNosheryOnboardingController extends GetxController {
     TODO: Error handling bottomsheet
      */
     try {
+      showLoader();
       ApiResponse response = await StreetNosheryOnboardingProviders.verifyotp(
           mobileNumber: contactNumber.value,
           objective: StreetNosheryOnboardingEnums.MOBILE_VERIFICATION,
@@ -212,6 +213,7 @@ class StreetNosheryOnboardingController extends GetxController {
       if (response.data != null) {
         isOtpVerify.value = true;
       }
+      hideLoader();
       return isOtpVerify.value;
     } catch (e) {
       hideLoader();
