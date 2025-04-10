@@ -183,6 +183,7 @@ class StreetNosheryCartController extends GetxController {
     await createOrder();
     hideLoader();
     homeController.switchToHome();
+    await homeController.getPastOrders();
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
