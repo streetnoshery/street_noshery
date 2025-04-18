@@ -30,23 +30,15 @@ class StreetNosheryCartController extends GetxController {
   StreetNosheryCartFirebaseStaticDataModel get streetNosheryFirebasemodel =>
       homeController.onboardingController.fireBaseContentHandler
           .streetNosheryCartFirebaseModel;
-  final Razorpay _razorpay = Razorpay();
+  late Razorpay _razorpay;
   Rx<OrderData> orderData = OrderData().obs;
   final isOrderCreated = false.obs;
   final paymentId = "".obs;
   final orderId = "".obs;
 
-  var options = {
-    'key': 'rzp_test_7RoefomgUxd2EJ',
-    'amount': 5,
-    'currency': "INR",
-    'name': 'Acme Corp.',
-    'description': 'Fine T-Shirt',
-    'prefill': {'contact': '8107748619', 'email': 'sumitgod510@gmail.com'}
-  };
-
   @override
   void onInit() {
+    _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
@@ -130,8 +122,20 @@ class StreetNosheryCartController extends GetxController {
     update();
   }
 
-  Future<void> placeOrder() async {
-    _razorpay.open(options);
+  void placeOrder() async {
+    try {
+      var options = {
+        'key': 'rzp_test_N2WixccVgkgsVG',
+        'amount': (homeController.totalPayment.value * 100),
+        'currency': "INR",
+        'name': 'Street Noshery',
+        'description': 'Inventory payment',
+        'prefill': {'contact': '8107748619', 'email': 'sumitgod510@gmail.com'}
+      };
+      _razorpay.open(options);
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   Future<void> createFT() async {
@@ -189,7 +193,6 @@ class StreetNosheryCartController extends GetxController {
   void _handlePaymentError(PaymentFailureResponse response) {
     // Do something when payment fails
     print("razorpay payment failed");
-    Get.back();
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {

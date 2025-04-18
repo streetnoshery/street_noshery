@@ -31,7 +31,7 @@ class StreetNosheryCartView extends GetView<StreetNosheryCartController> {
                   ? () async {
                       print('Save button pressed');
                       showLoader();
-                      await controller.placeOrder();
+                      controller.placeOrder();
                       hideLoader();
                     }
                   : null,
