@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:street_noshery/common/common_api.dart';
 import 'package:street_noshery/common/common_host.dart';
 import 'package:street_noshery/common/common_response.dart';
@@ -36,7 +38,7 @@ class StreetNosheryOnboardingProviders {
           method: "post",
           payload: {
             "mobileNumber": mobileNumber,
-            "reason": objective,
+            "reason": objective?.toString().split('.').last, // Convert enum to string,
             "otp": otp
           });
 
@@ -52,7 +54,7 @@ class StreetNosheryOnboardingProviders {
       final response = await api.request(
           apiString: finalUrl,
           method: "get",
-          queryParams: {"mobilenumber": mobileNumber});
+          queryParams: {"mobileNumber": mobileNumber});
 
       return ApiResponse.fromJson(response);
     } catch (e) {
@@ -65,7 +67,7 @@ class StreetNosheryOnboardingProviders {
     try {
       final String finalUrl = commonHost.url(StreetNosheryUrls.createUser);
       final response =
-          await api.request(apiString: finalUrl, method: "post", payload: data);
+          await api.request(apiString: finalUrl, method: "post", payload: data.toJson());
 
       return ApiResponse.fromJson(response);
     } catch (e) {

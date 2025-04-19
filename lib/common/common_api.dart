@@ -16,6 +16,7 @@ class API {
       apiUri = Uri(
         scheme: apiUri.scheme,
         host: apiUri.host,
+        port: apiUri.port,
         path: apiUri.path,
         queryParameters: queryParams,
       );
@@ -26,22 +27,25 @@ class API {
     // String encryptedPayload = payload != null ? encryption.encryptData(payload) : '';
 
     http.Response response;
+    if (payload != null && payload["shopId"] != null) {
+  print(payload["shopId"].runtimeType);
+}
     try {
       switch (method.toUpperCase()) {
         case 'GET':
-          response = await http.get(apiUri, headers: headers);
+          response = await http.get(apiUri, headers: headers).timeout(const Duration(seconds: 60));;
           break;
         case 'POST':
-          response = await http.post(apiUri, headers: headers, body: payload);
+          response = await http.post(apiUri, headers: headers, body: payload).timeout(const Duration(seconds: 60));
           break;
         case 'PUT':
-          response = await http.put(apiUri, headers: headers, body: payload);
+          response = await http.put(apiUri, headers: headers, body: payload).timeout(const Duration(seconds: 60));;
           break;
         case 'DELETE':
-          response = await http.delete(apiUri, headers: headers, body: payload);
+          response = await http.delete(apiUri, headers: headers, body: payload).timeout(const Duration(seconds: 60));;
           break;
         case 'PATCH':
-          response = await http.post(apiUri, headers: headers, body: payload);
+          response = await http.post(apiUri, headers: headers, body: payload).timeout(const Duration(seconds: 60));;
           break;
         default:
           throw Exception('Unsupported HTTP method: $method');
@@ -53,7 +57,7 @@ class API {
       return encryption.decryptResponse(response.body);
     } catch (e) {
       print("API Request Error: $e");
-      return null;
+       return null;
     }
   }
 }

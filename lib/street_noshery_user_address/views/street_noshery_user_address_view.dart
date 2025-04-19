@@ -87,7 +87,7 @@ class StreetNosheryUserAddressView
                     if (value!.contains(formattedItem)) {
                       controller.firstLine.value = item.shopAddress?.addressLine1 ?? "";
                       controller.secondLine.value = item.shopAddress?.addressLine2 ?? "";
-                      controller.shopId.value = int.tryParse(item.shopAddress?.shopId ?? "0") ?? 0;
+                      controller.shopId.value = item.shopAddress?.shopId ?? 0;
                     }
                   }
                   showLoader();

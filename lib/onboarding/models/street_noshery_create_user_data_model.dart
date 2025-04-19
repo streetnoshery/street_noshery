@@ -4,7 +4,9 @@ class StreetNosheryCreateuserDatamodel {
   String? email;
   String? password;
   String? userName;
-  StreetNosheryShopAddress? address;
+  String? firstLine;
+  String? secondLine;
+  String? shopId;
 
   StreetNosheryCreateuserDatamodel({
     this.mobileNumber,
@@ -12,14 +14,23 @@ class StreetNosheryCreateuserDatamodel {
     this.email,
     this.password,
     this.userName,
-    this.address,
+    this.firstLine, 
+    this.secondLine,
+    this.shopId
   });
-}
 
-class StreetNosheryShopAddress {
-  final String? firstLine;
-  final String? secondLine;
-  final int? shopId;
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
 
-  StreetNosheryShopAddress({this.firstLine, this.secondLine, this.shopId});
+    if (mobileNumber != null) data['mobileNumber'] = mobileNumber;
+    if (countryCode != null) data['countryCode'] = countryCode;
+    if (email != null) data['email'] = email;
+    if (password != null) data['password'] = password;
+    if (userName != null) data['userName'] = userName;
+    if (firstLine != null) data['firstLine'] = firstLine;
+    if (secondLine != null) data['secondLine'] = secondLine;
+    if (shopId != null) data['shopId'] = shopId;
+
+    return data;
+  }
 }

@@ -24,7 +24,7 @@ class StreetNosheryOnboardingController extends GetxController {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final userName = "".obs;
-  final address = StreetNosheryShopAddress().obs;
+  final address = StreetNosheryCreateuserDatamodel().obs;
   final isUserDetailsValid = false.obs;
   List<StreetNosheryShopsModelShop> get items =>
       fireBaseContentHandler.streetNosheryShopsFirebaseData;
@@ -70,7 +70,10 @@ class StreetNosheryOnboardingController extends GetxController {
     String mobileNumber =
         box.get('mobileNumber', defaultValue: 'No mobile number found');
     String customer = box.get('customerId', defaultValue: 'No customer found');
-    if (mobileNumber.isEmpty || mobileNumber == "No mobile number found" ||  customer.isEmpty || customer == "No customer found") {
+    if (mobileNumber.isEmpty ||
+        mobileNumber == "No mobile number found" ||
+        customer.isEmpty ||
+        customer == "No customer found") {
       /* TODO: 1 
         Go to form mobile number screen for login
       */
@@ -81,7 +84,7 @@ class StreetNosheryOnboardingController extends GetxController {
       final hashMobileNUmber = hashMobileNumber(contactNumber.value);
       await fireBaseContentHandler.userFirebaseData(hashMobileNUmber);
       await Future.delayed(const Duration(seconds: 2));
-      if(!isFirebaseDataChanged.value) {
+      if (!isFirebaseDataChanged.value) {
         await getUser(contactNumber.value);
       }
       await onboardingStates();
@@ -146,7 +149,7 @@ class StreetNosheryOnboardingController extends GetxController {
     isUserDetailsValid.value = false;
     nameController.text = "";
     userName.value = "";
-    address.value = StreetNosheryShopAddress();
+    address.value = StreetNosheryCreateuserDatamodel();
   }
 
   void resetMobileNumber() {
@@ -227,24 +230,32 @@ class StreetNosheryOnboardingController extends GetxController {
   }
 
   Future<void> savemobileDetails() async {
-    var data = StreetNosheryCreateuserDatamodel();
-    data.mobileNumber = contactNumber.value;
-    data.countryCode = selectedCountryCode.value;
-    await createUser(data);
-    disposeTimer();
+    try {
+      var data = StreetNosheryCreateuserDatamodel();
+      data.mobileNumber = contactNumber.value;
+      data.countryCode = selectedCountryCode.value;
+      await createUser(data);
+      disposeTimer();
+    } catch (e) {
+      throw e;
+    }
   }
 
   Future<void> saveEmailDetails() async {
     var data = StreetNosheryCreateuserDatamodel();
     data.email = emailController.text;
     data.password = passwordController.text;
+    data.mobileNumber = contactNumber.value;
     await createUser(data);
   }
 
   Future<void> saveuserDetails() async {
     var data = StreetNosheryCreateuserDatamodel();
     data.userName = userName.value;
-    data.address = address.value;
+    data.firstLine = address.value.firstLine;
+    data.secondLine = address.value.secondLine;
+    data.shopId = address.value.shopId;
+    data.mobileNumber = contactNumber.value;
     await createUser(data);
   }
 
@@ -270,7 +281,9 @@ class StreetNosheryOnboardingController extends GetxController {
         isUserRegister.value = true;
         customerId.value = streetNosheryUserData.value.customerId ?? "";
       }
-    } catch (e) {}
+    } catch (e) {
+      throw e;
+    }
   }
 
   Future<void> createUser(StreetNosheryCreateuserDatamodel data) async {
@@ -283,6 +296,7 @@ class StreetNosheryOnboardingController extends GetxController {
       }
     } catch (e) {
       hideLoader();
+      throw e;
     }
   }
 
@@ -297,6 +311,6 @@ class StreetNosheryOnboardingController extends GetxController {
   }
 
   String hashMobileNumber(String mobileNumber) {
-  return sha256.convert(utf8.encode(mobileNumber)).toString();
-}
+    return sha256.convert(utf8.encode(mobileNumber)).toString();
+  }
 }

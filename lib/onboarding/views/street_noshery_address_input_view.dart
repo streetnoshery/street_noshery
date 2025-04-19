@@ -151,10 +151,10 @@ class OnboardingUserDetails extends GetView<StreetNosheryOnboardingController> {
                       );
 
                       if (selectedAddress.shopAddress != null) {
-                        controller.address.value = StreetNosheryShopAddress(
+                        controller.address.value = StreetNosheryCreateuserDatamodel(
                           firstLine: selectedAddress.shopAddress?.addressLine1,
                           secondLine: selectedAddress.shopAddress?.addressLine2,
-                          shopId: int.parse(selectedAddress.shopAddress?.shopId ?? "0"),
+                          shopId: selectedAddress.shopAddress?.shopId.toString(),
                         );
                       }
                     },

@@ -10,7 +10,7 @@ class StreetNosheryHomeProviders {
     try {
       final String finalUrl = commonHost.url(StreetNosheryUrls.getMenu);
       final response = await api.request(
-          apiString: finalUrl, method: "get", queryParams: {"shopId": shopId});
+          apiString: finalUrl, method: "get", queryParams: {"shopId": shopId.toString()});
 
       return ApiResponse.fromJson(response);
     } catch (e) {
@@ -22,7 +22,7 @@ class StreetNosheryHomeProviders {
     try {
       final String finalUrl = commonHost.url(StreetNosheryUrls.getReview);
       final response = await api.request(
-          apiString: finalUrl, method: "get", queryParams: {"shopId": shopId});
+          apiString: finalUrl, method: "get", queryParams: {"shopId": shopId.toString()});
 
       return ApiResponse.fromJson(response);
     } catch (e) {
