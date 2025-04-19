@@ -96,7 +96,6 @@ class StreetNosheryMenuController extends GetxController {
   @override
   void onReady() async {
     // TODO: Screen shimer loader
-    await reviews();
     menuList.assignAll(homeController.recentlyBroughtFoodItems);
     tempFoodArray.assignAll(food);
     tempDrinks.assignAll(drinkS);
@@ -104,6 +103,7 @@ class StreetNosheryMenuController extends GetxController {
     getBreakfast(homeController.menu.value);
     getFood(homeController.menu.value);
     getDrinks(homeController.menu.value);
+    await reviews();
     super.onReady();
   }
 
