@@ -36,15 +36,9 @@ class StreetNosheryHomepageAppbar extends GetView<StreetNosheryHomeController>
                     color: colors.textPrimary,
                     fontWeight: FontWeight.bold),
               ),
-              InkWell(
-                highlightColor: Colors.teal.shade200,
-                onTap: () {
-                  Get.toNamed(Routes.userAddress);
-                },
-                child: Text(
-                  "${controller.streetNosheryUser.value.userName ?? controller.onboardingController.userName.value}...",
-                  style: TextStyle(color: colors.textSecondary, fontSize: 12),
-                ),
+              Text(
+                "${controller.streetNosheryUser.value.userName ?? controller.onboardingController.userName.value}...",
+                style: TextStyle(color: colors.textSecondary, fontSize: 12),
               )
             ],
           ),

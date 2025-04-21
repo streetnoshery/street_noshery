@@ -75,14 +75,14 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
                   width: 2,
                 ),
                 Text(
-                  "${foodItem.rating ?? 0}",
+                  "${double.parse(foodItem.rating?.toStringAsFixed(1) ?? "1")}",
                   style: TextStyle(fontSize: 15, color: Colors.green.shade800),
                 ),
                 const SizedBox(
                   width: 5,
                 ),
                 Text(
-                  "(50)",
+                  "(${foodItem.ratingCount})",
                   style: TextStyle(color: Colors.grey.shade800, fontSize: 15),
                 ),
               ],

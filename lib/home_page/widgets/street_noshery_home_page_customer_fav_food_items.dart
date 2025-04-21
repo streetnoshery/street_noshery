@@ -91,7 +91,7 @@ class BestSellerFoodItems extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "${favFoodData[index].rating}",
+                            "${double.parse(favFoodData[index].rating?.toStringAsFixed(1) ?? "1")}",
                             style: const TextStyle(fontSize: 15),
                           ),
                           const SizedBox(
