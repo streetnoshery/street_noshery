@@ -49,6 +49,19 @@ class StreetNosheryUserAddressView
         ),
       ),
       body: Obx(() {
+        final userAddressLine = controller.getUserAddress(
+                                firstLine: controller
+                                    .onboardingController
+                                    .streetNosheryUserData
+                                    .value
+                                    .address
+                                    ?.firstLine,
+                                secondLine: controller
+                                    .onboardingController
+                                    .streetNosheryUserData
+                                    .value
+                                    .address
+                                    ?.secondLine);
         return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,26 +80,26 @@ class StreetNosheryUserAddressView
                     .map((item) =>
                         "${item.shopAddress?.addressLine1}, ${item.shopAddress?.addressLine2}")
                     .toList(), // Convert object to string
-                dropdownDecoratorProps: const DropDownDecoratorProps(
+                dropdownDecoratorProps: DropDownDecoratorProps(
                   dropdownSearchDecoration: InputDecoration(
-                    labelText: "Search the address",
+                    labelText: userAddressLine,
                     hintText: "Choose one",
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                   ),
                 ),
-                onSaved: (newValue) async {
-                },
+                onSaved: (newValue) async {},
                 onChanged: (value) async {
                   // Find the corresponding object from the list
-                  controller.selectedAddress.value = value ?? "";
                   final items = controller.items;
                   for (var item in items) {
                     String formattedItem =
                         "${item.shopAddress?.addressLine1}, ${item.shopAddress?.addressLine2}";
 
                     if (value!.contains(formattedItem)) {
-                      controller.firstLine.value = item.shopAddress?.addressLine1 ?? "";
-                      controller.secondLine.value = item.shopAddress?.addressLine2 ?? "";
+                      controller.firstLine.value =
+                          item.shopAddress?.addressLine1 ?? "";
+                      controller.secondLine.value =
+                          item.shopAddress?.addressLine2 ?? "";
                       controller.shopId.value = item.shopAddress?.shopId ?? 0;
                     }
                   }
@@ -121,7 +134,7 @@ class StreetNosheryUserAddressView
                 height: 20,
               ),
               Visibility(
-                visible: controller.selectedAddress.isNotEmpty,
+                visible: userAddressLine.isNotEmpty,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: Text(
@@ -137,7 +150,7 @@ class StreetNosheryUserAddressView
                 height: 20,
               ),
               Visibility(
-                visible: controller.selectedAddress.isNotEmpty,
+                visible: userAddressLine.isNotEmpty,
                 child: Container(
                   color: Colors.white,
                   width: Get.width,
@@ -160,7 +173,8 @@ class StreetNosheryUserAddressView
                         // const SizedBox(
                         //   height: 5,
                         // ),
-                        Text("${controller.selectedAddress}",
+                        Text(
+                            userAddressLine,
                             style: TextStyle(
                                 color: Colors.grey.shade700, fontSize: 12)),
                         const SizedBox(

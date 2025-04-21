@@ -16,7 +16,7 @@ class StreetNosheryAddressProviders {
       final response = await api.request(
           apiString: finalUrl,
           method: "patch",
-          payload: {firstLine, secondLine, shopId, customerId});
+          payload: {"firstLine": firstLine, "secondLine": secondLine, "shopId": shopId, "customerId": customerId});
 
       return ApiResponse.fromJson(response);
     } catch (e) {

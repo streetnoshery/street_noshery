@@ -161,7 +161,7 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                                                       width: 5,
                                                     ),
                                                     Text(
-                                                      "${controller.ratings.averageRating?.toInt()}",
+                                                      "${controller.rating.value}",
                                                       style: const TextStyle(
                                                           fontSize: 15,
                                                           color: Colors.white),

@@ -12,6 +12,16 @@ class CustomerOrderModel {
     required this.shopId,
     required this.orderItems,
     required this.paymentId,
-    required this.razorpayOrderId
+    required this.razorpayOrderId,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'customerId': customerId,
+      'shopId': shopId,
+      'paymentId': paymentId,
+      'razorpayOrderId': razorpayOrderId,
+      'orderItems': orderItems.map((item) => item.toJson()).toList(),
+    };
+  }
 }

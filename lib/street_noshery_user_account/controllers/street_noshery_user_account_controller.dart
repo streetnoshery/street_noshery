@@ -11,11 +11,16 @@ class StreetnosheryUserAccountController extends GetxController {
   NotificationSettings get accountSettingFirebaseModel => homeController.onboardingController.fireBaseContentHandler.streetNosheryAccountSettingFirebaseModel;
   final isNotificationUpdated = false.obs;
 
+  @override
+  void onInit() {
+    isNotificationUpdated.value = homeController.onboardingController.streetNosheryUserData.value.isEmailNotificationEnable ?? true;
+    super.onInit();
+  }
   Future<void> notification(bool value) async {
     try {
-      ApiResponse response = await StreetNosheryUserAccountProviders.enableNotification(customerId: homeController.onboardingController.streetNosheryUserData.value.userName, isEnable: value);
+      ApiResponse response = await StreetNosheryUserAccountProviders.enableNotification(customerId: homeController.onboardingController.streetNosheryUserData.value.customerId, isEnable: value);
       if(response.data != null) {
-        isNotificationUpdated.value = true;
+        isNotificationUpdated.value = !isNotificationUpdated.value;
       }
     } catch (e) {
       hideLoader();

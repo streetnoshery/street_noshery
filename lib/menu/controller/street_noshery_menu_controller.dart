@@ -92,6 +92,7 @@ class StreetNosheryMenuController extends GetxController {
   List<MenuItem> tempBreakfast = <MenuItem>[].obs;
   StreetNosheryMenuFirebaseModel get streetNosheryMenuFirebaseStaticModel => homeController.onboardingController.fireBaseContentHandler.streetNosheryMenuFireBasemodel;
   StreetNosheryShopRating ratings = const StreetNosheryShopRating();
+  final rating = 0.obs;
 
   @override
   void onReady() async {
@@ -191,6 +192,7 @@ class StreetNosheryMenuController extends GetxController {
           shopId: homeController.streetNosheryUser.value.address?.shopId);
       if (response.data != null) {
         ratings = StreetNosheryShopRatingMapper.fromMap(response.data);
+        rating.value = ratings.averageRating?.toInt() ?? 0;
       }
     } catch (e) {
       throw e;

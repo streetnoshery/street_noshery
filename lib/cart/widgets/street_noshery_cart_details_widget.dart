@@ -43,88 +43,91 @@ class StreetNosheryCartDetailsWidget
                           cartItem.count; // Get the quantity
                       final price = num.tryParse(cartItem.price ?? "0");
                       final foodId = cartItem.foodId;
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Flexible(
-                            child: Text(
-                              itemName,
-                              style: const TextStyle(
-                                  color: Colors.black, fontSize: 15),
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                itemName,
+                                style: const TextStyle(
+                                    color: Colors.black, fontSize: 15),
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                decoration: const BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
-                                child: Row(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        controller.homeController
-                                            .removeFromCart(
-                                                itemName);
-                                        controller.homeController
-                                            .updateCartAmount(price?.toInt() ?? 0,
-                                                UpdatePrice.removed);
-                                        controller.menuController.removeditems(foodId as num);
-                                      },
-                                      child: const Padding(
-                                        padding: EdgeInsets.all(5.0),
-                                        child: Text(
-                                          "-",
-                                          style: TextStyle(color: Colors.white),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  decoration: const BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5))),
+                                  child: Row(
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          controller.homeController
+                                              .removeFromCart(
+                                                  itemName);
+                                          controller.homeController
+                                              .updateCartAmount(price?.toInt() ?? 0,
+                                                  UpdatePrice.removed);
+                                          controller.menuController.removeditems(foodId as num);
+                                        },
+                                        child: const Padding(
+                                          padding: EdgeInsets.all(5.0),
+                                          child: Text(
+                                            "-",
+                                            style: TextStyle(color: Colors.white),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                      child: Center(
-                                        child: Text("$count",
-                                            style: const TextStyle(
-                                                color: Colors.white)),
+                                      const SizedBox(
+                                        width: 5,
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        controller.homeController.addAllItemsToCart([cartItem]);
-                                      },
-                                      child: const Padding(
-                                        padding: EdgeInsets.all(5.0),
-                                        child: Text("+",
-                                            style:
-                                                TextStyle(color: Colors.white)),
+                                      SizedBox(
+                                        width: 20,
+                                        child: Center(
+                                          child: Text("$count",
+                                              style: const TextStyle(
+                                                  color: Colors.white)),
+                                        ),
                                       ),
-                                    )
-                                  ],
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          controller.homeController.addAllItemsToCart([cartItem]);
+                                        },
+                                        child: const Padding(
+                                          padding: EdgeInsets.all(5.0),
+                                          child: Text("+",
+                                              style:
+                                                  TextStyle(color: Colors.white)),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Text(
-                                "\u20B9 ${(price?.toInt() ?? 0) * (count?.toInt() ?? 0)}",
-                                style: const TextStyle(color: Colors.black),
-                              )
-                            ],
-                          )
-                        ],
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  "\u20B9 ${(price?.toInt() ?? 0) * (count?.toInt() ?? 0)}",
+                                  style: const TextStyle(color: Colors.black),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       );
                     },
                     separatorBuilder: (context, n) {

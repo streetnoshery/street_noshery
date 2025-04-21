@@ -11,7 +11,7 @@ class StreetNosheryShopOrdersProviders {
     try {
       final String finalUrl = commonHost.url(StreetNosheryUrls.createOrderFT);
       final response = await api.request(
-          apiString: finalUrl, method: "post", payload: payload);
+          apiString: finalUrl, method: "post", payload: payload?.toJson());
 
       return ApiResponse.fromJson(response);
     } catch (e) {
@@ -26,7 +26,7 @@ class StreetNosheryShopOrdersProviders {
       final response = await api.request(
           apiString: finalUrl,
           method: "post",
-          payload: {orderTrackId, customerId, shopId});
+          payload: {"orderTrackId": orderTrackId, "customerId": customerId, "shopId": shopId});
 
       return ApiResponse.fromJson(response);
     } catch (e) {
@@ -44,7 +44,7 @@ class StreetNosheryShopOrdersProviders {
       final response = await api.request(
           apiString: finalUrl,
           method: "patch",
-          payload: {orderTrackId, customerId, shopId, status});
+          payload: {"orderTrackId": orderTrackId, "customerId": customerId, "shopId": shopId, "status": status});
 
       return ApiResponse.fromJson(response);
     } catch (e) {

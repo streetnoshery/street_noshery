@@ -29,10 +29,6 @@ class StreetNosheryUserAddressController extends GetxController {
     phoneNumber.value = profileController.contactNumber.value.isNotEmpty
         ? profileController.contactNumber.value
         : onboardingController.contactNumber.value;
-    selectedAddress.value = [
-      onboardingController.streetNosheryUserData.value.address?.firstLine,
-      onboardingController.streetNosheryUserData.value.address?.secondLine
-    ].where((line) => line != null && line.isNotEmpty).join(", ");
   }
 
   Future<void> updateAddress() async {
@@ -48,5 +44,12 @@ class StreetNosheryUserAddressController extends GetxController {
       hideLoader();
       throw e;
     }
+  }
+
+  String getUserAddress({String? firstLine, String? secondLine}) {
+    return [
+       firstLine,
+       secondLine
+    ].where((line) => line != null && line.isNotEmpty).join(", ");
   }
 }
