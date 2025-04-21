@@ -244,7 +244,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                                 .streetNosheryUser.value.isRegisterForShop ??
                             true)),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                       child: Text(
                         controller.streetNosheryHomePageFirebaseModel
                                 .recentBrought?.title ??

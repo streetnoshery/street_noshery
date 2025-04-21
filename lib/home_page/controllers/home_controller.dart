@@ -25,7 +25,7 @@ class StreetNosheryHomeController extends GetxController {
   Rx<StreetNosheryMenu> menu = StreetNosheryMenu().obs;
   final bestSeller = <MenuItem>[].obs;
 
-  List<StreetNosheryPastOrdersModel> recentlyBroughtFoodItems = [];
+  var recentlyBroughtFoodItems = <StreetNosheryPastOrdersModel>[].obs;
 
   final allImages = CommonImages();
   RxString username = "Sumit".obs;
@@ -242,7 +242,7 @@ class StreetNosheryHomeController extends GetxController {
   }
 
   void assignPastOrders() {
-    recentlyBroughtFoodItems = pastOrders;
+    recentlyBroughtFoodItems.value = pastOrders;
   }
 
   PastOrderDetailsResponse getPastOrderDetails(List<MenuItem> menuList) {
