@@ -157,16 +157,17 @@ class StreetNosheryCartController extends GetxController {
         customerId: homeController.streetNosheryUser.value.customerId ?? "",
         shopId: homeController.streetNosheryUser.value.address?.shopId ?? 1,
         orderItems: homeController.foodCartList,
-        paymentId: paymentId.value,
-        razorpayOrderId: orderId.value);
+        amount: homeController.totalPayment.value);
   }
 
   Future<void> createOrder() async {
     try {
       ApiResponse response = await StreetNosheryShopOrdersProviders.createOrder(
           orderTrackId: orderData.value.orderTrackId,
-          customerId: homeController.streetNosheryUser.value.customerId,
-          shopId: homeController.streetNosheryUser.value.address?.shopId);
+          customerId: homeController.streetNosheryUser.value.customerId ?? "",
+          shopId: homeController.streetNosheryUser.value.address?.shopId ?? 1,
+          paymentId: paymentId.value,
+          razorpayOrderId: orderId.value);
       if (response.data != null) {
         orderData.value = OrderData.fromJson(response.data);
         isOrderCreated.value = true;
@@ -180,20 +181,19 @@ class StreetNosheryCartController extends GetxController {
 
   Future<void> _handlePaymentSuccess(PaymentSuccessResponse response) async {
     // Do something when payment succeeds
-    print("razorpay payment success");
     paymentId.value = response.paymentId ?? "";
     orderId.value = response.orderId ?? "";
     showLoader();
-    await createFT();
     await createOrder();
     hideLoader();
     homeController.switchToHome();
     await homeController.getPastOrders();
+    homeController.assignPastOrders();
+    homeController.foodCartList.value = [];
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
     // Do something when payment fails
-    print("razorpay payment failed");
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {

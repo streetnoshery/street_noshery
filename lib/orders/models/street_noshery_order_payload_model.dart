@@ -3,25 +3,22 @@ import 'package:street_noshery/home_page/models/street_noshery_menu_model.dart';
 class CustomerOrderModel {
   final String customerId;
   final int shopId;
-  final String paymentId;
-  final String razorpayOrderId;
   final List<MenuItem> orderItems;
+  final num amount;
 
   CustomerOrderModel({
     required this.customerId,
     required this.shopId,
     required this.orderItems,
-    required this.paymentId,
-    required this.razorpayOrderId,
+    required this.amount
   });
 
   Map<String, dynamic> toJson() {
     return {
       'customerId': customerId,
       'shopId': shopId,
-      'paymentId': paymentId,
-      'razorpayOrderId': razorpayOrderId,
       'orderItems': orderItems.map((item) => item.toJson()).toList(),
+      'amount': amount
     };
   }
 }

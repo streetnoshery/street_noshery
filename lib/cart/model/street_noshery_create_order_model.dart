@@ -1,6 +1,6 @@
 class OrderResponse {
   final String? state;
-  final int? status;
+  final num? status;
   final OrderData? data;
 
   OrderResponse({this.state, this.status, this.data});
@@ -8,7 +8,7 @@ class OrderResponse {
   factory OrderResponse.fromJson(Map<String, dynamic> json) {
     return OrderResponse(
       state: json['state'] as String?,
-      status: json['status'] as int?,
+      status: json['status'] as num?,
       data: json['data'] != null ? OrderData.fromJson(json['data']) : null,
     );
   }
@@ -17,7 +17,7 @@ class OrderResponse {
 class OrderData {
   final String? id;
   final String? orderTrackId;
-  final int? v;
+  final num? v;
   final DateTime? createdAt;
   final String? customerId;
   final bool? isOrderConfirmed;
@@ -31,9 +31,9 @@ class OrderData {
   final List<OrderItem>? orderItems;
   final DateTime? orderPlacedAt;
   final String? orderStatus;
-  final double? paymentAmount;
+  final num? paymentAmount;
   final String? paymentStatus;
-  final int? shopId;
+  final num? shopId;
   final DateTime? updatedAt;
   final DateTime? orderConfirmedAt;
   final String? paymentId;
@@ -69,7 +69,7 @@ class OrderData {
     return OrderData(
       id: json['_id'] as String?,
       orderTrackId: json['orderTrackId'] as String?,
-      v: json['__v'] as int?,
+      v: json['__v'] as num?,
       createdAt: json['createdAt'] != null ? DateTime.tryParse(json['createdAt']) : null,
       customerId: json['customerId'] as String?,
       isOrderConfirmed: json['isOrderConfirmed'] as bool?,
@@ -87,7 +87,7 @@ class OrderData {
       orderStatus: json['orderStatus'] as String?,
       paymentAmount: _parseDouble(json['paymentAmount']),
       paymentStatus: json['paymentStatus'] as String?,
-      shopId: json['shopId'] as int?,
+      shopId: json['shopId'] as num?,
       updatedAt: json['updatedAt'] != null ? DateTime.tryParse(json['updatedAt']) : null,
       orderConfirmedAt: json['orderConfirmedAt'] != null ? DateTime.tryParse(json['orderConfirmedAt']) : null,
       paymentId: json['paymentId'],
@@ -110,9 +110,9 @@ class OrderItem {
   final String? dishName;
   final String? description;
   final String? price;
-  final int? rating;
-  final int? foodId;
-  final int? count;
+  final num? rating;
+  final num? foodId;
+  final num? count;
 
   OrderItem({
     this.dishName,
@@ -128,9 +128,9 @@ class OrderItem {
       dishName: json['dishName'] as String?,
       description: json['description'] as String?,
       price: json['price'] as String?,
-      rating: json['rating'] as int?,
-      foodId: json['foodId'] as int?,
-      count: json['count'] as int?
+      rating: json['rating'] as num?,
+      foodId: json['foodId'] as num?,
+      count: json['count'] as num?
     );
   }
 }

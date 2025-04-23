@@ -31,8 +31,9 @@ class StreetNosheryCartView extends GetView<StreetNosheryCartController> {
                   ? () async {
                       print('Save button pressed');
                       showLoader();
-                      controller.placeOrder();
+                      await controller.createFT();
                       hideLoader();
+                      controller.placeOrder();
                     }
                   : null,
               child: Text(controller.streetNosheryFirebasemodel.primaryCTA ?? 'Pay'),

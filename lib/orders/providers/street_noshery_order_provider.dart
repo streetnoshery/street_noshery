@@ -20,13 +20,13 @@ class StreetNosheryShopOrdersProviders {
   }
 
   static Future<ApiResponse> createOrder(
-      {String? orderTrackId, String? customerId, num? shopId}) async {
+      {String? orderTrackId, required String customerId, required num shopId, required String paymentId, required String razorpayOrderId}) async {
     try {
       final String finalUrl = commonHost.url(StreetNosheryUrls.createOrder);
       final response = await api.request(
           apiString: finalUrl,
           method: "post",
-          payload: {"orderTrackId": orderTrackId, "customerId": customerId, "shopId": shopId});
+          payload: {"orderTrackId": orderTrackId, "customerId": customerId, "shopId": shopId, "paymentId":paymentId , "razorpayOrderId":razorpayOrderId });
 
       return ApiResponse.fromJson(response);
     } catch (e) {
