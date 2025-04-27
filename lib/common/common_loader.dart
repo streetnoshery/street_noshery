@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:street_noshery/common/common_images.dart';
-import 'package:street_noshery/main.dart';
 
 class FullPageLoader extends StatelessWidget {
   const FullPageLoader({super.key});
@@ -27,13 +27,13 @@ class _CustomFoodLoaderState extends State<CustomFoodLoader>
   void initState() {
     super.initState();
 
-    // Bounce Animation
+    // Bounce Animation Setup
     _bounceController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
       lowerBound: 0.0,
       upperBound: 1.0,
-    )..repeat(reverse: true); // Moves up and down
+    )..repeat(reverse: true);
 
     _bounceAnimation = Tween<double>(begin: 0, end: 20).animate(
       CurvedAnimation(parent: _bounceController, curve: Curves.easeInOut),
@@ -48,37 +48,25 @@ class _CustomFoodLoaderState extends State<CustomFoodLoader>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.withOpacity(0.3),
-      body: Center(
+    return Material(
+      color: Colors.grey.withOpacity(0.3), // Semi-transparent background
+      child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // Centers content
+          mainAxisSize: MainAxisSize.min,
           children: [
-            // Animated Image
             AnimatedBuilder(
               animation: _bounceAnimation,
               builder: (context, child) {
                 return Transform.translate(
-                  offset:
-                      Offset(0, -_bounceAnimation.value), // Moves up and down
+                  offset: Offset(0, -_bounceAnimation.value),
                   child: Image.asset(
-                    CommonImages().streetNosheryLogo, // Your food-themed image
+                    CommonImages().streetNosheryLogo,
                     width: 80,
                     height: 80,
                   ),
                 );
               },
             ),
-            const SizedBox(height: 20), // Space between the image and the text
-            // // Text under the image
-            // const Text(
-            //   "Cooking your order...",
-            //   style: TextStyle(
-            //     fontSize: 18,
-            //     fontWeight: FontWeight.bold,
-            //     color: Colors.black, // Change color as needed
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -86,24 +74,20 @@ class _CustomFoodLoaderState extends State<CustomFoodLoader>
   }
 }
 
-// Function to show the loader
+// ✅ Show Loader Function (without GlobalKey issues)
 void showLoader() {
-  final context = navigatorKey.currentContext;
-  if (context == null || !context.mounted) return;
-
-  navigatorKey.currentState?.push(
-    PageRouteBuilder(
-      opaque: false,
-      pageBuilder: (_, __, ___) => const FullPageLoader(),
-    ),
-  );
+  if (Get.isDialogOpen == false) {
+    Get.dialog(
+      const FullPageLoader(),
+      barrierDismissible: false, // Prevent accidental dismiss
+      transitionDuration: const Duration(milliseconds: 300),
+    );
+  }
 }
 
+// ✅ Hide Loader Function (safe pop)
 void hideLoader() {
-  final context = navigatorKey.currentContext;
-  if (context == null || !context.mounted) return;
-
-  if (navigatorKey.currentState?.canPop() ?? false) {
-    navigatorKey.currentState?.pop();
+  if (Get.isDialogOpen == true) {
+    Get.back();
   }
 }

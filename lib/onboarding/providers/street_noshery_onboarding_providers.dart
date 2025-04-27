@@ -1,16 +1,29 @@
-import 'dart:convert';
-
 import 'package:street_noshery/common/common_api.dart';
+import 'package:street_noshery/common/common_exception_mapper.dart';
 import 'package:street_noshery/common/common_host.dart';
 import 'package:street_noshery/common/common_response.dart';
 import 'package:street_noshery/onboarding/enums/street_noshery_onboarding_status_enums.dart';
 import 'package:street_noshery/onboarding/models/street_noshery_create_user_data_model.dart';
+import 'package:street_noshery/onboarding/models/street_noshery_onboarding_user_data_model.dart';
+import 'package:street_noshery/onboarding/models/street_noshery_otp_model.dart';
 
 final api = API();
 final commonHost = StreetNosheryCommonHost();
 
 class StreetNosheryOnboardingProviders {
-  static Future<ApiResponse> generateOtp(
+  // Private static variable to hold the singleton instance
+  static final StreetNosheryOnboardingProviders _instance =
+      StreetNosheryOnboardingProviders._internal();
+
+  // Private constructor to prevent instantiation
+  StreetNosheryOnboardingProviders._internal();
+
+  // Public factory constructor to return the singleton instance
+  factory StreetNosheryOnboardingProviders() {
+    return _instance;
+  }
+  
+  Future<RepoResponse> generateOtp(
       {String? mobileNumber, StreetNosheryOnboardingEnums? objective}) async {
     try {
       final String finalUrl = commonHost.url(StreetNosheryUrls.generateOtp);
@@ -21,26 +34,29 @@ class StreetNosheryOnboardingProviders {
             objective?.toString().split('.').last // Convert enum to string
       });
 
-      return ApiResponse.fromJson(response);
+      return response is ApiException
+          ? RepoResponse<ApiException>(error: response, data: null)
+          : RepoResponse<StreetNosheryOtpResponse>(
+              data: StreetNosheryOtpResponse.fromJson(
+                  response == '' ? {} : response));
     } catch (e) {
       rethrow;
     }
   }
 
-  static Future<ApiResponse> verifyotp(
+  Future<ApiResponse> verifyotp(
       {String? mobileNumber,
       StreetNosheryOnboardingEnums? objective,
       String? otp}) async {
     try {
       final String finalUrl = commonHost.url(StreetNosheryUrls.verifyOtp);
-      final response = await api.request(
-          apiString: finalUrl,
-          method: "post",
-          payload: {
-            "mobileNumber": mobileNumber,
-            "reason": objective?.toString().split('.').last, // Convert enum to string,
-            "otp": otp
-          });
+      final response =
+          await api.request(apiString: finalUrl, method: "post", payload: {
+        "mobileNumber": mobileNumber,
+        "reason":
+            objective?.toString().split('.').last, // Convert enum to string,
+        "otp": otp
+      });
 
       return ApiResponse.fromJson(response);
     } catch (e) {
@@ -48,26 +64,29 @@ class StreetNosheryOnboardingProviders {
     }
   }
 
-  static Future<ApiResponse> getUser(String mobileNumber) async {
+  Future<RepoResponse> getUser(String mobileNumber) async {
     try {
       final String finalUrl = commonHost.url(StreetNosheryUrls.getUser);
-      final response = await api.request(
+      var response = await api.request(
           apiString: finalUrl,
           method: "get",
           queryParams: {"mobileNumber": mobileNumber});
 
-      return ApiResponse.fromJson(response);
+      return response is ApiException
+          ? RepoResponse<ApiException>(error: response, data: null)
+          : RepoResponse<StreetNosheryUser>(
+              data: StreetNosheryUser.fromJson(response == '' ? {} : response));
     } catch (e) {
       rethrow;
     }
   }
 
-  static Future<ApiResponse> createUser(
+  Future<ApiResponse> createUser(
       StreetNosheryCreateuserDatamodel data) async {
     try {
       final String finalUrl = commonHost.url(StreetNosheryUrls.createUser);
-      final response =
-          await api.request(apiString: finalUrl, method: "post", payload: data.toJson());
+      final response = await api.request(
+          apiString: finalUrl, method: "post", payload: data.toJson());
 
       return ApiResponse.fromJson(response);
     } catch (e) {

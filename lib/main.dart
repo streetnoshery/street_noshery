@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,6 @@ import 'package:street_noshery/firebase_options.dart';
 import 'package:street_noshery/onboarding/views/street_noshery_first_view.dart';
 import 'package:street_noshery/routes/app_pages.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +16,9 @@ void main() async {
   );
   await Hive.initFlutter(); // Initializes Hive with Flutter bindings
   await Hive.openBox('myBox'); // Open a box named 'myBox'
+  log("main function running: log");
+  debugPrint("main function running: debug");
+  print("main function running: print");
   runApp(const MyApp());
 }
 
@@ -24,7 +28,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      navigatorKey: navigatorKey,
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -48,6 +51,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    print("_MyHomePageState class running: print");
     return const StreetNosheryHeartbeatScreen();
   }
 }

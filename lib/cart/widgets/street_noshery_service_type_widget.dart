@@ -100,7 +100,7 @@ void _showBottomSheet(BuildContext context) {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Get.back();
                 },
                 child: const Text(
                   'Done',

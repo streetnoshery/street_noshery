@@ -8,6 +8,7 @@ import 'package:street_noshery/menu/view/street_noshery_menu_view.dart';
 import 'package:street_noshery/onboarding/bindings/street_noshery_onboarding_binding.dart';
 import 'package:street_noshery/onboarding/views/street_noshery_address_input_view.dart';
 import 'package:street_noshery/onboarding/views/street_noshery_email_view.dart';
+import 'package:street_noshery/onboarding/views/street_noshery_first_view.dart';
 import 'package:street_noshery/onboarding/views/street_noshery_mobile_number_view.dart';
 import 'package:street_noshery/onboarding/views/street_noshery_otp_view.dart';
 import 'package:street_noshery/order_tracking/binding/street_noshery_order_tracking_binding.dart';
@@ -28,6 +29,10 @@ class Pages {
   Pages._();
 
   static final routes = [
+    GetPage(
+      name: _Pages.streetNosheryBeforehome, 
+      page: () => const StreetNosheryHeartbeatScreen(),
+      binding: StreetNosheryOnboardingbinding()),
     GetPage(
       name: _Pages.home, 
       page: () => const StreetNosheryHomePage(),

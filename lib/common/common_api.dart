@@ -1,4 +1,8 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:http/http.dart' as http;
+import 'package:street_noshery/common/common_exception_mapper.dart';
 import 'common_encryption_decryption.dart';
 import 'dart:convert';
 
@@ -43,7 +47,7 @@ class API {
         case 'POST':
           response = await http
               .post(apiUri, headers: headers, body: jsonEncode(payload))
-              .timeout(const Duration(seconds: 60));
+              .timeout(const Duration(seconds: 10));
           break;
         case 'PUT':
           response = await http
@@ -70,10 +74,39 @@ class API {
       print("Response Status Code: ${response.statusCode}");
       print("Response Body: ${response.body}");
 
-      return encryption.decryptResponse(response.body);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return encryption.decryptResponse(response.body);
+      } else {
+        return {
+          "error": "RequestFailed",
+          "statusCode": response.statusCode,
+          "message": response.reasonPhrase ?? "Request failed",
+        };
+      }
+    } on TimeoutException catch (error) {
+      return ApiException(
+        message: "Timeout",
+        errorCode: "400",
+        errorReason: error
+      );
+    } on SocketException catch (_) {
+      return ApiException(
+        message: "Socket hangup",
+        errorCode: "400",
+        errorReason: _
+      );
+    } on FormatException catch (_) {
+      return ApiException(
+        message: "BadFormatResponse",
+        errorCode: "400",
+        errorReason: _
+      );
     } catch (e) {
       print("API Request Error: $e");
-      return null;
+      return ApiException(
+        message: "Something went wrong",
+        errorReason: e
+      );
     }
   }
 }

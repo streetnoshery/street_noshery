@@ -7,9 +7,11 @@ class StreetNosheryHeartbeatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("StreetNosheryHeartbeatScreen class before onboarding controller running: print");
     Get.isRegistered<StreetNosheryOnboardingController>()
             ? Get.find<StreetNosheryOnboardingController>()
             : Get.put(StreetNosheryOnboardingController());
+    print("StreetNosheryHeartbeatScreen class after onboarding controller running: print");
     return Scaffold(
       body: Center(
         child: TweenAnimationBuilder(

@@ -37,7 +37,6 @@ class StreetNosheryOnboardingController extends GetxController {
   final isEmailValid = true.obs;
   final isPasswordValid = true.obs;
   final isPasswordEmpty = true.obs;
-  final formKey = GlobalKey<FormState>();
   final box = Hive.box('myBox'); // Access the Hive box
 
   final showResendButton = false.obs;
@@ -53,6 +52,7 @@ class StreetNosheryOnboardingController extends GetxController {
   final isFirebaseDataChanged = false.obs;
 
   Rx<StreetNosheryUser> streetNosheryUserData = StreetNosheryUser().obs;
+  StreetNosheryOnboardingProviders onboardingProvider = StreetNosheryOnboardingProviders();
 
   @override
   void onInit() async {
@@ -171,7 +171,7 @@ class StreetNosheryOnboardingController extends GetxController {
      */
     try {
       showLoader();
-      ApiResponse response = await StreetNosheryOnboardingProviders.generateOtp(
+      RepoResponse response = await onboardingProvider.generateOtp(
           mobileNumber: contactNumber.value,
           objective: StreetNosheryOnboardingEnums.MOBILE_VERIFICATION);
       if (response.data != null) {
@@ -209,7 +209,7 @@ class StreetNosheryOnboardingController extends GetxController {
      */
     try {
       showLoader();
-      ApiResponse response = await StreetNosheryOnboardingProviders.verifyotp(
+      ApiResponse response = await onboardingProvider.verifyotp(
           mobileNumber: contactNumber.value,
           objective: StreetNosheryOnboardingEnums.MOBILE_VERIFICATION,
           otp: otp.value);
@@ -272,12 +272,11 @@ class StreetNosheryOnboardingController extends GetxController {
   }
 
   Future<void> getUser(String mobileNumber) async {
-    // TODO: error handling
     try {
-      ApiResponse response =
-          await StreetNosheryOnboardingProviders.getUser(mobileNumber);
+      RepoResponse response =
+          await onboardingProvider.getUser(mobileNumber);
       if (response.data != null) {
-        streetNosheryUserData.value = StreetNosheryUser.fromJson(response.data);
+        streetNosheryUserData.value = response.data;
         isUserRegister.value = true;
         customerId.value = streetNosheryUserData.value.customerId ?? "";
       }
@@ -289,7 +288,7 @@ class StreetNosheryOnboardingController extends GetxController {
   Future<void> createUser(StreetNosheryCreateuserDatamodel data) async {
     try {
       ApiResponse response =
-          await StreetNosheryOnboardingProviders.createUser(data);
+          await onboardingProvider.createUser(data);
       if (response.data != null) {
         streetNosheryUserData.value = StreetNosheryUser.fromJson(response.data);
         customerId.value = streetNosheryUserData.value.customerId ?? "";

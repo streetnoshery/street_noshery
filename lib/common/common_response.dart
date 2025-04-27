@@ -1,3 +1,5 @@
+import 'package:street_noshery/common/common_exception_mapper.dart';
+
 class ApiResponse {
   final String state;
   final int status;
@@ -20,4 +22,11 @@ class ApiResponse {
       'data': data,
     };
   }
+}
+
+class RepoResponse<T> {
+  final ApiException? error;
+  final T? data;
+
+  RepoResponse({this.error, this.data});
 }

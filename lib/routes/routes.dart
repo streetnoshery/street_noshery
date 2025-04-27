@@ -2,6 +2,8 @@ part of 'app_pages.dart';
 
 class Routes {
   Routes._();
+
+  static const blank = _Pages.streetNosheryBeforehome;
   static const home = _Pages.home;
   static const mobileView = _Pages.mobileView;
   static const mobileVerificationOTPScreen = _Pages.mobileVerificationOTPScreen;
@@ -22,6 +24,7 @@ class Routes {
 abstract class _Pages {
   _Pages._();
 
+  static const streetNosheryBeforehome = "/";
   static const home = "/street-noshery-home";
   static const mobileView = "/street-noshery-mobile-view";
   static const mobileVerificationOTPScreen = "/street-noshery-mobile-verification";

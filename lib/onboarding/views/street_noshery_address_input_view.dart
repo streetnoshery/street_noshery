@@ -31,6 +31,10 @@ class OnboardingUserDetails extends GetView<StreetNosheryOnboardingController> {
               backgroundColor: controller.isUserDetailsValid.value
                   ? Colors.black
                   : Colors.grey.shade400,
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(30), // <-- adds round borders
+              ),
               child: Text(
                 "Continue",
                 style: TextStyle(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class StreetNosheryCommonErrorBottomsheet extends StatelessWidget {
   const StreetNosheryCommonErrorBottomsheet({super.key});
@@ -20,7 +21,7 @@ class StreetNosheryCommonErrorBottomsheet extends StatelessWidget {
         const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () {
-            Navigator.pop(context); // Close the bottom sheet
+            Get.back();
           },
           child: const Text('Close'),
         ),
