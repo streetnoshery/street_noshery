@@ -166,9 +166,6 @@ class StreetNosheryOnboardingController extends GetxController {
 
   Future<bool> sendOTP(BuildContext context) async {
     startOtpTimer();
-    /* 
-    TODO: Error handling bottomsheet
-     */
     try {
       showLoader();
       RepoResponse response = await onboardingProvider.generateOtp(

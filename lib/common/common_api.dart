@@ -42,29 +42,29 @@ class API {
         case 'GET':
           response = await http
               .get(apiUri, headers: headers)
-              .timeout(const Duration(seconds: 60));
+              .timeout(const Duration(seconds: 5));
           break;
         case 'POST':
           response = await http
               .post(apiUri, headers: headers, body: jsonEncode(payload))
-              .timeout(const Duration(seconds: 10));
+              .timeout(const Duration(seconds: 5));
           break;
         case 'PUT':
           response = await http
               .put(apiUri, headers: headers, body: jsonEncode(payload))
-              .timeout(const Duration(seconds: 60));
+              .timeout(const Duration(seconds: 5));
           ;
           break;
         case 'DELETE':
           response = await http
               .delete(apiUri, headers: headers, body: jsonEncode(payload))
-              .timeout(const Duration(seconds: 60));
+              .timeout(const Duration(seconds: 5));
           ;
           break;
         case 'PATCH':
           response = await http
               .patch(apiUri, headers: headers, body: jsonEncode(payload))
-              .timeout(const Duration(seconds: 60));
+              .timeout(const Duration(seconds: 5));
           ;
           break;
         default:

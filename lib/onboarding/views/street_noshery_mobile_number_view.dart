@@ -1,6 +1,8 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_bottomsheet.dart';
+import 'package:street_noshery/home_page/widgets/street_noshery_common_failure_bottomsheet.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
 import 'package:street_noshery/routes/app_pages.dart';
 
@@ -31,6 +33,9 @@ class StreetNosheryMobileNumberView
                         final isOtpSent = await controller.sendOTP(context);
                         if (isOtpSent) {
                           Get.toNamed(Routes.mobileVerificationOTPScreen);
+                        }
+                        else{
+                          StreetNosheryCommonBottomSheet.show(child: const StreetNosheryCommonErrorBottomsheet(errorTitle: "Otp failed",));
                         }
                       }
                     : null,

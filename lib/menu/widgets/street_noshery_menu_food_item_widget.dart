@@ -92,9 +92,8 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
             ),
             InkWell(
               onTap: () {
-                print("View more");
-                StreetNosheryCommonBottomsheet().showCustomBottomSheet(
-                    context, const StreetNosheryMenuMoreDetails());
+                StreetNosheryCommonBottomSheet.show(
+                    child:  const StreetNosheryMenuMoreDetails());
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
