@@ -2,11 +2,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:street_noshery/common/common_bottomsheet.dart';
 import 'package:street_noshery/common/common_images.dart';
 import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_response.dart';
 import 'package:street_noshery/firebase/firebase_helper.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_shops_firebase_model.dart';
+import 'package:street_noshery/home_page/widgets/street_noshery_common_failure_bottomsheet.dart';
 import 'package:street_noshery/onboarding/enums/street_noshery_onboarding_status_enums.dart';
 import 'package:street_noshery/onboarding/models/street_noshery_create_user_data_model.dart';
 import 'package:street_noshery/onboarding/models/street_noshery_onboarding_user_data_model.dart';
@@ -52,7 +54,8 @@ class StreetNosheryOnboardingController extends GetxController {
   final isFirebaseDataChanged = false.obs;
 
   Rx<StreetNosheryUser> streetNosheryUserData = StreetNosheryUser().obs;
-  StreetNosheryOnboardingProviders onboardingProvider = StreetNosheryOnboardingProviders();
+  StreetNosheryOnboardingProviders onboardingProvider =
+      StreetNosheryOnboardingProviders();
 
   @override
   void onInit() async {
@@ -231,26 +234,55 @@ class StreetNosheryOnboardingController extends GetxController {
       await createUser(data);
       disposeTimer();
     } catch (e) {
-      throw e;
+      StreetNosheryCommonBottomSheet.show(
+        child: const StreetNosheryCommonErrorBottomsheet(
+          errorTitle: "Something Went Wrong",
+          errorSubtitle:
+              "We're experiencing some issues at the moment. Please try again later.",
+        ),
+      );
+      rethrow;
     }
   }
 
   Future<void> saveEmailDetails() async {
-    var data = StreetNosheryCreateuserDatamodel();
-    data.email = emailController.text;
-    data.password = passwordController.text;
-    data.mobileNumber = contactNumber.value;
-    await createUser(data);
+    try {
+      var data = StreetNosheryCreateuserDatamodel();
+      data.email = emailController.text;
+      data.password = passwordController.text;
+      data.mobileNumber = contactNumber.value;
+      await createUser(data);
+    } catch (e) {
+      StreetNosheryCommonBottomSheet.show(
+        child: const StreetNosheryCommonErrorBottomsheet(
+          errorTitle: "Something Went Wrong",
+          errorSubtitle:
+              "We're experiencing some issues at the moment. Please try again later.",
+        ),
+      );
+      rethrow;
+    }
   }
 
   Future<void> saveuserDetails() async {
-    var data = StreetNosheryCreateuserDatamodel();
-    data.userName = userName.value;
-    data.firstLine = address.value.firstLine;
-    data.secondLine = address.value.secondLine;
-    data.shopId = address.value.shopId;
-    data.mobileNumber = contactNumber.value;
-    await createUser(data);
+    try {
+      var data = StreetNosheryCreateuserDatamodel();
+      data.userName = userName.value;
+      data.firstLine = address.value.firstLine;
+      data.secondLine = address.value.secondLine;
+      data.shopId = address.value.shopId;
+      data.mobileNumber = contactNumber.value;
+      await createUser(data);
+    } catch (e) {
+      StreetNosheryCommonBottomSheet.show(
+        child: const StreetNosheryCommonErrorBottomsheet(
+          errorTitle: "Something Went Wrong",
+          errorSubtitle:
+              "We're experiencing some issues at the moment. Please try again later.",
+        ),
+      );
+      rethrow;
+    }
   }
 
   Future<void> onboardingStates() async {
@@ -267,10 +299,9 @@ class StreetNosheryOnboardingController extends GetxController {
 
   Future<void> getUser(String mobileNumber) async {
     try {
-      RepoResponse response =
-          await onboardingProvider.getUser(mobileNumber);
+      RepoResponse response = await onboardingProvider.getUser(mobileNumber);
       if (response.data != null) {
-        streetNosheryUserData.value = response.data;
+        streetNosheryUserData.value = StreetNosheryUser.fromJson(response.data);
         isUserRegister.value = true;
         customerId.value = streetNosheryUserData.value.customerId ?? "";
       }
@@ -281,25 +312,29 @@ class StreetNosheryOnboardingController extends GetxController {
 
   Future<void> createUser(StreetNosheryCreateuserDatamodel data) async {
     try {
-      RepoResponse response =
-          await onboardingProvider.createUser(data);
+      RepoResponse response = await onboardingProvider.createUser(data);
       if (response.data != null) {
-        streetNosheryUserData.value = StreetNosheryUser.fromJson(response.data);
+        streetNosheryUserData.value = response.data!.data;
         customerId.value = streetNosheryUserData.value.customerId ?? "";
       }
     } catch (e) {
-
+      print(e);
+      throw e;
     }
   }
 
   Future<void> checkExistingUser() async {
-    await getUser(contactNumber.value);
-    await onboardingStates();
-    if (!isUserRegister.value) {
-      await savemobileDetails();
-      Get.toNamed(Routes.emailPassword);
+    try {
+      await getUser(contactNumber.value);
+      await onboardingStates();
+      if (!isUserRegister.value) {
+        await savemobileDetails();
+        Get.toNamed(Routes.emailPassword);
+      }
+      storeMobileNumberInHive();
+    } catch (e) {
+      rethrow;
     }
-    storeMobileNumberInHive();
   }
 
   String hashMobileNumber(String mobileNumber) {

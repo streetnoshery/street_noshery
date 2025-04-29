@@ -52,10 +52,10 @@ class StreetNosheryOnboardingProviders {
       final String finalUrl = commonHost.url(StreetNosheryUrls.verifyOtp);
       final response =
           await api.request(apiString: finalUrl, method: "post", payload: {
-        "mobileNumber": mobileNumber,
-        "reason":
-            objective?.toString().split('.').last, // Convert enum to string,
-        "otp": otp
+      "mobileNumber": mobileNumber,
+      "reason":
+      objective?.toString().split('.').last, // Convert enum to string,
+      "otp": otp
       });
 
       return response is ApiException
@@ -72,14 +72,14 @@ class StreetNosheryOnboardingProviders {
     try {
       final String finalUrl = commonHost.url(StreetNosheryUrls.getUser);
       var response = await api.request(
-          apiString: finalUrl,
-          method: "get",
-          queryParams: {"mobileNumber": mobileNumber});
+      apiString: finalUrl,
+      method: "get",
+      queryParams: {"mobileNumber": mobileNumber});
 
       return response is ApiException
           ? RepoResponse<ApiException>(error: response, data: null)
           : RepoResponse<StreetNosheryUser>(
-              data: StreetNosheryUser.fromJson(response == '' ? {} : response));
+          data: StreetNosheryUser.fromJson(response == '' ? {} : response["data"] as Map<String, dynamic>));
     } catch (e) {
       rethrow;
     }
@@ -95,7 +95,7 @@ class StreetNosheryOnboardingProviders {
       return response is ApiException
           ? RepoResponse<ApiException>(error: response, data: null)
           : RepoResponse<StreetNosheryUser>(
-              data: StreetNosheryUser.fromJson(response == '' ? {} : response));
+              data: StreetNosheryUser.fromJson(response == '' ? {} : response["data"] as Map<String, dynamic>));
     } catch (e) {
       rethrow;
     }
