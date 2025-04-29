@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_bottomsheet.dart';
+import 'package:street_noshery/home_page/widgets/street_noshery_common_failure_bottomsheet.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
 
 class StreetNosheryMobileVerificationView
@@ -17,10 +19,17 @@ class StreetNosheryMobileVerificationView
             child: FloatingActionButton(
               onPressed: (controller.otp.value.length == 6)
                   ? () async {
-                      
                       final isOtpValid = await controller.validateOtp();
                       if (isOtpValid) {
                         await controller.checkExistingUser();
+                      } else {
+                        StreetNosheryCommonBottomSheet.show(
+                          child: const StreetNosheryCommonErrorBottomsheet(
+                            errorTitle: "OTP Validation Failed",
+                            errorSubtitle:
+                                "The OTP you entered is incorrect or has expired. Please try again or request a new OTP.",
+                          ),
+                        );
                       }
                     }
                   : null,

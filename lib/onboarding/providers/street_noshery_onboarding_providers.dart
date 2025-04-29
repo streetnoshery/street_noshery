@@ -22,29 +22,29 @@ class StreetNosheryOnboardingProviders {
   factory StreetNosheryOnboardingProviders() {
     return _instance;
   }
-  
+
   Future<RepoResponse> generateOtp(
       {String? mobileNumber, StreetNosheryOnboardingEnums? objective}) async {
     try {
       final String finalUrl = commonHost.url(StreetNosheryUrls.generateOtp);
       final response =
           await api.request(apiString: finalUrl, method: "post", payload: {
-        "mobileNumber": mobileNumber,
-        "reason":
-            objective?.toString().split('.').last // Convert enum to string
+      "mobileNumber": mobileNumber,
+      "reason":
+      objective?.toString().split('.').last // Convert enum to string
       });
 
       return response is ApiException
           ? RepoResponse<ApiException>(error: response, data: null)
           : RepoResponse<StreetNosheryOtpResponse>(
-              data: StreetNosheryOtpResponse.fromJson(
-                  response == '' ? {} : response));
+          data: StreetNosheryOtpResponse.fromJson(
+              response == '' ? {} : response));
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<ApiResponse> verifyotp(
+  Future<RepoResponse> verifyotp(
       {String? mobileNumber,
       StreetNosheryOnboardingEnums? objective,
       String? otp}) async {
@@ -58,7 +58,11 @@ class StreetNosheryOnboardingProviders {
         "otp": otp
       });
 
-      return ApiResponse.fromJson(response);
+      return response is ApiException
+          ? RepoResponse<ApiException>(error: response, data: null)
+          : RepoResponse<StreetNosheryOtpResponse>(
+          data: StreetNosheryOtpResponse.fromJson(
+              response == '' ? {} : response));
     } catch (e) {
       rethrow;
     }
@@ -81,14 +85,17 @@ class StreetNosheryOnboardingProviders {
     }
   }
 
-  Future<ApiResponse> createUser(
+  Future<RepoResponse> createUser(
       StreetNosheryCreateuserDatamodel data) async {
     try {
       final String finalUrl = commonHost.url(StreetNosheryUrls.createUser);
       final response = await api.request(
           apiString: finalUrl, method: "post", payload: data.toJson());
 
-      return ApiResponse.fromJson(response);
+      return response is ApiException
+          ? RepoResponse<ApiException>(error: response, data: null)
+          : RepoResponse<StreetNosheryUser>(
+              data: StreetNosheryUser.fromJson(response == '' ? {} : response));
     } catch (e) {
       rethrow;
     }

@@ -201,12 +201,9 @@ class StreetNosheryOnboardingController extends GetxController {
   }
 
   Future<bool> validateOtp() async {
-    /* 
-    TODO: Error handling bottomsheet
-     */
     try {
       showLoader();
-      ApiResponse response = await onboardingProvider.verifyotp(
+      RepoResponse response = await onboardingProvider.verifyotp(
           mobileNumber: contactNumber.value,
           objective: StreetNosheryOnboardingEnums.MOBILE_VERIFICATION,
           otp: otp.value);
@@ -284,15 +281,14 @@ class StreetNosheryOnboardingController extends GetxController {
 
   Future<void> createUser(StreetNosheryCreateuserDatamodel data) async {
     try {
-      ApiResponse response =
+      RepoResponse response =
           await onboardingProvider.createUser(data);
       if (response.data != null) {
         streetNosheryUserData.value = StreetNosheryUser.fromJson(response.data);
         customerId.value = streetNosheryUserData.value.customerId ?? "";
       }
     } catch (e) {
-      hideLoader();
-      throw e;
+
     }
   }
 

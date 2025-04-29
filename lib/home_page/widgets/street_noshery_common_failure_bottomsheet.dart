@@ -31,6 +31,7 @@ class StreetNosheryCommonErrorBottomsheet extends StatelessWidget {
         const SizedBox(height: 10),
         Text(
           errorTitle,
+          style: const TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold,),
         ),
         const SizedBox(height: 20),
         Visibility(
@@ -39,6 +40,7 @@ class StreetNosheryCommonErrorBottomsheet extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 20.0),
             child: Text(
               errorSubtitle ?? "",
+              style: const TextStyle(color: Colors.black, fontSize: 16),
             ),
           ),
         ),

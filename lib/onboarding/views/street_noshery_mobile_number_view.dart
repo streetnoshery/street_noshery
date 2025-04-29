@@ -33,9 +33,13 @@ class StreetNosheryMobileNumberView
                         final isOtpSent = await controller.sendOTP(context);
                         if (isOtpSent) {
                           Get.toNamed(Routes.mobileVerificationOTPScreen);
-                        }
-                        else{
-                          StreetNosheryCommonBottomSheet.show(child: const StreetNosheryCommonErrorBottomsheet(errorTitle: "Otp failed",));
+                        } else {
+                          StreetNosheryCommonBottomSheet.show(
+                              child: const StreetNosheryCommonErrorBottomsheet(
+                            errorTitle: "OTP Generation Failed",
+                            errorSubtitle:
+                                "We couldn’t generate your OTP at the moment. Please check your internet connection and try again.",
+                          ));
                         }
                       }
                     : null,
