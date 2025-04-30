@@ -301,12 +301,19 @@ class StreetNosheryOnboardingController extends GetxController {
     try {
       RepoResponse response = await onboardingProvider.getUser(mobileNumber);
       if (response.data != null) {
-        streetNosheryUserData.value = StreetNosheryUser.fromJson(response.data);
+        streetNosheryUserData.value = response.data;
         isUserRegister.value = true;
         customerId.value = streetNosheryUserData.value.customerId ?? "";
       }
     } catch (e) {
-      throw e;
+      StreetNosheryCommonBottomSheet.show(
+        child: const StreetNosheryCommonErrorBottomsheet(
+          errorTitle: "Something Went Wrong",
+          errorSubtitle:
+              "We're experiencing some issues at the moment. Please try again later.",
+        ),
+      );
+      rethrow;
     }
   }
 
@@ -314,7 +321,7 @@ class StreetNosheryOnboardingController extends GetxController {
     try {
       RepoResponse response = await onboardingProvider.createUser(data);
       if (response.data != null) {
-        streetNosheryUserData.value = response.data!.data;
+        streetNosheryUserData.value = response.data;
         customerId.value = streetNosheryUserData.value.customerId ?? "";
       }
     } catch (e) {

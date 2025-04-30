@@ -3,12 +3,14 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:street_noshery/cart/model/street_noshery_create_order_model.dart';
+import 'package:street_noshery/common/common_bottomsheet.dart';
 import 'package:street_noshery/common/common_images.dart';
 import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_response.dart';
 import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_cart_static_data.model.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
+import 'package:street_noshery/home_page/widgets/street_noshery_common_failure_bottomsheet.dart';
 import 'package:street_noshery/menu/controller/street_noshery_menu_controller.dart';
 import 'package:street_noshery/orders/models/street_noshery_order_payload_model.dart';
 import 'package:street_noshery/orders/providers/street_noshery_order_provider.dart';
@@ -178,7 +180,6 @@ class StreetNosheryCartController extends GetxController {
     }
   }
 
-
   Future<void> _handlePaymentSuccess(PaymentSuccessResponse response) async {
     // Do something when payment succeeds
     paymentId.value = response.paymentId ?? "";
@@ -194,6 +195,13 @@ class StreetNosheryCartController extends GetxController {
 
   void _handlePaymentError(PaymentFailureResponse response) {
     // Do something when payment fails
+    StreetNosheryCommonBottomSheet.show(
+      child: const StreetNosheryCommonErrorBottomsheet(
+        errorTitle: "Payment Failed",
+        errorSubtitle:
+            "Your payment couldn’t be processed. Please check your details or try another method.",
+      ),
+    );
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {

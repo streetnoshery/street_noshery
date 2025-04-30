@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_bottomsheet.dart';
 import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_response.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_account_setting_static_data.model.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
+import 'package:street_noshery/home_page/widgets/street_noshery_common_failure_bottomsheet.dart';
 import 'package:street_noshery/street_noshery_user_account/providers/street_noshery_account_provider.dart';
 
 class StreetnosheryUserAccountController extends GetxController {
@@ -24,6 +26,13 @@ class StreetnosheryUserAccountController extends GetxController {
       }
     } catch (e) {
       hideLoader();
+      StreetNosheryCommonBottomSheet.show(
+        child: const StreetNosheryCommonErrorBottomsheet(
+          errorTitle: "Something Went Wrong",
+          errorSubtitle:
+              "We're experiencing some issues at the moment. Please try again later.",
+        ),
+      );
       throw e;
     }
   }
