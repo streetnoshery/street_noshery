@@ -23,6 +23,7 @@ class StreetNosheryUserAddressController extends GetxController {
   final secondLine = "".obs;
   final shopId = 0.obs;
   final isuserAddressUpdated = false.obs;
+  StreetNosheryAddressProviders userAddressProvider = StreetNosheryAddressProviders();
 
   @override
   void onReady() {
@@ -34,7 +35,7 @@ class StreetNosheryUserAddressController extends GetxController {
 
   Future<void> updateAddress() async {
     try {
-      ApiResponse response = await StreetNosheryAddressProviders.updateAddress(
+      RepoResponse response = await userAddressProvider.updateAddress(
           firstLine: firstLine.value,
           secondLine: secondLine.value,
           shopId: shopId.value,
@@ -54,7 +55,7 @@ class StreetNosheryUserAddressController extends GetxController {
               "We couldn’t update your address at the moment. Please try again shortly.",
         ),
       );
-      throw e;
+      rethrow;
     }
   }
 

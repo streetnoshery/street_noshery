@@ -37,6 +37,7 @@ class StreetNosheryCartController extends GetxController {
   final isOrderCreated = false.obs;
   final paymentId = "".obs;
   final orderId = "".obs;
+  StreetNosheryShopOrdersProviders streetNosheryShopOrderProvider = StreetNosheryShopOrdersProviders();
 
   @override
   void onInit() {
@@ -143,10 +144,10 @@ class StreetNosheryCartController extends GetxController {
   Future<void> createFT() async {
     try {
       final orderPayload = getOrderPayload();
-      ApiResponse response =
-          await StreetNosheryShopOrdersProviders.orderFT(payload: orderPayload);
+      RepoResponse response =
+          await streetNosheryShopOrderProvider.orderFT(payload: orderPayload);
       if (response.data != null) {
-        orderData.value = OrderData.fromJson(response.data);
+        orderData.value = response.data;
       }
     } catch (error) {
       hideLoader();
@@ -164,14 +165,14 @@ class StreetNosheryCartController extends GetxController {
 
   Future<void> createOrder() async {
     try {
-      ApiResponse response = await StreetNosheryShopOrdersProviders.createOrder(
+      RepoResponse response = await streetNosheryShopOrderProvider.createOrder(
           orderTrackId: orderData.value.orderTrackId,
           customerId: homeController.streetNosheryUser.value.customerId ?? "",
           shopId: homeController.streetNosheryUser.value.address?.shopId ?? 1,
           paymentId: paymentId.value,
           razorpayOrderId: orderId.value);
       if (response.data != null) {
-        orderData.value = OrderData.fromJson(response.data);
+        orderData.value = response.data;
         isOrderCreated.value = true;
       }
     } catch (error) {

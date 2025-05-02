@@ -46,7 +46,6 @@ class StreetNosheryOnboardingController extends GetxController {
   Timer? timer;
   late AnimationController controller;
   late Animation<double> animation;
-  final onboardingAPI = StreetNosheryOnboardingProviders;
   final isOtpSent = false.obs;
   final isOtpVerify = false.obs;
   final isUserRegister = false.obs;
@@ -56,11 +55,6 @@ class StreetNosheryOnboardingController extends GetxController {
   Rx<StreetNosheryUser> streetNosheryUserData = StreetNosheryUser().obs;
   StreetNosheryOnboardingProviders onboardingProvider =
       StreetNosheryOnboardingProviders();
-
-  @override
-  void onInit() async {
-    super.onInit();
-  }
 
   @override
   void onReady() async {

@@ -12,6 +12,7 @@ class StreetnosheryUserAccountController extends GetxController {
   final homeController = Get.find<StreetNosheryHomeController>();
   NotificationSettings get accountSettingFirebaseModel => homeController.onboardingController.fireBaseContentHandler.streetNosheryAccountSettingFirebaseModel;
   final isNotificationUpdated = false.obs;
+  StreetNosheryUserAccountProviders userAccountProvider = StreetNosheryUserAccountProviders();
 
   @override
   void onInit() {
@@ -20,7 +21,7 @@ class StreetnosheryUserAccountController extends GetxController {
   }
   Future<void> notification(bool value) async {
     try {
-      ApiResponse response = await StreetNosheryUserAccountProviders.enableNotification(customerId: homeController.onboardingController.streetNosheryUserData.value.customerId, isEnable: value);
+      RepoResponse response = await userAccountProvider.enableNotification(customerId: homeController.onboardingController.streetNosheryUserData.value.customerId, isEnable: value);
       if(response.data != null) {
         isNotificationUpdated.value = !isNotificationUpdated.value;
       }
@@ -33,7 +34,7 @@ class StreetnosheryUserAccountController extends GetxController {
               "We're experiencing some issues at the moment. Please try again later.",
         ),
       );
-      throw e;
+      rethrow;
     }
   }
 }

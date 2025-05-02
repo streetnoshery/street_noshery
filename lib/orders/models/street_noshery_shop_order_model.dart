@@ -1,4 +1,32 @@
 
+class StreetNosheryShopDataResponseModel {
+  String? state;
+  int? status;
+  List<StreetNosheryShopOrders>? data;
+
+  StreetNosheryShopDataResponseModel({this.state, this.status, this.data});
+
+  StreetNosheryShopDataResponseModel.fromJson(Map<String, dynamic> json) {
+    state = json['state'];
+    status = json['status'];
+    if (json['data'] != null) {
+      data = <StreetNosheryShopOrders>[];
+      json['data'].forEach((v) {
+        data!.add(StreetNosheryShopOrders.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['state'] = state;
+    data['status'] = status;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
 class StreetNosheryShopOrders {
   final String? id;
   final String? orderTrackId;

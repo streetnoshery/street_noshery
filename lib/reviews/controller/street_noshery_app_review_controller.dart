@@ -21,6 +21,7 @@ class StreetnosheryAppReviewController extends GetxController {
           .fireBaseContentHandler.streetNosheryReviewFirebaseModel;
   StreetNosheryReviewmodel reviewmodel = StreetNosheryReviewmodel();
   final homeController = Get.find<StreetNosheryHomeController>();
+  StreetNosheryReviewProviders streetNosheryReviewprovider = StreetNosheryReviewProviders();
 
   void increaseStarCount(int index) {
     selectedStars.value = index + 1;
@@ -33,7 +34,7 @@ class StreetnosheryAppReviewController extends GetxController {
 
   Future<void> updateReview(num? rating, String? reviews) async {
     try {
-      ApiResponse response = await StreetNosheryReviewProviders.updateReview(
+      RepoResponse response = await streetNosheryReviewprovider.updateReview(
           customerId:
               onboardingController.streetNosheryUserData.value.customerId,
           shopId:
@@ -41,7 +42,7 @@ class StreetnosheryAppReviewController extends GetxController {
           ratings: rating,
           reviews: reviews);
       if (response.data != null) {
-        reviewmodel = StreetNosheryReviewmodel.fromJson(response.data);
+        reviewmodel = response.data;
       }
     } catch (e) {
       hideLoader();

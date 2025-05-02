@@ -29,7 +29,6 @@ class StreetNosheryCartView extends GetView<StreetNosheryCartController> {
               ),
               onPressed: controller.homeController.foodCartList.isNotEmpty
                   ? () async {
-                      print('Save button pressed');
                       showLoader();
                       await controller.createFT();
                       hideLoader();

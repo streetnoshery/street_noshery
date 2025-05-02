@@ -2,6 +2,35 @@ import 'dart:convert';
 
 import 'package:street_noshery/home_page/models/street_noshery_menu_model.dart';
 
+class StreetNosheryPastorderDataResponseModel {
+  String? state;
+  int? status;
+  List<StreetNosheryPastOrdersModel>? data;
+
+  StreetNosheryPastorderDataResponseModel({this.state, this.status, this.data});
+
+  StreetNosheryPastorderDataResponseModel.fromJson(Map<String, dynamic> json) {
+    state = json['state'];
+    status = json['status'];
+    if (json['data'] != null) {
+      data = <StreetNosheryPastOrdersModel>[];
+      json['data'].forEach((v) {
+        data!.add(StreetNosheryPastOrdersModel.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['state'] = state;
+    data['status'] = status;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
 class StreetNosheryPastOrdersModel {
   final String? id;
   final String? orderTrackId;

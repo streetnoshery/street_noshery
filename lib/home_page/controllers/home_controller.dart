@@ -13,7 +13,6 @@ import 'package:street_noshery/home_page/providers/street_noshery_home_page_prov
 import 'package:street_noshery/menu/enums/street_noshery_menu_enums.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
 import 'package:street_noshery/onboarding/models/street_noshery_onboarding_user_data_model.dart';
-import 'package:street_noshery/orders/models/street_noshery_shop_order_model.dart';
 import 'package:street_noshery/orders/providers/street_noshery_order_provider.dart';
 import 'package:street_noshery/routes/app_pages.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -55,6 +54,8 @@ class StreetNosheryHomeController extends GetxController {
 
   Rx<StreetNosheryUser> streetNosheryUser = StreetNosheryUser().obs;
   List<StreetNosheryPastOrdersModel> pastOrders = [];
+  StreetNosheryHomeProviders streetNosheryhomeProvider = StreetNosheryHomeProviders();
+  StreetNosheryShopOrdersProviders streetNosheryShopOrderProvider = StreetNosheryShopOrdersProviders();
 
   final isOrderFetched = false.obs;
   RxList orders = [].obs;
@@ -159,7 +160,7 @@ class StreetNosheryHomeController extends GetxController {
   Future<void> updateFoodReview(
       {required num rating, String? review, required List<num> foodIds}) async {
     try {
-      ApiResponse response = await StreetNosheryHomeProviders.updateFoodReview(
+      RepoResponse response = await streetNosheryhomeProvider.updateFoodReview(
           rating: rating,
           foodIds: foodIds,
           shopId: streetNosheryUser.value.address?.shopId?.toInt() ?? 1);
@@ -212,10 +213,10 @@ class StreetNosheryHomeController extends GetxController {
 
   Future<void> getMenu(int shopId) async {
     try {
-      ApiResponse response =
-          await StreetNosheryHomeProviders.getMenu(shopId: shopId);
+      RepoResponse response =
+          await streetNosheryhomeProvider.getMenu(shopId: shopId);
       if (response.data != null) {
-        menu.value = StreetNosheryMenu.fromJson(response.data);
+        menu.value = response.data;
       }
     } catch (e) {
       throw e;
@@ -229,15 +230,13 @@ class StreetNosheryHomeController extends GetxController {
 
   Future<void> getPastOrders() async {
     try {
-      ApiResponse response = await StreetNosheryHomeProviders.getPastOrders(
+      RepoResponse response = await streetNosheryhomeProvider.getPastOrders(
           customerId: streetNosheryUser.value.customerId);
       if (response.data != null) {
-        pastOrders = (response.data as List)
-            .map((e) => StreetNosheryPastOrdersModel.fromJson(e))
-            .toList();
+        pastOrders = response.data?.data;
       }
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -280,12 +279,10 @@ class StreetNosheryHomeController extends GetxController {
 
   Future<void> fetchOrders() async {
     try {
-      ApiResponse response = await StreetNosheryShopOrdersProviders.getOrder(
+      RepoResponse response = await streetNosheryShopOrderProvider.getOrder(
           shopId: streetNosheryUser.value.address?.shopId);
       if (response.data != null) {
-        orders.value = (response.data as List)
-            .map((e) => StreetNosheryShopOrders.fromJson(e))
-            .toList();
+        orders.value = response.data!.data;
         isOrderFetched.value = true;
       }
     } catch (e) {
@@ -295,15 +292,13 @@ class StreetNosheryHomeController extends GetxController {
 
   Future<void> updateOrder(String? orderTrackId, String? status) async {
     try {
-      ApiResponse response = await StreetNosheryShopOrdersProviders.updateOrder(
+      RepoResponse response = await streetNosheryShopOrderProvider.updateOrder(
           shopId: streetNosheryUser.value.address?.shopId,
           orderTrackId: orderTrackId,
           customerId: streetNosheryUser.value.customerId,
           status: status);
       if (response.data != null) {
-        orders.value = (response.data as List)
-            .map((e) => StreetNosheryShopOrders.fromJson(e))
-            .toList();
+        orders.value = response.data!.data;
       }
     } catch (e) {
       rethrow;

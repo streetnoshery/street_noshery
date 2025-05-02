@@ -9,6 +9,7 @@ class StreetNosheryOrderTrackingController extends GetxController{
   final isOrderStatusResponseSuccess = false.obs;
   Rx<OrderTrackingData> orderTrackingData = OrderTrackingData().obs;
   final allImages = CommonImages();
+  StreetNosheryOrderTrackingProvider streetNosheryOrderTrackingProvider = StreetNosheryOrderTrackingProvider();
 
   @override
   void onReady() async {
@@ -17,9 +18,9 @@ class StreetNosheryOrderTrackingController extends GetxController{
 
   Future<void> getOrderTrackingStatus() async {
     try {
-      ApiResponse response = await StreetNosheryOrderTrackingProvider.getOrderStatus(arguments['orderTrackId']);
+      RepoResponse response = await streetNosheryOrderTrackingProvider.getOrderStatus(arguments['orderTrackId']);
       if(response.data != null) {
-        orderTrackingData.value = OrderTrackingData.fromJson(response.data);
+        orderTrackingData.value = response.data;
         isOrderStatusResponseSuccess.value = true;
       }
     } catch (e) {
