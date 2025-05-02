@@ -15,7 +15,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = CommonTheme();
+    final colorsTheme = CommonTheme();
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -25,10 +25,10 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
         appBar: const StreetNosheryHomepageAppbar(),
         body: Container(
           decoration: BoxDecoration(
-            color: colors.greyTer,
+            color: colorsTheme.theme.greyTer,
             boxShadow: [
               BoxShadow(
-                color: colors.textPrimary.withOpacity(0.3), // Shadow color
+                color: colorsTheme.theme.textPrimary.withOpacity(0.3), // Shadow color
                 spreadRadius: 2, // Spread radius
                 blurRadius: 8, // Blur radius
                 offset: const Offset(0, 4), // Offset in X and Y direction
@@ -61,7 +61,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                   ),
                   Divider(
                     thickness: 1.5,
-                    color: colors.greySecondary,
+                    color: colorsTheme.theme.greySecondary,
                   ),
                   Visibility(
                     visible:
@@ -110,7 +110,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                                             ?.home ??
                                         "Home",
                                     style: TextStyle(
-                                      color: colors.textPrimary,
+                                      color: colorsTheme.theme.textPrimary,
                                     ),
                                   )),
                               (controller.selectedTab.value == TabEnum.home)
@@ -118,7 +118,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                                       width: 50,
                                       height: 5,
                                       decoration: BoxDecoration(
-                                          color: colors.lightMossgreen,
+                                          color: colorsTheme.theme.lightMossgreen,
                                           borderRadius: const BorderRadius.all(
                                               Radius.circular(10))),
                                     )
@@ -147,7 +147,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                                       width: 50,
                                       height: 5,
                                       decoration: BoxDecoration(
-                                          color: colors.lightMossgreen,
+                                          color: colorsTheme.theme.lightMossgreen,
                                           borderRadius: const BorderRadius.all(
                                               Radius.circular(10))),
                                     )
@@ -176,7 +176,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                                       width: 50,
                                       height: 5,
                                       decoration: BoxDecoration(
-                                          color: colors.lightMossgreen,
+                                          color: colorsTheme.theme.lightMossgreen,
                                           borderRadius: const BorderRadius.all(
                                               Radius.circular(10))),
                                     )
@@ -195,7 +195,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                       padding: const EdgeInsets.only(bottom: 20),
                       child: Divider(
                         thickness: 1,
-                        color: colors.greySecondary,
+                        color: colorsTheme.theme.greySecondary,
                       ),
                     ),
                   ),

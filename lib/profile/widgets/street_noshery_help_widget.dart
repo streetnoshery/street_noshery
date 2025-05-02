@@ -8,11 +8,11 @@ class StreetNosheryHelp extends GetView<StreetNosheryHomeController> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = CommonTheme();
+    final colorsTheme = CommonTheme();
     return Scaffold(
       appBar: AppBar(
-        title: Text(controller.streetnosheryHelpAndSupportFirebaseModel.title ?? 'Help & Support', style: TextStyle(color: colors.textPrimary, fontSize: 18),),
-        backgroundColor: colors.lightLeafGreen,
+        title: Text(controller.streetnosheryHelpAndSupportFirebaseModel.title ?? 'Help & Support', style: TextStyle(color: colorsTheme.theme.textPrimary, fontSize: 18),),
+        backgroundColor: colorsTheme.theme.lightLeafGreen,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -21,12 +21,12 @@ class StreetNosheryHelp extends GetView<StreetNosheryHomeController> {
           children: [
             Text(
               controller.streetnosheryHelpAndSupportFirebaseModel.body?.title ?? 'How can we help you?',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: colors.textPrimary),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: colorsTheme.theme.textPrimary),
             ),
             const SizedBox(height: 10),
             Text(
               controller.streetnosheryHelpAndSupportFirebaseModel.body?.subTitle ?? 'If you have any issues with your order, please contact us using the details below.',
-              style: TextStyle(fontSize: 15, color: colors.greySecondary),
+              style: TextStyle(fontSize: 15, color: colorsTheme.theme.greySecondary),
             ),
             const SizedBox(height: 20),
             // ListTile(
@@ -37,7 +37,7 @@ class StreetNosheryHelp extends GetView<StreetNosheryHomeController> {
             //   },
             // ),
             ListTile(
-              leading: Icon(Icons.email, color: colors.darkLeafGreen),
+              leading: Icon(Icons.email, color: colorsTheme.theme.darkLeafGreen),
               title: const Text('support@yourapp.com'),
               onTap: () {
                 controller.sendEmail('sumitgod510@gmail.com');  //TODO: should add shop email ID

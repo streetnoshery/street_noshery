@@ -58,7 +58,7 @@ class StreetNosheryCartController extends GetxController {
   }
 
   Future<void> selectDate(BuildContext context) async {
-    final colors = CommonTheme();
+    final colorsTheme = CommonTheme();
     DateFormat format = DateFormat("dd-MM-yyyy");
     final DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -70,9 +70,9 @@ class StreetNosheryCartController extends GetxController {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: colors.darkLeafGreen, // Header background color
+            primaryColor: colorsTheme.theme.darkLeafGreen, // Header background color
             colorScheme: ColorScheme.light(
-                primary: colors.darkLeafGreen), // Header text color
+                primary: colorsTheme.theme.darkLeafGreen), // Header text color
             buttonTheme:
                 const ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
@@ -89,7 +89,7 @@ class StreetNosheryCartController extends GetxController {
   }
 
   Future<void> selectTime(BuildContext context) async {
-    final colors = CommonTheme();
+    final colorsTheme = CommonTheme();
     List<String> timeParts =
         selectedTime.split(':'); // Split string into hours and minutes
     int hour = 0;
@@ -107,9 +107,9 @@ class StreetNosheryCartController extends GetxController {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: colors.darkLeafGreen, // Header background color
+            primaryColor: colorsTheme.theme.darkLeafGreen, // Header background color
             colorScheme: ColorScheme.light(
-                primary: colors.darkLeafGreen), // Header text color
+                primary: colorsTheme.theme.darkLeafGreen), // Header text color
             buttonTheme:
                 const ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),

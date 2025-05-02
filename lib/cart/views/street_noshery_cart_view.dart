@@ -14,7 +14,7 @@ class StreetNosheryCartView extends GetView<StreetNosheryCartController> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = CommonTheme();
+    final colorsTheme = CommonTheme();
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       floatingActionButton: Obx(() {
@@ -50,7 +50,7 @@ class StreetNosheryCartView extends GetView<StreetNosheryCartController> {
                   height: Get.height * .16,
                   width: Get.width,
                   decoration: BoxDecoration(
-                    color: colors.lightLeafGreen,
+                    color: colorsTheme.theme.lightLeafGreen,
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(30),
                         bottomRight:

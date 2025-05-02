@@ -139,14 +139,14 @@ class StreetNosheryHomeController extends GetxController {
       String? review,
       required List<num> foodIds}) async {
     await updateFoodReview(rating: rating, foodIds: foodIds);
-    final colors = CommonTheme();
+    final colorsTheme = CommonTheme();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
           "Review submitted",
-          style: TextStyle(color: colors.textPrimary),
+          style: TextStyle(color: colorsTheme.theme.textPrimary),
         ),
-        backgroundColor: colors.lightGreen,
+        backgroundColor: colorsTheme.theme.lightGreen,
       ),
     );
     boxReviewController.text = "";

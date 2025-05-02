@@ -10,7 +10,7 @@ class StreetNosheryAppReviewView
 
   @override
   Widget build(BuildContext context) {
-    final colors = CommonTheme();
+    final colorsTheme = CommonTheme();
     return Scaffold(
       body: Obx(() {
         return SingleChildScrollView(
@@ -22,7 +22,7 @@ class StreetNosheryAppReviewView
                   height: Get.height * .16,
                   width: Get.width,
                   decoration: BoxDecoration(
-                    color: colors.lightLeafGreen,
+                    color: colorsTheme.theme.lightLeafGreen,
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(30),
                         bottomRight:
@@ -73,7 +73,7 @@ class StreetNosheryAppReviewView
                                 ? Icons.star
                                 : Icons.star_border,
                             color: index < controller.selectedStars.value
-                                ? colors.yellowStar
+                                ? colorsTheme.theme.yellowStar
                                 : Colors.grey,
                             size: 40,
                           ),
@@ -151,7 +151,7 @@ class StreetNosheryAppReviewView
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                           decoration: BoxDecoration(
-                            color: (controller.selectedStars.value != 0 && controller.review.value.isNotEmpty) ? colors.lightLeafGreen : Colors.grey.shade300,
+                            color: (controller.selectedStars.value != 0 && controller.review.value.isNotEmpty) ? colorsTheme.theme.lightLeafGreen : Colors.grey.shade300,
                             borderRadius: const BorderRadius.all(Radius.circular(10)),
                             border: Border.all(
                               color: Colors.grey.shade400

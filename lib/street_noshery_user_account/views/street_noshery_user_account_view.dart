@@ -11,7 +11,7 @@ class StreetNosheryUserAccountView
 
   @override
   Widget build(BuildContext context) {
-    final colors = CommonTheme();
+    final colorsTheme = CommonTheme();
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: PreferredSize(
@@ -19,7 +19,7 @@ class StreetNosheryUserAccountView
         child: Container(
           decoration: BoxDecoration(boxShadow: [
             BoxShadow(
-              color: colors.lightLeafGreen, // Shadow color
+              color: colorsTheme.theme.lightLeafGreen, // Shadow color
               spreadRadius: 2, // Spread radius
               blurRadius: 1, // Blur radius
               offset: const Offset(0, 4), // Offset in X and Y direction
@@ -150,7 +150,7 @@ class StreetNosheryUserAccountView
                               await controller.notification(value);
                               hideLoader();
                             },
-                            activeColor: colors.lightMossgreen,
+                            activeColor: colorsTheme.theme.lightMossgreen,
                           );
                         })
                       ],
@@ -174,7 +174,7 @@ class StreetNosheryUserAccountView
             color: Colors.white,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Text(controller.accountSettingFirebaseModel.accountDelete?.subTitle ?? "Delete account", style: TextStyle(color: colors.lightMossgreen, fontWeight: FontWeight.bold),),
+              child: Text(controller.accountSettingFirebaseModel.accountDelete?.subTitle ?? "Delete account", style: TextStyle(color: colorsTheme.theme.lightMossgreen, fontWeight: FontWeight.bold),),
             ),
           )
         ],

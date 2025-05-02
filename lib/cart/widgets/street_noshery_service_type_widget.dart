@@ -9,7 +9,7 @@ class StreetNosheryServiceTypeWidget
 
   @override
   Widget build(BuildContext context) {
-    final colors = CommonTheme();
+    final colorsTheme = CommonTheme();
     return Obx(() {
       return Visibility(
       visible: controller.homeController.foodCartList.isNotEmpty,
@@ -43,7 +43,7 @@ class StreetNosheryServiceTypeWidget
                 title: Text(value),
                 leading: Radio<int>(
                   value: key,
-                  activeColor: colors.lightMossgreen,
+                  activeColor: colorsTheme.theme.lightMossgreen,
                   groupValue: controller.serviceOption.value,
                   onChanged: (selectedValue) {
                     if (selectedValue != null) {
@@ -70,7 +70,7 @@ void _showBottomSheet(BuildContext context) {
   showModalBottomSheet(
     context: context,
     builder: (context) {
-      final colors = CommonTheme();
+      final colorsTheme = CommonTheme();
       return Obx(() {
         return Padding(
           padding: const EdgeInsets.all(16.0),
@@ -81,7 +81,7 @@ void _showBottomSheet(BuildContext context) {
                 title: Text(
                     'Selected Date: ${cartController.selectedDate.value.isNotEmpty ? cartController.selectedDate.value : 'Not Selected'}'),
                 trailing:
-                    Icon(Icons.calendar_today, color: colors.darkLeafGreen),
+                    Icon(Icons.calendar_today, color: colorsTheme.theme.darkLeafGreen),
                 onTap: () {
                   cartController.selectDate(context);
                 },
@@ -91,7 +91,7 @@ void _showBottomSheet(BuildContext context) {
                     'Selected Time: ${cartController.selectedTime.isNotEmpty ? cartController.selectedTime.value : 'Not Selected'}'),
                 trailing: Icon(
                   Icons.access_time,
-                  color: colors.darkLeafGreen,
+                  color: colorsTheme.theme.darkLeafGreen,
                 ),
                 onTap: () {
                   cartController.selectTime(context);

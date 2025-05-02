@@ -11,7 +11,7 @@ class StreetNosheryUserAddressView
 
   @override
   Widget build(BuildContext context) {
-    final colors = CommonTheme();
+    final colorsTheme = CommonTheme();
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: PreferredSize(
@@ -19,7 +19,7 @@ class StreetNosheryUserAddressView
         child: Container(
           decoration: BoxDecoration(boxShadow: [
             BoxShadow(
-              color: colors.lightLeafGreen, // Shadow color
+              color: colorsTheme.theme.lightLeafGreen, // Shadow color
               spreadRadius: 2, // Spread radius
               blurRadius: 1, // Blur radius
               offset: const Offset(0, 4), // Offset in X and Y direction

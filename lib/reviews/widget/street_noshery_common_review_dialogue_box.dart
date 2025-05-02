@@ -10,7 +10,7 @@ class ReviewPopup extends GetView<StreetNosheryHomeController> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = CommonTheme();
+    final colorsTheme = CommonTheme();
     return Obx(() {
       String review = controller.boxReview.value;
       return AlertDialog(
@@ -30,7 +30,7 @@ class ReviewPopup extends GetView<StreetNosheryHomeController> {
                           ? Icons.star
                           : Icons.star_border,
                       color: index < controller.selectedStars.value
-                          ? colors.yellowStar
+                          ? colorsTheme.theme.yellowStar
                           : Colors.grey,
                       size: 20,
                     ),

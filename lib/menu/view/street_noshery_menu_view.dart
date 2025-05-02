@@ -12,7 +12,7 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = CommonTheme();
+    final colorsTheme = CommonTheme();
     return Obx(() {
       controller.menuList;
       return Scaffold(
@@ -59,7 +59,7 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                   Container(
                     height: Get.height * .25,
                     decoration: BoxDecoration(
-                      color: colors.lightLeafGreen,
+                      color: colorsTheme.theme.lightLeafGreen,
                       borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(30),
                           bottomRight:
@@ -138,7 +138,7 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                                                         vertical: 2),
                                                 decoration: BoxDecoration(
                                                     color:
-                                                        colors.lightMossgreen,
+                                                        colorsTheme.theme.lightMossgreen,
                                                     borderRadius:
                                                         const BorderRadius.all(
                                                             Radius.circular(
@@ -154,7 +154,7 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                                                     ),
                                                     Icon(
                                                       Icons.star, // Star icon
-                                                      color: colors.yellowStar, // Icon color
+                                                      color: colorsTheme.theme.yellowStar, // Icon color
                                                       size: 15, // Icon size
                                                     ),
                                                     const SizedBox(

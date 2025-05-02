@@ -13,7 +13,7 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = CommonTheme();
+    final colorsTheme = CommonTheme();
     return Obx(() {
       return Scaffold(
         appBar: PreferredSize(
@@ -21,7 +21,7 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
           child: Container(
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(
-                color: colors.lightLeafGreen, // Shadow color
+                color: colorsTheme.theme.lightLeafGreen, // Shadow color
                 spreadRadius: 2, // Spread radius
                 blurRadius: 1, // Blur radius
                 offset: const Offset(0, 4), // Offset in X and Y direction
@@ -59,8 +59,8 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                                       Radius.circular(20)),
                                   gradient: LinearGradient(
                                     colors: [
-                                      colors.lightGreen,
-                                      colors.lightMossgreen
+                                      colorsTheme.theme.lightGreen,
+                                      colorsTheme.theme.lightMossgreen
                                     ], // Gradient colors
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
@@ -378,7 +378,7 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = CommonTheme();
+    final colorsTheme = CommonTheme();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(
@@ -403,7 +403,7 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
               ),
               Icon(
                 Icons.star, // Star icon
-                color: colors.yellowStar, // Icon color
+                color: colorsTheme.theme.yellowStar, // Icon color
                 size: 18, // Icon size
               ),
               const Spacer(),

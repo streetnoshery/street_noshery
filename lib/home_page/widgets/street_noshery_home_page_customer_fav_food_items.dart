@@ -18,7 +18,7 @@ class BestSellerFoodItems extends StatelessWidget {
             ? Get.find<StreetNosheryHomeController>()
             : Get.put(StreetNosheryHomeController());
     final favFoodData = streetNosheryHomeController.bestSeller;
-    final colors = CommonTheme();
+    final colorsTheme = CommonTheme();
     return SizedBox(
       width: 150,
       height: 350,
@@ -99,7 +99,7 @@ class BestSellerFoodItems extends StatelessWidget {
                           ),
                           Icon(
                             Icons.star, // Star icon
-                            color: colors.yellowStar, // Icon color
+                            color: colorsTheme.theme.yellowStar, // Icon color
                             size: 20, // Icon size
                           ),
                           const SizedBox(

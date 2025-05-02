@@ -17,11 +17,11 @@ class StreetNosheryHomepageAppbar extends GetView<StreetNosheryHomeController>
   Widget build(BuildContext context) {
     return Obx(() {
     final name = controller.getFirstName(controller.streetNosheryUser.value.userName ?? controller.onboardingController.userName.value);
-    final colors = CommonTheme();
+    final colorsTheme = CommonTheme();
     return PreferredSize(
       preferredSize: const Size.fromHeight(80), // Set desired height here
       child: AppBar(
-        backgroundColor: colors.lightLeafGreen,
+        backgroundColor: colorsTheme.theme.lightLeafGreen,
         automaticallyImplyLeading: false,
         title: Padding(
           padding: const EdgeInsets.only(left: 5, top: 15),
@@ -33,12 +33,12 @@ class StreetNosheryHomepageAppbar extends GetView<StreetNosheryHomeController>
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 20,
-                    color: colors.textPrimary,
+                    color: colorsTheme.theme.textPrimary,
                     fontWeight: FontWeight.bold),
               ),
               Text(
                 "${controller.streetNosheryUser.value.userName ?? controller.onboardingController.userName.value}...",
-                style: TextStyle(color: colors.textSecondary, fontSize: 12),
+                style: TextStyle(color: colorsTheme.theme.textSecondary, fontSize: 12),
               )
             ],
           ),
@@ -52,7 +52,7 @@ class StreetNosheryHomepageAppbar extends GetView<StreetNosheryHomeController>
               },
               child: CircleAvatar(
                 radius: 15,
-                backgroundColor: colors.textTer,
+                backgroundColor: colorsTheme.theme.textTer,
                 child: const Icon(
                   Icons.person, // Profile placeholder icon
                   color: Colors.black,
