@@ -15,8 +15,18 @@ class OnboardingUserDetails extends GetView<StreetNosheryOnboardingController> {
     return Obx(() {
       controller.isValidDetails();
       return Scaffold(
+        backgroundColor: controller.theme.theme.pageBackgroundColor,
+        appBar: AppBar(
+          backgroundColor: controller.theme.theme.pageBackgroundColor,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+        ),
         floatingActionButton: Padding(
-          padding: const EdgeInsets.only(left: 30),
+          padding: const EdgeInsets.only(left: 30, bottom: 10),
           child: SizedBox(
             width: Get.width,
             child: FloatingActionButton(
@@ -53,17 +63,6 @@ class OnboardingUserDetails extends GetView<StreetNosheryOnboardingController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 30, bottom: 20, left: 10),
-                  child: IconButton(
-                    padding: const EdgeInsets.only(top: 30),
-                    icon: const Icon(Icons.arrow_back, color: Colors.black),
-                    onPressed: () {
-                      Get.back();
-                    },
-                  ),
-                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -75,12 +74,12 @@ class OnboardingUserDetails extends GetView<StreetNosheryOnboardingController> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     "Name",
                     style: TextStyle(
-                        color: Colors.black,
+                        color: controller.theme.theme.textPrimary,
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
@@ -97,7 +96,7 @@ class OnboardingUserDetails extends GetView<StreetNosheryOnboardingController> {
                         border: const OutlineInputBorder(),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                              color: Colors.green.shade800,
+                              color: controller.theme.theme.textGreen,
                               width: 2.0), // On focus
                         ),
                       ),
@@ -109,12 +108,12 @@ class OnboardingUserDetails extends GetView<StreetNosheryOnboardingController> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     "Address",
                     style: TextStyle(
-                        color: Colors.black,
+                        color: controller.theme.theme.textPrimary,
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),

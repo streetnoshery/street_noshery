@@ -12,8 +12,19 @@ class StreetNosheryMobileVerificationView
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
+        backgroundColor: controller.theme.theme.pageBackgroundColor,
+        appBar: AppBar(
+          backgroundColor: controller.theme.theme.pageBackgroundColor,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              controller.resetMobileNumber(); // Reset after sendOTP
+              Get.back();
+            },
+          ),
+        ),
         floatingActionButton: Padding(
-          padding: const EdgeInsets.only(left: 30),
+          padding: const EdgeInsets.only(left: 30, bottom: 10),
           child: SizedBox(
             width: Get.width,
             child: FloatingActionButton(
@@ -58,21 +69,7 @@ class StreetNosheryMobileVerificationView
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  child: IconButton(
-                    padding: const EdgeInsets.only(top: 30),
-                    icon: const Icon(Icons.arrow_back, color: Colors.black),
-                    onPressed: () {
-                      controller.resetMobileNumber(); // Reset after sendOTP
-                      Get.back();
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Image.asset(controller.allImages.streetNosheryLogo,
@@ -81,12 +78,12 @@ class StreetNosheryMobileVerificationView
                 const SizedBox(
                   height: 20,
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     "Otp",
                     style: TextStyle(
-                        color: Colors.black,
+                        color: controller.theme.theme.textPrimary,
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
@@ -103,7 +100,7 @@ class StreetNosheryMobileVerificationView
                         border: const OutlineInputBorder(),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                              color: Colors.green.shade800,
+                              color: controller.theme.theme.textGreen,
                               width: 2.0), // On focus
                         ),
                       ),
@@ -117,7 +114,7 @@ class StreetNosheryMobileVerificationView
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 20),
                     child: Text(
-                        'Waiting for OTP... ${controller.countdown.value} seconds remaining'),
+                        'Waiting for OTP... ${controller.countdown.value} seconds remaining', style: TextStyle(color: controller.theme.theme.textSecondary, fontSize: 15),),
                   ),
                 if (controller.showResendButton.value)
                   Padding(
@@ -128,13 +125,13 @@ class StreetNosheryMobileVerificationView
                         if (isOtpSent) {}
                       },
                       style: ButtonStyle(
-                        overlayColor: MaterialStateProperty.all(Colors
+                        overlayColor: WidgetStateProperty.all(Colors
                             .transparent), // Removes the background highlight
                       ),
                       child: Text(
                         'Resent Otp',
                         style: TextStyle(
-                            fontSize: 16, color: Colors.green.shade800),
+                            fontSize: 15, color: controller.theme.theme.textGreen),
                       ),
                     ),
                   ),

@@ -22,9 +22,9 @@ class StreetNosheryMobileNumberView
           return false;
         },
         child: Scaffold(
-          backgroundColor: Colors.grey.shade200,
+          backgroundColor: onboardingController.theme.theme.pageBackgroundColor,
           floatingActionButton: Padding(
-            padding: const EdgeInsets.only(left: 30),
+            padding: const EdgeInsets.only(left: 30, bottom: 10),
             child: SizedBox(
               width: Get.width,
               child: FloatingActionButton(
@@ -80,31 +80,30 @@ class StreetNosheryMobileNumberView
                   const SizedBox(
                     height: 10,
                   ),
-                  const Center(
+                  Center(
                       child: Text(
                     "Welcome back",
                     style: TextStyle(
-                        color: Colors.black,
+                        color: onboardingController.theme.theme.textPrimary,
                         fontSize: 25,
                         fontWeight: FontWeight.bold),
                   )),
-                  const Center(
+                  Center(
                       child: Text(
                     "Please enter your details to login.",
                     style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                        fontWeight: FontWeight.normal),
+                        color: onboardingController.theme.theme.textPrimary,
+                        fontSize: 15,),
                   )),
                   const SizedBox(
                     height: 30,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
                       "Mobile Number",
                       style: TextStyle(
-                          color: Colors.black,
+                          color: onboardingController.theme.theme.textPrimary,
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),

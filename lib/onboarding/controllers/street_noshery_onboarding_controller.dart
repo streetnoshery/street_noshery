@@ -6,6 +6,7 @@ import 'package:street_noshery/common/common_bottomsheet.dart';
 import 'package:street_noshery/common/common_images.dart';
 import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_response.dart';
+import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/firebase/firebase_helper.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_shops_firebase_model.dart';
 import 'package:street_noshery/home_page/widgets/street_noshery_common_failure_bottomsheet.dart';
@@ -19,6 +20,7 @@ import 'dart:convert';
 
 class StreetNosheryOnboardingController extends GetxController {
   final allImages = CommonImages();
+  final theme = CommonTheme();
   final fireBaseContentHandler = Get.isRegistered<FirebaseHelper>()
       ? Get.find<FirebaseHelper>()
       : Get.put(FirebaseHelper());

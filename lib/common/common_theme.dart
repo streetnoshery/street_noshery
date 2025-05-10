@@ -20,10 +20,13 @@ class CommonPrivateTheme {
   final Color lightMossgreen = const Color(0xFF6B9071);
   final Color lightLeafGreen = const Color(0xFFAEC3B0);
   final Color lightGreen = const Color(0xFFE3EED4);
-  final Color textPrimary = const Color(0xFF111112);
-  final Color textSecondary = const Color(0xFF393A3A);
-  final Color textTer = const Color(0xFFEEEEEE);
+  final Color textPrimary = const Color(0xFF000000);
+  final Color textSecondary = const Color(0xFF424242);
+  final Color textTer = const Color(0xFF9E9E9E);
   final Color greyTer = const Color(0xFFF5F5F5);
   final Color greySecondary = const Color(0xFF757575);
   final Color yellowStar = const Color(0xFFFFE135);
+  final Color pageBackgroundColor = const Color(0xFFEEEEEE);
+  final Color textGreen = const Color(0xFF2E7D32);
+  final Color errorText = const Color(0xFF9A0E0B);
 }
