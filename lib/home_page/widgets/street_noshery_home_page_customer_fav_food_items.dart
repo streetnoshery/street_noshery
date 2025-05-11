@@ -57,10 +57,10 @@ class BestSellerFoodItems extends StatelessWidget {
                 Center(
                   child: Text(
                     streetNosheryHomeController.streetNosheryHomePageFirebaseModel.homePageBestSeller?.subTitle ?? "Special Meal",
-                    style: const TextStyle(
-                        color: Colors.black,
+                    style: TextStyle(
+                        color: colorsTheme.theme.textPrimary,
                         fontWeight: FontWeight.bold,
-                        fontSize: 12),
+                        fontSize: 15),
                   ),
                 ),
                 const SizedBox(
@@ -69,7 +69,7 @@ class BestSellerFoodItems extends StatelessWidget {
                 Center(
                   child: Text(
                     "${favFoodData[index].dishName}",
-                    style: const TextStyle(color: Colors.black, fontSize: 15),
+                    style: TextStyle(color: colorsTheme.theme.textSecondary, fontSize: 15),
                   ),
                 ),
                 Image.asset(
@@ -84,7 +84,7 @@ class BestSellerFoodItems extends StatelessWidget {
                       Text(
                         "\u20B9 ${favFoodData[index].price}",
                         style: TextStyle(
-                            color: Colors.grey.shade600, fontSize: 15),
+                            color: colorsTheme.theme.textPrimary, fontSize: 15),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -92,7 +92,7 @@ class BestSellerFoodItems extends StatelessWidget {
                         children: [
                           Text(
                             "${double.parse(favFoodData[index].rating?.toStringAsFixed(1) ?? "1")}",
-                            style: const TextStyle(fontSize: 15),
+                            style: TextStyle(color: colorsTheme.theme.textPrimary,fontSize: 15),
                           ),
                           const SizedBox(
                             width: 5,

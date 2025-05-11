@@ -17,7 +17,7 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
     return Obx(() {
       return Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(150), // Custom AppBar height
+          preferredSize: const Size.fromHeight(100), // Custom AppBar height
           child: Container(
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(
@@ -32,14 +32,14 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 30, left: 5),
+                    padding: const EdgeInsets.only(left: 5, top: 30),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         // Back button at the left
                         IconButton(
-                          icon:
-                              const Icon(Icons.arrow_back, color: Colors.black),
+                          icon: Icon(Icons.arrow_back,
+                              color: colorsTheme.theme.textPrimary),
                           onPressed: () {
                             Get.back();
                           },
@@ -69,7 +69,9 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                                 controller.streetNosheryProfileFireBaseModel
                                         .appbar?.help ??
                                     "Help",
-                                style: const TextStyle(color: Colors.black),
+                                style: TextStyle(
+                                    color: colorsTheme.theme.textPrimary,
+                                    fontSize: 15),
                               ),
                             ),
                           ),
@@ -89,8 +91,8 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                           : controller.onboardingController
                                   .streetNosheryUserData.value.userName ??
                               "",
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: colorsTheme.theme.textPrimary,
                         fontSize: 20,
                       ),
                     ),
@@ -107,10 +109,7 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                                   .streetNosheryUserData.value.mobileNumber ??
                               "",
                       style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                      ),
+                          color: colorsTheme.theme.textSecondary, fontSize: 15),
                     ),
                   ),
                 ),
@@ -174,7 +173,11 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                   controller.streetNosheryProfileFireBaseModel
                           .primaryButtonTitle ??
                       "Cart >",
-                  style: const TextStyle(fontSize: 16), // Text style
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: controller.homeController.foodCartList.isNotEmpty
+                          ? colorsTheme.theme.textPrimary
+                          : colorsTheme.theme.textTer), // Text style
                 ),
               ),
             ),
@@ -205,25 +208,30 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                           controller.streetNosheryProfileFireBaseModel.body
                                   ?.accountSetting?.title ??
                               "My Account",
-                          style: const TextStyle(color: Colors.black),
+                          style: TextStyle(
+                              color: colorsTheme.theme.textPrimary,
+                              fontSize: 15),
                         ),
                         Text(
                           controller.streetNosheryProfileFireBaseModel.body
                                   ?.accountSetting?.subTitle ??
                               "Settings",
-                          style: TextStyle(color: Colors.grey.shade600),
+                          style: TextStyle(
+                              color: colorsTheme.theme.textSecondary,
+                              fontSize: 13),
                         )
                       ],
                     ),
                     Text(">",
                         style: TextStyle(
-                            color: Colors.grey.shade600, fontSize: 20))
+                            color: colorsTheme.theme.textSecondary,
+                            fontSize: 20))
                   ],
                 ),
               ),
             ),
             const Divider(
-              thickness: 0.5,
+              thickness: 0.7,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -243,25 +251,30 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                           controller.streetNosheryProfileFireBaseModel.body
                                   ?.addressSetting?.title ??
                               "Address",
-                          style: const TextStyle(color: Colors.black),
+                          style: TextStyle(
+                              color: colorsTheme.theme.textPrimary,
+                              fontSize: 15),
                         ),
                         Text(
                           controller.streetNosheryProfileFireBaseModel.body
                                   ?.addressSetting?.subTitle ??
                               "Share, Edit & Add New Address",
-                          style: TextStyle(color: Colors.grey.shade600),
+                          style: TextStyle(
+                              color: colorsTheme.theme.textSecondary,
+                              fontSize: 13),
                         )
                       ],
                     ),
                     Text(">",
                         style: TextStyle(
-                            color: Colors.grey.shade600, fontSize: 20))
+                            color: colorsTheme.theme.textSecondary,
+                            fontSize: 20))
                   ],
                 ),
               ),
             ),
             const Divider(
-              thickness: 0.5,
+              thickness: 0.7,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -281,19 +294,24 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                           controller.streetNosheryProfileFireBaseModel.body
                                   ?.review?.title ??
                               "Review",
-                          style: const TextStyle(color: Colors.black),
+                          style: TextStyle(
+                              color: colorsTheme.theme.textPrimary,
+                              fontSize: 15),
                         ),
                         Text(
                           controller.streetNosheryProfileFireBaseModel.body
                                   ?.review?.subTitle ??
                               "Share App Reviews",
-                          style: TextStyle(color: Colors.grey.shade600),
+                          style: TextStyle(
+                              color: colorsTheme.theme.textSecondary,
+                              fontSize: 13),
                         )
                       ],
                     ),
                     Text(">",
                         style: TextStyle(
-                            color: Colors.grey.shade600, fontSize: 20))
+                            color: colorsTheme.theme.textSecondary,
+                            fontSize: 20))
                   ],
                 ),
               ),
@@ -311,8 +329,8 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                     controller.streetNosheryProfileFireBaseModel.body?.pastOrder
                             ?.toUpperCase() ??
                         "PAST ORDERS",
-                    style:
-                        TextStyle(color: Colors.grey.shade600, fontSize: 15)),
+                    style: TextStyle(
+                        color: colorsTheme.theme.textSecondary, fontSize: 15)),
               ),
             ),
             const SizedBox(
@@ -328,14 +346,17 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(controller.streetNosheryProfileFireBaseModel.body
                           ?.emptyOrderTitle ??
-                      "Order to remove your cravings"),
+                      "Order to remove your cravings",
+                      style: TextStyle(
+                        color: colorsTheme.theme.textSecondary, fontSize: 15)),
                 )),
             Visibility(
               visible: !(controller.homeController.streetNosheryUser.value
                       .isRegisterForShop ??
                   false),
               child: Container(
-                color: Colors.grey.shade100,
+                color: colorsTheme.theme.pageBackgroundColor,
+                height: Get.height,
                 child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
@@ -390,21 +411,23 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
                 controller
                     .getPastOrderDetails(foodList[index].orderItems ?? [])
                     .title,
-                style: TextStyle(color: Colors.grey.shade900, fontSize: 15),
+                style: TextStyle(
+                    color: colorsTheme.theme.textSecondary, fontSize: 15),
               ),
               const SizedBox(
                 width: 10,
               ),
               Text(
                   "${controller.getPastOrderDetails(foodList[index].orderItems ?? []).rating}",
-                  style: TextStyle(color: Colors.grey.shade900, fontSize: 15)),
+                  style: TextStyle(
+                      color: colorsTheme.theme.textSecondary, fontSize: 15)),
               const SizedBox(
                 width: 5,
               ),
               Icon(
                 Icons.star, // Star icon
                 color: colorsTheme.theme.yellowStar, // Icon color
-                size: 18, // Icon size
+                size: 15, // Icon size
               ),
               const Spacer(),
               InkWell(
@@ -413,11 +436,12 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
                       'orderTrackId': foodList[index].orderTrackId,
                     });
                   },
-                  child: const Padding(
-                    padding: EdgeInsets.all(10.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
                     child: Text(
                       ">",
-                      style: TextStyle(color: Colors.black, fontSize: 20),
+                      style: TextStyle(
+                          color: colorsTheme.theme.textPrimary, fontSize: 20),
                     ),
                   ))
               // Obx(() {
@@ -450,7 +474,7 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
           ),
           Text(
             DateFormatter().orderDateFormat(foodList[index].orderPlacedAt),
-            style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+            style: TextStyle(color: colorsTheme.theme.textTer, fontSize: 15),
           ),
           const SizedBox(
             height: 10,
@@ -475,7 +499,8 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
                               .recentBrought?.reorder
                               .toUpperCase() ??
                           "REORDER",
-                      style: const TextStyle(color: Colors.black, fontSize: 15),
+                      style: TextStyle(
+                          color: colorsTheme.theme.textPrimary, fontSize: 15),
                     ),
                   ),
                 ),
@@ -499,15 +524,16 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.orangeAccent),
+                        border:
+                            Border.all(color: colorsTheme.theme.orangeAccent),
                         color: Colors.white),
                     child: Text(
                       controller.streetNosheryHomePageFirebaseModel
                               .recentBrought?.rate
                               .toUpperCase() ??
                           "RATE ORDER",
-                      style: const TextStyle(
-                          color: Colors.orangeAccent, fontSize: 15),
+                      style: TextStyle(
+                          color: colorsTheme.theme.orangeAccent, fontSize: 15),
                     ),
                   ),
                 ),

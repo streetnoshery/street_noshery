@@ -11,7 +11,7 @@ class StreetNosheryHelp extends GetView<StreetNosheryHomeController> {
     final colorsTheme = CommonTheme();
     return Scaffold(
       appBar: AppBar(
-        title: Text(controller.streetnosheryHelpAndSupportFirebaseModel.title ?? 'Help & Support', style: TextStyle(color: colorsTheme.theme.textPrimary, fontSize: 18),),
+        title: Text(controller.streetnosheryHelpAndSupportFirebaseModel.title ?? 'Help & Support', style: TextStyle(color: colorsTheme.theme.textPrimary, fontSize: 15),),
         backgroundColor: colorsTheme.theme.lightLeafGreen,
       ),
       body: Padding(
@@ -21,26 +21,18 @@ class StreetNosheryHelp extends GetView<StreetNosheryHomeController> {
           children: [
             Text(
               controller.streetnosheryHelpAndSupportFirebaseModel.body?.title ?? 'How can we help you?',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: colorsTheme.theme.textPrimary),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: colorsTheme.theme.textPrimary),
             ),
             const SizedBox(height: 10),
             Text(
               controller.streetnosheryHelpAndSupportFirebaseModel.body?.subTitle ?? 'If you have any issues with your order, please contact us using the details below.',
-              style: TextStyle(fontSize: 15, color: colorsTheme.theme.greySecondary),
+              style: TextStyle(fontSize: 15, color: colorsTheme.theme.textSecondary),
             ),
-            const SizedBox(height: 20),
-            // ListTile(
-            //   leading: Icon(Icons.phone, color: colors.darkLeafGreen),
-            //   title: Text('${controller.streetnosheryHelpAndSupportFirebaseModel.body?.callUs ?? "Call Us:" }+91 98765 43210'),
-            //   onTap: () {
-            //     // Implement call functionality
-            //   },
-            // ),
             ListTile(
-              leading: Icon(Icons.email, color: colorsTheme.theme.darkLeafGreen),
-              title: const Text('support@yourapp.com'),
+              leading: Icon(Icons.email, color: colorsTheme.theme.darkLeafGreen, size: 25,),
+              title: Text('support@yourapp.com', style: TextStyle(color: colorsTheme.theme.textSecondary, fontSize: 15),),
               onTap: () {
-                controller.sendEmail('sumitgod510@gmail.com');  //TODO: should add shop email ID
+                controller.sendEmail('sumitgod510@gmail.com');
               },
             ),
             const SizedBox(height: 20),

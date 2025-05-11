@@ -19,6 +19,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class StreetNosheryHomeController extends GetxController {
   final RxBool homeState = false.obs;
+  final theme = CommonTheme();
   final onboardingController = Get.find<StreetNosheryOnboardingController>();
 
   Rx<StreetNosheryMenu> menu = StreetNosheryMenu().obs;
@@ -219,7 +220,7 @@ class StreetNosheryHomeController extends GetxController {
         menu.value = response.data;
       }
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 

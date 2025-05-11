@@ -12,44 +12,17 @@ class StreetNosheryAppReviewView
   Widget build(BuildContext context) {
     final colorsTheme = CommonTheme();
     return Scaffold(
+      appBar: AppBar(
+        title: Text(controller.streetNosheryReviewFirebasemodel.title ?? "Rate and Review", style: TextStyle(color: colorsTheme.theme.textPrimary, fontSize: 15),),
+        backgroundColor: colorsTheme.theme.lightLeafGreen,
+      ),
+      backgroundColor: colorsTheme.theme.pageBackgroundColor,
       body: Obx(() {
         return SingleChildScrollView(
           child: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: Get.height * .16,
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                    color: colorsTheme.theme.lightLeafGreen,
-                    borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                        bottomRight:
-                            Radius.circular(30)), // Optional: Rounded corners
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30),
-                        child: IconButton(
-                          icon:
-                              const Icon(Icons.arrow_back, color: Colors.black),
-                          onPressed: () {
-                            Get.back();
-                          },
-                        ),
-                      ),
-                      Center(
-                        child: Text(
-                          controller.streetNosheryReviewFirebasemodel.title ?? "Rate and Review",
-                          style: const TextStyle(color: Colors.black, fontSize: 20),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -57,7 +30,7 @@ class StreetNosheryAppReviewView
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     "${controller.streetNosheryReviewFirebasemodel.ratings ?? "Rating"}(${controller.selectedStars.value}/5)",
-                    style: TextStyle(color: Colors.grey.shade800),
+                    style: TextStyle(color: colorsTheme.theme.textSecondary, fontSize: 15),
                   ),
                 ),
                 const SizedBox(
@@ -74,7 +47,7 @@ class StreetNosheryAppReviewView
                                 : Icons.star_border,
                             color: index < controller.selectedStars.value
                                 ? colorsTheme.theme.yellowStar
-                                : Colors.grey,
+                                : colorsTheme.theme.greySecondary,
                             size: 40,
                           ),
                           onPressed: () {
@@ -90,7 +63,7 @@ class StreetNosheryAppReviewView
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     controller.streetNosheryReviewFirebasemodel.review ?? "Review",
-                    style: TextStyle(color: Colors.grey.shade800),
+                    style: TextStyle(color: colorsTheme.theme.textSecondary, fontSize: 15),
                   ),
                 ),
                 const SizedBox(
@@ -108,9 +81,10 @@ class StreetNosheryAppReviewView
                       focusedBorder: OutlineInputBorder(
                         borderRadius: const BorderRadius.all(Radius.circular(20)),
                         borderSide: BorderSide(
-                            color: Colors.green.shade800, width: 2.0),
+                            color: colorsTheme.theme.darkLeafGreen, width: 2.0),
                       ),
                       hintText: controller.streetNosheryReviewFirebasemodel.reviewPrefilled ?? "Write your review here...",
+                      labelStyle: TextStyle(color: colorsTheme.theme.textPrimary, fontSize: 15)
                     ),
                     onChanged: (value) {
                       controller.review.value = value;
@@ -124,7 +98,7 @@ class StreetNosheryAppReviewView
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
-                        highlightColor: Colors.white,
+                        highlightColor: colorsTheme.theme.surface,
                         onTap: () {
                           Get.back();
                         },
@@ -134,10 +108,10 @@ class StreetNosheryAppReviewView
                             color: Colors.white,
                             borderRadius: const BorderRadius.all(Radius.circular(10)),
                             border: Border.all(
-                              color: Colors.grey.shade400
+                              color: colorsTheme.theme.textTer
                             )
                           ),
-                          child: Text(controller.streetNosheryReviewFirebasemodel.secondaryCta ?? "Cancel", style: const TextStyle(color: Colors.black),),
+                          child: Text(controller.streetNosheryReviewFirebasemodel.secondaryCta ?? "Cancel", style: TextStyle(color: colorsTheme.theme.textPrimary, fontSize: 15),),
                         ),
                       ),
                       InkWell(
@@ -154,10 +128,10 @@ class StreetNosheryAppReviewView
                             color: (controller.selectedStars.value != 0 && controller.review.value.isNotEmpty) ? colorsTheme.theme.lightLeafGreen : Colors.grey.shade300,
                             borderRadius: const BorderRadius.all(Radius.circular(10)),
                             border: Border.all(
-                              color: Colors.grey.shade400
+                              color: colorsTheme.theme.textTer
                             )
                           ),
-                          child: Text(controller.streetNosheryReviewFirebasemodel.primaryCta ?? "Post", style: const TextStyle(color: Colors.black),),
+                          child: Text(controller.streetNosheryReviewFirebasemodel.primaryCta ?? "Post", style: TextStyle(color: colorsTheme.theme.textPrimary, fontSize: 15),),
                         ),
                       )
                     ],

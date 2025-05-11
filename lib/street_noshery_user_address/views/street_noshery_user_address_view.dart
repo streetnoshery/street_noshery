@@ -13,40 +13,11 @@ class StreetNosheryUserAddressView
   Widget build(BuildContext context) {
     final colorsTheme = CommonTheme();
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70), // Custom AppBar height
-        child: Container(
-          decoration: BoxDecoration(boxShadow: [
-            BoxShadow(
-              color: colorsTheme.theme.lightLeafGreen, // Shadow color
-              spreadRadius: 2, // Spread radius
-              blurRadius: 1, // Blur radius
-              offset: const Offset(0, 4), // Offset in X and Y direction
-            ),
-          ]),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 30),
-            child: Row(
-              children: [
-                // Back button at the left
-                IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
-                  onPressed: () {
-                    Get.back();
-                  },
-                ),
-                // Help button at the right
-                Text(
-                  controller.streetNosheryAddressFirebaseModel.title
-                          ?.toUpperCase() ??
-                      "ADDRESSES",
-                  style: const TextStyle(color: Colors.black),
-                ),
-              ],
-            ),
-          ),
-        ),
+      backgroundColor: colorsTheme.theme.pageBackgroundColor,
+      appBar: AppBar(
+        title: Text(controller.streetNosheryAddressFirebaseModel.title ??
+                      "Address", style: TextStyle(color: colorsTheme.theme.textPrimary, fontSize: 15),),
+        backgroundColor: colorsTheme.theme.lightLeafGreen,
       ),
       body: Obx(() {
         final userAddressLine = controller.getUserAddress(
@@ -66,13 +37,15 @@ class StreetNosheryUserAddressView
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 20,),
               DropdownSearch<String>(
-                popupProps: const PopupProps.menu(
+                popupProps: PopupProps.menu(
                   showSearchBox: true, // Enables the search box
                   searchFieldProps: TextFieldProps(
                     decoration: InputDecoration(
                       hintText: "Search here...",
-                      border: OutlineInputBorder(),
+                      labelStyle: TextStyle(color: colorsTheme.theme.textPrimary, fontSize: 15),
+                      border: const OutlineInputBorder(),
                     ),
                   ),
                 ),
@@ -83,6 +56,7 @@ class StreetNosheryUserAddressView
                 dropdownDecoratorProps: DropDownDecoratorProps(
                   dropdownSearchDecoration: InputDecoration(
                     labelText: userAddressLine,
+                    labelStyle: TextStyle(color: colorsTheme.theme.textPrimary, fontSize: 15),
                     hintText: "Choose one",
                     border: const OutlineInputBorder(),
                   ),
@@ -143,7 +117,7 @@ class StreetNosheryUserAddressView
                               ?.toUpperCase() ??
                           "SAVED ADDRESS",
                       style:
-                          TextStyle(color: Colors.grey.shade700, fontSize: 12)),
+                          TextStyle(color: colorsTheme.theme.textSecondary, fontSize: 15)),
                 ),
               ),
               const SizedBox(
@@ -176,7 +150,7 @@ class StreetNosheryUserAddressView
                         Text(
                             userAddressLine,
                             style: TextStyle(
-                                color: Colors.grey.shade700, fontSize: 12)),
+                                color: colorsTheme.theme.textSecondary, fontSize: 15)),
                         const SizedBox(
                           height: 10,
                         ),
@@ -187,10 +161,10 @@ class StreetNosheryUserAddressView
                                         .savedAddress?.phoneNumber ??
                                     "Phone Number:",
                                 style: TextStyle(
-                                    color: Colors.grey.shade700, fontSize: 12)),
+                                    color: colorsTheme.theme.greySecondary, fontSize: 15)),
                             Text(controller.phoneNumber.value,
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 12))
+                                style: TextStyle(
+                                    color: colorsTheme.theme.textPrimary, fontSize: 15))
                           ],
                         )
                       ],

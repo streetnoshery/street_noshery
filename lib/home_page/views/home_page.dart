@@ -21,7 +21,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
         return false;
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: colorsTheme.theme.pageBackgroundColor,
         appBar: const StreetNosheryHomepageAppbar(),
         body: Container(
           decoration: BoxDecoration(
@@ -38,17 +38,10 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
           child: Obx(() {
             controller.homeState.value;
             controller.bestSeller;
-            // final percentange = controller.sale.value;
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -67,23 +60,23 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                     visible:
                         controller.streetNosheryUser.value.isRegisterForShop ??
                             false,
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: 20),
+                          padding: const EdgeInsets.only(left: 20),
                           child: Text(
                             "Orders",
                             style: TextStyle(
-                                color: Colors.black,
+                                color: colorsTheme.theme.textPrimary,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 15),
+                                fontSize: 20),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        StreetNosheryOrderView()
+                        const StreetNosheryOrderView()
                       ],
                     ),
                   ),
@@ -111,6 +104,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                                         "Home",
                                     style: TextStyle(
                                       color: colorsTheme.theme.textPrimary,
+                                      fontSize: 15
                                     ),
                                   )),
                               (controller.selectedTab.value == TabEnum.home)
@@ -138,8 +132,9 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                                             .menuTab
                                             ?.menu ??
                                         "Menu",
-                                    style: const TextStyle(
-                                      color: Colors.black,
+                                    style: TextStyle(
+                                      color: colorsTheme.theme.textPrimary,
+                                      fontSize: 15
                                     ),
                                   )),
                               (controller.selectedTab.value == TabEnum.menu)
@@ -167,8 +162,9 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                                             .menuTab
                                             ?.cart ??
                                         "Cart",
-                                    style: const TextStyle(
-                                      color: Colors.black,
+                                    style: TextStyle(
+                                      color: colorsTheme.theme.textPrimary,
+                                      fontSize: 15
                                     ),
                                   )),
                               (controller.selectedTab.value == TabEnum.cart)
@@ -194,7 +190,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 20),
                       child: Divider(
-                        thickness: 1,
+                        thickness: 1.5,
                         color: colorsTheme.theme.greySecondary,
                       ),
                     ),
@@ -210,10 +206,10 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                         controller.streetNosheryHomePageFirebaseModel
                                 .homePageBestSeller?.title ??
                             "BestSeller",
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontStyle: FontStyle.italic,
-                            fontSize: 18,
-                            color: Colors.orangeAccent,
+                            fontSize: 20,
+                            color: colorsTheme.theme.orangeAccent,
                             fontWeight: FontWeight.bold),
                       ),
                     ),

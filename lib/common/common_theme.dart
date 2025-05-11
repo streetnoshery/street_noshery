@@ -29,4 +29,6 @@ class CommonPrivateTheme {
   final Color pageBackgroundColor = const Color(0xFFEEEEEE);
   final Color textGreen = const Color(0xFF2E7D32);
   final Color errorText = const Color(0xFF9A0E0B);
+  final Color orangeAccent = const Color(0xFFFFAB40);
+  final Color surface = const Color(0xFFFFFFFF);
 }

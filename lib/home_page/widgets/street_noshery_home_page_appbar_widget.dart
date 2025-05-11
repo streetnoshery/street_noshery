@@ -37,25 +37,25 @@ class StreetNosheryHomepageAppbar extends GetView<StreetNosheryHomeController>
                     fontWeight: FontWeight.bold),
               ),
               Text(
-                "${controller.streetNosheryUser.value.userName ?? controller.onboardingController.userName.value}...",
-                style: TextStyle(color: colorsTheme.theme.textSecondary, fontSize: 12),
+                controller.streetNosheryUser.value.userName ?? controller.onboardingController.userName.value,
+                style: TextStyle(color: colorsTheme.theme.textSecondary, fontSize: 15),
               )
             ],
           ),
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 20, top: 10),
+            padding: const EdgeInsets.only(right: 20, top: 0),
             child: InkWell(
               onTap: () {
                 Get.toNamed(Routes.profile);
               },
               child: CircleAvatar(
                 radius: 15,
-                backgroundColor: colorsTheme.theme.textTer,
-                child: const Icon(
+                backgroundColor: colorsTheme.theme.surface,
+                child: Icon(
                   Icons.person, // Profile placeholder icon
-                  color: Colors.black,
+                  color: colorsTheme.theme.textPrimary,
                   size: 20,
                 ),
               ),
