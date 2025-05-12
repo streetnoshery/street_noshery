@@ -40,8 +40,7 @@ class BestSellerFoodItems extends StatelessWidget {
               );
         },
         onTap: () {
-          streetNosheryHomeController.addAllItemsToCart([favFoodData[index]]);
-          Get.toNamed(Routes.cart);
+          Get.toNamed(Routes.menu);
         },
         child: Card(
           surfaceTintColor: Colors.white,

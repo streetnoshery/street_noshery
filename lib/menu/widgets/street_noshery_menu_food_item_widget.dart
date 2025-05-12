@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:street_noshery/common/common_bottomsheet.dart';
+import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/home_page/models/street_noshery_menu_model.dart';
 import 'package:street_noshery/menu/controller/street_noshery_menu_controller.dart';
 import 'package:street_noshery/menu/enums/street_noshery_menu_enums.dart';
@@ -15,6 +16,7 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
 
   @override
   Widget build(BuildContext context) {
+    final colorTheme = CommonTheme();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,14 +29,14 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(6)),
                   border: Border.all(
-                      color: Colors.green.shade700, // Border color
+                      color: colorTheme.theme.veg, // Border color
                       width: 2, // Border width
                       style: BorderStyle.solid)),
               child: Container(
                   height: 10,
                   width: 10,
                   decoration: BoxDecoration(
-                    color: Colors.green.shade700,
+                    color: colorTheme.theme.veg,
                     borderRadius: const BorderRadius.all(Radius.circular(5)),
                   )),
             ),
@@ -46,10 +48,9 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
                   0.4, // Specify width or wrap in Flexible if inside a limited space
               child: Text(
                 "${foodItem.dishName}",
-                style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: colorTheme.theme.textPrimary,
+                    fontSize: 20),
               ),
             ),
             const SizedBox(
@@ -57,7 +58,7 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
             ),
             Text(
               "\u20B9 ${foodItem.price}",
-              style: const TextStyle(color: Colors.black, fontSize: 15),
+              style: TextStyle(color: colorTheme.theme.textSecondary, fontSize: 15),
             ),
             const SizedBox(
               height: 10,
@@ -68,22 +69,22 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
               children: [
                 Icon(
                   Icons.star, // Star icon
-                  color: Colors.green.shade800, // Icon color
-                  size: 15, // Icon size
+                  color: colorTheme.theme.textGreen, // Icon color
+                  size: 20, // Icon size
                 ),
                 const SizedBox(
                   width: 2,
                 ),
                 Text(
                   "${double.parse(foodItem.rating?.toStringAsFixed(1) ?? "1")}",
-                  style: TextStyle(fontSize: 15, color: Colors.green.shade800),
+                  style: TextStyle(fontSize: 15, color: colorTheme.theme.textGreen),
                 ),
                 const SizedBox(
                   width: 5,
                 ),
                 Text(
                   "(${foodItem.ratingCount})",
-                  style: TextStyle(color: Colors.grey.shade800, fontSize: 15),
+                  style: TextStyle(color: colorTheme.theme.textSecondary, fontSize: 15),
                 ),
               ],
             ),
@@ -99,10 +100,10 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(color: Colors.grey.shade400)),
+                    border: Border.all(color: colorTheme.theme.textTer)),
                 child: Text(
                   controller.streetNosheryMenuFirebaseStaticModel.menu?.moreDetail ?? "More Details >",
-                  style: TextStyle(color: Colors.grey.shade600, fontSize: 15),
+                  style: TextStyle(color: colorTheme.theme.textSecondary, fontSize: 15),
                 ),
               ),
             )
@@ -147,11 +148,11 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
                           fontSize: 16.0 // Font size
                           );
                     },
-                    child: const Padding(
-                      padding: EdgeInsets.all(0.0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(0.0),
                       child: Text(
                         "-",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        style: TextStyle(color: colorTheme.theme.surface, fontSize: 20),
                       ),
                     ),
                   ),
@@ -163,7 +164,7 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
                     child: Center(
                       child: Text(
                         "${foodItem.count}",
-                        style: const TextStyle(color: Colors.white, fontSize: 15),
+                        style: TextStyle(color: colorTheme.theme.surface, fontSize: 15),
                       ),
                     ),
                   ),
@@ -186,9 +187,9 @@ class StreetnosheryMenuItems extends GetView<StreetNosheryMenuController> {
                           fontSize: 16.0 // Font size
                           );
                     },
-                    child: const Padding(
-                      padding: EdgeInsets.all(5.0),
-                      child: Text("+", style: TextStyle(color: Colors.white)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text("+", style: TextStyle(color: colorTheme.theme.surface, fontSize: 15)),
                     ),
                   )
                 ],

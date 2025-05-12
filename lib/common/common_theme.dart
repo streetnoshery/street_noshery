@@ -31,4 +31,6 @@ class CommonPrivateTheme {
   final Color errorText = const Color(0xFF9A0E0B);
   final Color orangeAccent = const Color(0xFFFFAB40);
   final Color surface = const Color(0xFFFFFFFF);
+  final Color transwparent = const Color(0x00000000);
+  final Color veg = const Color(0xFF388E3C);
 }

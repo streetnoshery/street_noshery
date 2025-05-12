@@ -126,11 +126,17 @@ class StreetNosheryHomeController extends GetxController {
     switch (type) {
       case UpdatePrice.add:
         totalCartAmount.value += itemPrice;
-        updateTotalPayment();
+        totalPayment.value = totalCartAmount.value +
+        deliveryFee.value +
+        platFormFee.value +
+        gst.value;
         break;
       case UpdatePrice.removed:
         totalCartAmount.value -= itemPrice;
-        updateTotalPayment();
+        totalPayment.value = totalCartAmount.value +
+        deliveryFee.value +
+        platFormFee.value +
+        gst.value;
     }
   }
 
@@ -178,13 +184,6 @@ class StreetNosheryHomeController extends GetxController {
       return true;
     }
     return false;
-  }
-
-  void updateTotalPayment() {
-    totalPayment.value = totalCartAmount.value +
-        deliveryFee.value +
-        platFormFee.value +
-        gst.value;
   }
 
   void increaseStarCount(int index) {
@@ -249,7 +248,7 @@ class StreetNosheryHomeController extends GetxController {
     var response = PastOrderDetailsResponse(title: '', rating: 0, price: "0");
     var price = 0;
     for (var pastOrderMenu in menuList) {
-      response.title += (pastOrderMenu.dishName ?? "");
+      response.title += "${pastOrderMenu.dishName} ";
       response.rating += pastOrderMenu.rating?.toInt() ?? 0;
       price += num.tryParse(pastOrderMenu.price.toString())?.toInt() ?? 0;
     }

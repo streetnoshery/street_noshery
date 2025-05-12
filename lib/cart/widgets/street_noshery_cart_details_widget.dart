@@ -106,6 +106,7 @@ class StreetNosheryCartDetailsWidget
                                       InkWell(
                                         onTap: () {
                                           controller.homeController.addAllItemsToCart([cartItem]);
+                                          controller.menuController.updateItems(foodId);
                                         },
                                         child: const Padding(
                                           padding: EdgeInsets.all(5.0),

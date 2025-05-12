@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:street_noshery/common/common_theme.dart';
-import 'package:street_noshery/home_page/enums/street_noshery_home_page_enums.dart';
 import 'package:street_noshery/menu/controller/street_noshery_menu_controller.dart';
 import 'package:street_noshery/menu/widgets/street_noshery_menu_food_item_widget.dart';
 import 'package:street_noshery/routes/app_pages.dart';
@@ -16,7 +15,15 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
     return Obx(() {
       controller.menuList;
       return Scaffold(
-          backgroundColor: Colors.grey.shade100,
+          backgroundColor: colorsTheme.theme.pageBackgroundColor,
+          appBar: AppBar(
+            title: Text(
+              "Menu",
+              style:
+                  TextStyle(color: colorsTheme.theme.textPrimary, fontSize: 15),
+            ),
+            backgroundColor: colorsTheme.theme.lightLeafGreen,
+          ),
           floatingActionButton: SizedBox(
             width: Get.width,
             child: Padding(
@@ -28,10 +35,6 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
-                  foregroundColor:
-                      controller.homeController.foodCartList.isNotEmpty
-                          ? Colors.white
-                          : Colors.black,
                   backgroundColor:
                       controller.homeController.foodCartList.isNotEmpty
                           ? Colors.black
@@ -45,8 +48,14 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                   ),
                 ),
                 child: Text(
-                  controller.streetNosheryMenuFirebaseStaticModel.primaryCtaTitle ?? "Cart >",
-                  style: const TextStyle(fontSize: 16), // Text style
+                  controller.streetNosheryMenuFirebaseStaticModel
+                          .primaryCtaTitle ??
+                      "Cart >",
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: controller.homeController.foodCartList.isNotEmpty
+                          ? colorsTheme.theme.surface
+                          : colorsTheme.theme.greySecondary), // Text style
                 ),
               ),
             ),
@@ -56,138 +65,102 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    height: Get.height * .25,
-                    decoration: BoxDecoration(
-                      color: colorsTheme.theme.lightLeafGreen,
-                      borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(30),
-                          bottomRight:
-                              Radius.circular(30)), // Optional: Rounded corners
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30, bottom: 20),
-                          child: Row(
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.arrow_back,
-                                    color: Colors.black),
-                                onPressed: () {
-                                  controller.homeController.selectedTab.value =
-                                      TabEnum.home;
-                                  Get.back();
-                                },
-                              )
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Container(
-                            width: Get.width,
-                            decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              color: Colors.white,
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Container(
+                      width: Get.width,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: Colors.white,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Discover Delight at Street Noshery",
+                                  style: TextStyle(
+                                      color: colorsTheme.theme.textPrimary,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  "Flavors that feel like home.",
+                                  style: TextStyle(
+                                      color: colorsTheme.theme.textSecondary,
+                                      fontSize: 15),
+                                ),
+                              ],
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, top: 10, bottom: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "Office address cafe name",
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20),
-                                          ),
-                                          // Text(
-                                          //   "5-10 ${controller.streetNosheryMenuFirebaseStaticModel.appbar?.deliveryTimeMin ?? "mins"}",
-                                          //   style: const TextStyle(
-                                          //       color: Colors.black,
-                                          //       fontSize: 15),
-                                          // )
-                                        ],
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 10, right: 20),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5,
-                                                        vertical: 2),
-                                                decoration: BoxDecoration(
-                                                    color:
-                                                        colorsTheme.theme.lightMossgreen,
-                                                    borderRadius:
-                                                        const BorderRadius.all(
-                                                            Radius.circular(
-                                                                10))),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    const SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    Icon(
-                                                      Icons.star, // Star icon
-                                                      color: colorsTheme.theme.yellowStar, // Icon color
-                                                      size: 15, // Icon size
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    Text(
-                                                      "${controller.rating.value}",
-                                                      style: const TextStyle(
-                                                          fontSize: 15,
-                                                          color: Colors.white),
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                  ],
-                                                )),
-                                            Text(
-                                              controller.streetNosheryMenuFirebaseStaticModel.appbar?.rating ?? "Ratings",
-                                              style: TextStyle(
-                                                  color: Colors.grey.shade600,
-                                                  fontSize: 13),
-                                            )
-                                          ],
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5, vertical: 2),
+                                    decoration: BoxDecoration(
+                                        color: colorsTheme.theme.lightMossgreen,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10))),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        const SizedBox(
+                                          width: 5,
                                         ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
+                                        Icon(
+                                          Icons.star, // Star icon
+                                          color: colorsTheme
+                                              .theme.yellowStar, // Icon color
+                                          size: 15, // Icon size
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          "${controller.rating.value}",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: colorsTheme.theme.surface),
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                      ],
+                                    )),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  controller
+                                          .streetNosheryMenuFirebaseStaticModel
+                                          .appbar
+                                          ?.rating ??
+                                      "Ratings",
+                                  style: TextStyle(
+                                      color: colorsTheme.theme.textSecondary,
+                                      fontSize: 13),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -200,26 +173,30 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                       child: Row(
                         children: [
                           Text(
-                            controller.streetNosheryMenuFirebaseStaticModel.recentBroughtTitle ?? "Recently Brought",
-                            style: const TextStyle(
+                            controller.streetNosheryMenuFirebaseStaticModel
+                                    .recentBroughtTitle ??
+                                "Recently Brought",
+                            style: TextStyle(
                                 fontStyle: FontStyle.italic,
-                                fontSize: 18,
-                                color: Colors.black,
+                                fontSize: 20,
+                                color: colorsTheme.theme.textPrimary,
                                 fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
                             width: 5,
                           ),
-                          const Text(
+                          Text(
                             "😋", // Yummy face emoji
-                            style: TextStyle(fontSize: 15),
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: colorsTheme.theme.yellowStar),
                           )
                         ],
                       ),
                     ),
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
                   Visibility(
                     visible: controller.menuList.isNotEmpty,
@@ -254,21 +231,29 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  controller.streetNosheryMenuFirebaseStaticModel.menu?.breakfastTitle ?? "Healthy Breakfast & Gym Diet",
-                                  style: const TextStyle(
-                                      color: Colors.black,
+                                  controller
+                                          .streetNosheryMenuFirebaseStaticModel
+                                          .menu
+                                          ?.breakfastTitle ??
+                                      "Healthy Breakfast & Gym Diet",
+                                  style: TextStyle(
+                                      color: colorsTheme.theme.textPrimary,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
                                 (controller.isBreakfastSelected.value)
-                                    ? const Text(
+                                    ? Text(
                                         "^",
                                         style: TextStyle(
-                                            color: Colors.black, fontSize: 25),
+                                            color:
+                                                colorsTheme.theme.textPrimary,
+                                            fontSize: 25),
                                       )
-                                    : const Text("v",
+                                    : Text("v",
                                         style: TextStyle(
-                                            color: Colors.black, fontSize: 20)),
+                                            color:
+                                                colorsTheme.theme.textPrimary,
+                                            fontSize: 18)),
                               ],
                             ),
                           ),
@@ -318,21 +303,29 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  controller.streetNosheryMenuFirebaseStaticModel.menu?.thaliAndCombosTitle ?? "Thalis & Combos for ${"Sumit"}",
-                                  style: const TextStyle(
-                                      color: Colors.black,
+                                  controller
+                                          .streetNosheryMenuFirebaseStaticModel
+                                          .menu
+                                          ?.thaliAndCombosTitle ??
+                                      "Thalis & Combos for ${"Sumit"}",
+                                  style: TextStyle(
+                                      color: colorsTheme.theme.textPrimary,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
                                 (controller.isFooditemSelected.value)
-                                    ? const Text(
+                                    ? Text(
                                         "^",
                                         style: TextStyle(
-                                            color: Colors.black, fontSize: 25),
+                                            color:
+                                                colorsTheme.theme.textPrimary,
+                                            fontSize: 25),
                                       )
-                                    : const Text("v",
+                                    : Text("v",
                                         style: TextStyle(
-                                            color: Colors.black, fontSize: 20)),
+                                            color:
+                                                colorsTheme.theme.textPrimary,
+                                            fontSize: 18)),
                               ],
                             ),
                           ),
@@ -380,21 +373,29 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  controller.streetNosheryMenuFirebaseStaticModel.menu?.sidesAndDrinksTitle ?? "Sides & Drinks",
+                                  controller
+                                          .streetNosheryMenuFirebaseStaticModel
+                                          .menu
+                                          ?.sidesAndDrinksTitle ??
+                                      "Sides & Drinks",
                                   style: const TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
                                 (controller.isDrinksSelected.value)
-                                    ? const Text(
+                                    ? Text(
                                         "^",
                                         style: TextStyle(
-                                            color: Colors.black, fontSize: 25),
+                                            color:
+                                                colorsTheme.theme.textPrimary,
+                                            fontSize: 25),
                                       )
-                                    : const Text("v",
+                                    : Text("v",
                                         style: TextStyle(
-                                            color: Colors.black, fontSize: 20)),
+                                            color:
+                                                colorsTheme.theme.textPrimary,
+                                            fontSize: 18)),
                               ],
                             ),
                           ),
@@ -439,14 +440,19 @@ Widget _buildListItems(BuildContext context, int index) {
           ? Get.find<StreetNosheryMenuController>()
           : Get.put(StreetNosheryMenuController());
   final favFoodData = streetNosheryMenuController.menuList;
+  final colorsTheme = CommonTheme();
   return SizedBox(
     width: 150,
     height: 300,
     child: InkWell(
-      splashColor: Colors.transparent, // Removes the splash color
-      highlightColor: Colors.transparent,
+      splashColor: colorsTheme.theme.transwparent, // Removes the splash color
+      highlightColor: colorsTheme.theme.transwparent,
       onTap: () {
-        streetNosheryMenuController.homeController.addAllItemsToCart(favFoodData[index].orderItems ?? []);
+        streetNosheryMenuController.homeController
+            .addAllItemsToCart(favFoodData[index].orderItems ?? []);
+        for (var foodItem in favFoodData[index].orderItems ?? []) {
+          streetNosheryMenuController.updateItems(foodItem.foodId);
+        }
         Get.toNamed(Routes.cart);
       },
       child: Card(
@@ -467,8 +473,11 @@ Widget _buildListItems(BuildContext context, int index) {
               Padding(
                 padding: const EdgeInsets.only(left: 15),
                 child: Text(
-                  streetNosheryMenuController.homeController.getPastOrderDetails(favFoodData[index].orderItems ??[]).title,
-                  style: const TextStyle(color: Colors.black, fontSize: 15),
+                  streetNosheryMenuController.homeController
+                      .getPastOrderDetails(favFoodData[index].orderItems ?? [])
+                      .title,
+                  style: TextStyle(
+                      color: colorsTheme.theme.textSecondary, fontSize: 15),
                 ),
               ),
               const SizedBox(
@@ -480,25 +489,31 @@ Widget _buildListItems(BuildContext context, int index) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      streetNosheryMenuController.homeController.getPastOrderDetails(favFoodData[index].orderItems ??[]).price ?? "",
-                      style:
-                          TextStyle(color: Colors.grey.shade600, fontSize: 15),
+                      streetNosheryMenuController.homeController
+                              .getPastOrderDetails(
+                                  favFoodData[index].orderItems ?? [])
+                              .price ??
+                          "",
+                      style: TextStyle(
+                          color: colorsTheme.theme.textSecondary, fontSize: 15),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "${streetNosheryMenuController.homeController.getPastOrderDetails(favFoodData[index].orderItems ??[]).rating}",
-                          style: const TextStyle(fontSize: 15),
+                          "${streetNosheryMenuController.homeController.getPastOrderDetails(favFoodData[index].orderItems ?? []).rating}",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: colorsTheme.theme.textSecondary),
                         ),
                         const SizedBox(
-                          width: 10,
+                          width: 5,
                         ),
-                        const Icon(
+                        Icon(
                           Icons.star, // Star icon
-                          color: Colors.amber, // Icon color
-                          size: 15, // Icon size
+                          color: colorsTheme.theme.yellowStar, // Icon color
+                          size: 20, // Icon size
                         ),
                         const SizedBox(
                           width: 15,

@@ -176,7 +176,7 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                   style: TextStyle(
                       fontSize: 15,
                       color: controller.homeController.foodCartList.isNotEmpty
-                          ? colorsTheme.theme.textPrimary
+                          ? colorsTheme.theme.surface
                           : colorsTheme.theme.textTer), // Text style
                 ),
               ),
@@ -484,9 +484,7 @@ class StreetNosheryPastOrders extends GetView<StreetNosheryHomeController> {
               Flexible(
                 child: InkWell(
                   onTap: () {
-                    controller
-                        .addAllItemsToCart(foodList[index].orderItems ?? []);
-                    Get.toNamed(Routes.cart);
+                    Get.toNamed(Routes.menu);
                   },
                   child: Container(
                     padding:
