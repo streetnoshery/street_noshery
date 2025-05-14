@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:street_noshery/common/common_theme.dart';
+import 'package:street_noshery/home_page/enums/street_noshery_home_page_enums.dart';
 import 'package:street_noshery/menu/controller/street_noshery_menu_controller.dart';
 import 'package:street_noshery/menu/widgets/street_noshery_menu_food_item_widget.dart';
 import 'package:street_noshery/routes/app_pages.dart';
@@ -23,6 +24,14 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                   TextStyle(color: colorsTheme.theme.textPrimary, fontSize: 15),
             ),
             backgroundColor: colorsTheme.theme.lightLeafGreen,
+            leading: IconButton(
+              icon:
+                  Icon(Icons.arrow_back, color: colorsTheme.theme.textPrimary),
+              onPressed: () {
+                controller.homeController.selectedTab.value = TabEnum.home;
+                Get.back();
+              },
+            ),
           ),
           floatingActionButton: SizedBox(
             width: Get.width,
@@ -72,9 +81,16 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Container(
                       width: Get.width,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         color: Colors.white,
+                        boxShadow: [
+                  BoxShadow(
+                    color: colorsTheme.theme.shadowColor, // Shadow color
+                    blurRadius: 6, // Blur radius
+                    spreadRadius: 2, // Spread radius
+                    offset: Offset(2, 4), // Shadow offset (x, y)
+                  )]
                       ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(

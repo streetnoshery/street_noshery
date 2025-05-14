@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
 
 class StreetNosheryHeartbeatScreen extends StatelessWidget {
@@ -7,12 +8,12 @@ class StreetNosheryHeartbeatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("StreetNosheryHeartbeatScreen class before onboarding controller running: print");
+    final colorTheme = CommonTheme();
     Get.isRegistered<StreetNosheryOnboardingController>()
             ? Get.find<StreetNosheryOnboardingController>()
             : Get.put(StreetNosheryOnboardingController());
-    print("StreetNosheryHeartbeatScreen class after onboarding controller running: print");
     return Scaffold(
+      backgroundColor: colorTheme.theme.pageBackgroundColor,
       body: Center(
         child: TweenAnimationBuilder(
           tween: Tween<double>(begin: 1.0, end: 1.5),

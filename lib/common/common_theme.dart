@@ -15,7 +15,7 @@ class CommonPrivateTheme {
   static CommonPrivateTheme get instance => _instance;
 
   // Define your colors
-  final Color darkMossGreen = const Color(0xFF0F2A1D);
+  final Color darkMossGreen = const Color.fromARGB(255, 171, 185, 178);
   final Color darkLeafGreen = const Color(0xFF375534);
   final Color lightMossgreen = const Color(0xFF6B9071);
   final Color lightLeafGreen = const Color(0xFFAEC3B0);
@@ -26,11 +26,12 @@ class CommonPrivateTheme {
   final Color greyTer = const Color(0xFFF5F5F5);
   final Color greySecondary = const Color(0xFF757575);
   final Color yellowStar = const Color(0xFFFFE135);
-  final Color pageBackgroundColor = const Color(0xFFEEEEEE);
+  final Color pageBackgroundColor = const Color(0xFFF6F6F6);
   final Color textGreen = const Color(0xFF2E7D32);
   final Color errorText = const Color(0xFF9A0E0B);
   final Color orangeAccent = const Color(0xFFFFAB40);
   final Color surface = const Color(0xFFFFFFFF);
   final Color transwparent = const Color(0x00000000);
   final Color veg = const Color(0xFF388E3C);
+  final Color shadowColor = const Color(0x42000000);
 }

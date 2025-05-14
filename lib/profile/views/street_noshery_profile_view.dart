@@ -16,6 +16,7 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
     final colorsTheme = CommonTheme();
     return Obx(() {
       return Scaffold(
+        backgroundColor: colorsTheme.theme.pageBackgroundColor,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(100), // Custom AppBar height
           child: Container(
@@ -356,9 +357,8 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                   false),
               child: Container(
                 color: colorsTheme.theme.pageBackgroundColor,
-                height: Get.height,
+                height: Get.height * 0.60,
                 child: ListView.separated(
-                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       final foodList =
@@ -378,11 +378,8 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 60,
             ),
-            const SizedBox(
-              height: 30,
-            )
           ],
         )),
       );

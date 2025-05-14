@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:street_noshery/cart/controllers/street_noshery_cart_controller.dart';
+import 'package:street_noshery/common/common_theme.dart';
 
 class StreetNosherySavingCorner extends GetView<StreetNosheryCartController> {
   const StreetNosherySavingCorner({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final colorTheme = CommonTheme();
     return Obx(() {
       return Visibility(
           visible: controller.homeController.foodCartList.isNotEmpty,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Container(
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  color: Colors.white,
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  color: colorTheme.theme.surface,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black26, // Shadow color
+                      color: colorTheme.theme.shadowColor, // Shadow color
                       blurRadius: 6, // Blur radius
                       spreadRadius: 2, // Spread radius
-                      offset: Offset(2, 4), // Shadow offset (x, y)
+                      offset: const Offset(2, 4), // Shadow offset (x, y)
                     ),
                   ]),
               child: Padding(
@@ -32,7 +34,7 @@ class StreetNosherySavingCorner extends GetView<StreetNosheryCartController> {
                   children: [
                     Text(
                       controller.streetNosheryFirebasemodel.savingCorner?.title ??  "Savings Corner",
-                      style: TextStyle(fontSize: 15),
+                      style: TextStyle(fontSize: 15, color: colorTheme.theme.textPrimary),
                     ),
                     const SizedBox(
                       height: 5,
@@ -41,7 +43,7 @@ class StreetNosherySavingCorner extends GetView<StreetNosheryCartController> {
                       children: [
                         Icon(
                           Icons.local_offer, // Tag-like icon
-                          color: Colors.teal.shade500,
+                          color: colorTheme.theme.veg,
                           size: 15,
                         ),
                         const SizedBox(
@@ -50,7 +52,7 @@ class StreetNosherySavingCorner extends GetView<StreetNosheryCartController> {
                         Text(
                           controller.streetNosheryFirebasemodel.savingCorner?.subtitle ?? "Savings Corner",
                           style: TextStyle(
-                              fontSize: 15, color: Colors.grey.shade600),
+                              fontSize: 15, color: colorTheme.theme.greySecondary),
                         )
                       ],
                     )

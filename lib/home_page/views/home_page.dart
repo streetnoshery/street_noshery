@@ -25,7 +25,7 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
         appBar: const StreetNosheryHomepageAppbar(),
         body: Container(
           decoration: BoxDecoration(
-            color: colorsTheme.theme.greyTer,
+            color: colorsTheme.theme.pageBackgroundColor,
             boxShadow: [
               BoxShadow(
                 color: colorsTheme.theme.textPrimary.withOpacity(0.3), // Shadow color
@@ -257,25 +257,22 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                         !(controller
                                 .streetNosheryUser.value.isRegisterForShop ??
                             true)),
-                    child: Container(
-                      color: Colors.grey.shade100,
-                      child: ListView.separated(
-                          shrinkWrap: true,
-                          physics: const BouncingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            final foodList =
-                                controller.recentlyBroughtFoodItems;
-                            return StreetNosheryPastOrders(
-                                foodList: foodList, index: index);
-                          },
-                          separatorBuilder: (context, index) {
-                            return const Divider(
-                              thickness: 0.5,
-                            );
-                          },
-                          itemCount:
-                              controller.recentlyBroughtFoodItems.length),
-                    ),
+                    child: ListView.separated(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          final foodList =
+                              controller.recentlyBroughtFoodItems;
+                          return StreetNosheryPastOrders(
+                              foodList: foodList, index: index);
+                        },
+                        separatorBuilder: (context, index) {
+                          return const Divider(
+                            thickness: 0.5,
+                          );
+                        },
+                        itemCount:
+                            controller.recentlyBroughtFoodItems.length > 2 ? 2 : controller.recentlyBroughtFoodItems.length),
                   ),
                   const SizedBox(
                     height: 20,

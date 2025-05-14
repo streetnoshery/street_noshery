@@ -10,6 +10,7 @@ class StreetNosheryHelp extends GetView<StreetNosheryHomeController> {
   Widget build(BuildContext context) {
     final colorsTheme = CommonTheme();
     return Scaffold(
+      backgroundColor: colorsTheme.theme.pageBackgroundColor,
       appBar: AppBar(
         title: Text(controller.streetnosheryHelpAndSupportFirebaseModel.title ?? 'Help & Support', style: TextStyle(color: colorsTheme.theme.textPrimary, fontSize: 15),),
         backgroundColor: colorsTheme.theme.lightLeafGreen,

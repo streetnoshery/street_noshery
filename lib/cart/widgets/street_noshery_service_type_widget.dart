@@ -17,15 +17,15 @@ class StreetNosheryServiceTypeWidget
         margin: const EdgeInsets.symmetric(
             horizontal: 20), // Use margin instead of separate Padding
         width: Get.width,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: Colors.white,
+        decoration:  BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          color: colorsTheme.theme.surface,
           boxShadow: [
             BoxShadow(
-              color: Colors.black26, // Shadow color
+              color: colorsTheme.theme.shadowColor, // Shadow color
               blurRadius: 6, // Blur radius
               spreadRadius: 2, // Spread radius
-              offset: Offset(2, 4), // Shadow offset (x, y)
+              offset: const Offset(2, 4), // Shadow offset (x, y)
             ),
           ],
         ),
@@ -40,14 +40,13 @@ class StreetNosheryServiceTypeWidget
             final value = option.values.first;
             return Obx(() {
               return ListTile(
-                title: Text(value),
+                title: Text(value, style: TextStyle(color: colorsTheme.theme.textPrimary, fontSize: 15),),
                 leading: Radio<int>(
                   value: key,
-                  activeColor: colorsTheme.theme.lightMossgreen,
+                  activeColor: colorsTheme.theme.veg,
                   groupValue: controller.serviceOption.value,
                   onChanged: (selectedValue) {
                     if (selectedValue != null) {
-                      print(selectedValue);
                       controller.serviceOption.value = selectedValue;
                       if (selectedValue == 3) {
                         _showBottomSheet(context);

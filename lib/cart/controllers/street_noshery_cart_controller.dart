@@ -22,8 +22,7 @@ class StreetNosheryCartController extends GetxController {
       : Get.put(StreetNosheryMenuController());
   List serviceType = [
     {1: "take Away"},
-    {2: "book Table"},
-    {3: "Schedule"}
+    {2: "book Table"}
   ];
   final serviceOption = 1.obs;
   final allImages = CommonImages();
@@ -53,7 +52,7 @@ class StreetNosheryCartController extends GetxController {
     serviceType = [
       {1: streetNosheryFirebasemodel.serviceChoice?[0] ?? "take Away"},
       {2: streetNosheryFirebasemodel.serviceChoice?[1] ?? "book Table"},
-      {3: streetNosheryFirebasemodel.serviceChoice?[2] ?? "Schedule"}
+      // {3: streetNosheryFirebasemodel.serviceChoice?[2] ?? "Schedule"}
     ];
   }
 

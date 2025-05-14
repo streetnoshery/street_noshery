@@ -16,16 +16,32 @@ class StreetNosheryCartView extends GetView<StreetNosheryCartController> {
   Widget build(BuildContext context) {
     final colorsTheme = CommonTheme();
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: colorsTheme.theme.pageBackgroundColor,
+      appBar: AppBar(
+        title: Text(
+          controller.streetNosheryFirebasemodel.title ?? "Cart",
+          style: TextStyle(color: colorsTheme.theme.textPrimary, fontSize: 15),
+        ),
+        backgroundColor: colorsTheme.theme.lightLeafGreen,
+        leading: IconButton(
+              icon:
+                  Icon(Icons.arrow_back, color: colorsTheme.theme.textPrimary),
+              onPressed: () {
+                controller.homeController.selectedTab.value = TabEnum.home;
+                Get.back();
+              },
+            ),
+      ),
       floatingActionButton: Obx(() {
         return SizedBox(
-          width: Get.height,
+          width: Get.width,
+          height: 50,
           child: Padding(
             padding: const EdgeInsets.only(left: 30),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black, // Background color
-                foregroundColor: Colors.white, // Text color
+                backgroundColor: colorsTheme.theme.textPrimary, // Background color
+                foregroundColor: colorsTheme.theme.surface, // Text color
               ),
               onPressed: controller.homeController.foodCartList.isNotEmpty
                   ? () async {
@@ -35,97 +51,64 @@ class StreetNosheryCartView extends GetView<StreetNosheryCartController> {
                       controller.placeOrder();
                     }
                   : null,
-              child: Text(controller.streetNosheryFirebasemodel.primaryCTA ?? 'Pay'),
+              child: Text(
+                  controller.streetNosheryFirebasemodel.primaryCTA ?? 'Pay', style: TextStyle(color: controller.homeController.foodCartList.isNotEmpty ? colorsTheme.theme.surface : colorsTheme.theme.greySecondary),),
             ),
           ),
         );
       }),
       body: Obx(() {
         return SingleChildScrollView(
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: Get.height * .16,
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                    color: colorsTheme.theme.lightLeafGreen,
-                    borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                        bottomRight:
-                            Radius.circular(30)), // Optional: Rounded corners
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30),
-                        child: IconButton(
-                          icon:
-                              const Icon(Icons.arrow_back, color: Colors.black),
-                          onPressed: () {
-                            controller.homeController.selectedTab.value =
-                                TabEnum.home;
-                            Get.back();
-                          },
-                        ),
-                      ),
-                      Center(
-                        child: Text(
-                          controller.streetNosheryFirebasemodel.title ?? "Cart",
-                          style: const TextStyle(color: Colors.black, fontSize: 20),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const StreetNosheryCartDetailsWidget(),
-                const SizedBox(
-                  height: 20,
-                ),
-                const StreetNosherySavingCorner(),
-                const SizedBox(
-                  height: 20,
-                ),
-                const StreetNosheryServiceTypeWidget(),
-                const SizedBox(
-                  height: 20,
-                ),
-                const StreetNosheryPaymentWidget(),
-                Center(
-                  child: Visibility(
-                      visible:
-                          !controller.homeController.foodCartList.isNotEmpty,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: Get.width * .6,
-                            child: Image.asset(
-                              controller.allImages.streetNosheryLogo,
-                              fit: BoxFit.fill,
-                            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              const StreetNosheryCartDetailsWidget(),
+              const SizedBox(
+                height: 20,
+              ),
+              const StreetNosherySavingCorner(),
+              const SizedBox(
+                height: 20,
+              ),
+              const StreetNosheryServiceTypeWidget(),
+              const SizedBox(
+                height: 20,
+              ),
+              const StreetNosheryPaymentWidget(),
+              Center(
+                child: Visibility(
+                    visible:
+                        !controller.homeController.foodCartList.isNotEmpty,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: Get.width * .6,
+                          child: Image.asset(
+                            controller.allImages.streetNosheryLogo,
+                            fit: BoxFit.fill,
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            controller.streetNosheryFirebasemodel.emptyCartTitle ?? "Please choose a food item to enjoy!",
-                            style: const TextStyle(color: Colors.black),
-                          )
-                        ],
-                      )),
-                ),
-                SizedBox(
-                  height: controller.homeController.foodCartList.isNotEmpty
-                      ? 80
-                      : 60,
-                ),
-              ],
-            ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          controller.streetNosheryFirebasemodel
+                                  .emptyCartTitle ??
+                              "Please choose a food item to enjoy!",
+                          style: TextStyle(color: colorsTheme.theme.textPrimary, fontSize: 15),
+                        )
+                      ],
+                    )),
+              ),
+              SizedBox(
+                height: controller.homeController.foodCartList.isNotEmpty
+                    ? 80
+                    : 60,
+              ),
+            ],
           ),
         );
       }),
