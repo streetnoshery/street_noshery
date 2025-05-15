@@ -21,7 +21,8 @@ class StreetnosheryAppReviewController extends GetxController {
           .fireBaseContentHandler.streetNosheryReviewFirebaseModel;
   StreetNosheryReviewmodel reviewmodel = StreetNosheryReviewmodel();
   final homeController = Get.find<StreetNosheryHomeController>();
-  StreetNosheryReviewProviders streetNosheryReviewprovider = StreetNosheryReviewProviders();
+  StreetNosheryReviewProviders streetNosheryReviewprovider =
+      StreetNosheryReviewProviders();
 
   void increaseStarCount(int index) {
     selectedStars.value = index + 1;
@@ -43,6 +44,16 @@ class StreetnosheryAppReviewController extends GetxController {
           reviews: reviews);
       if (response.data != null) {
         reviewmodel = response.data;
+        hideLoader();
+      } else {
+        hideLoader();
+        StreetNosheryCommonBottomSheet.show(
+        child: const StreetNosheryCommonErrorBottomsheet(
+          errorTitle: "Review Submission Failed",
+          errorSubtitle:
+              "We couldn’t post your review right now. Please try again in a moment.",
+        ),
+      );
       }
     } catch (e) {
       hideLoader();

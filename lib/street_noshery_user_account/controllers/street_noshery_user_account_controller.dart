@@ -25,6 +25,16 @@ class StreetnosheryUserAccountController extends GetxController {
       if(response.data != null) {
         isNotificationUpdated.value = !isNotificationUpdated.value;
       }
+      else{
+        hideLoader();
+        StreetNosheryCommonBottomSheet.show(
+        child: const StreetNosheryCommonErrorBottomsheet(
+          errorTitle: "Something Went Wrong",
+          errorSubtitle:
+              "We're experiencing some issues at the moment. Please try again later.",
+        ),
+      );
+      }
     } catch (e) {
       hideLoader();
       StreetNosheryCommonBottomSheet.show(

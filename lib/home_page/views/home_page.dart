@@ -42,19 +42,19 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Container(
+                    padding:const EdgeInsets.only(top: 20, bottom: 20),
+                    decoration: BoxDecoration(
+                      color: colorsTheme.theme.pastelGreen
+                    ),
+                    child: Image.asset(controller.allImages.homePageBackgroundimage,
+                        height: Get.height * .30,
+                        width: Get.width,
+                        fit: BoxFit.fill,
+                        ),
+                  ),
                   const SizedBox(
                     height: 20,
-                  ),
-                  Image.asset(controller.allImages.homePageBackgroundimage,
-                      height: Get.height * .30,
-                      width: Get.width,
-                      fit: BoxFit.fill),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Divider(
-                    thickness: 1.5,
-                    color: colorsTheme.theme.greySecondary,
                   ),
                   Visibility(
                     visible:
@@ -190,8 +190,8 @@ class StreetNosheryHomePage extends GetView<StreetNosheryHomeController> {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 20),
                       child: Divider(
-                        thickness: 1.5,
-                        color: colorsTheme.theme.greySecondary,
+                        thickness: 0.7,
+                        color: colorsTheme.theme.textTer,
                       ),
                     ),
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_theme.dart';
 
 class StreetNosheryCommonErrorBottomsheet extends StatelessWidget {
   final String errorTitle;
@@ -9,29 +10,29 @@ class StreetNosheryCommonErrorBottomsheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorTheme = CommonTheme();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min, // Adjusts to content size
       children: [
         Container(
-          padding: const EdgeInsets.all(15), // Adjust size of circle
+          padding: EdgeInsets.all(20), // Adjust size of circle
           decoration: BoxDecoration(
-            color: Colors.red.shade800, // Red background color
+            color: colorTheme.theme.errorText, // Red background color
             shape: BoxShape.circle, // Make it round
           ),
-          child: const Text(
+          child: Text(
             '!', // Exclamation mark as text
             style: TextStyle(
-              color: Colors.white, // White color for the text
+              color: colorTheme.theme.surface, // White color for the text
               fontSize: 30, // Adjust the size of the text
               fontWeight: FontWeight.bold, // Make the exclamation bold
             ),
           ),
         ),
-        const SizedBox(height: 10),
         Text(
           errorTitle,
-          style: const TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold,),
+          style: TextStyle(color: colorTheme.theme.textPrimary, fontSize: 20, fontWeight: FontWeight.bold,),
         ),
         const SizedBox(height: 20),
         Visibility(
@@ -40,7 +41,7 @@ class StreetNosheryCommonErrorBottomsheet extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 20.0),
             child: Text(
               errorSubtitle ?? "",
-              style: const TextStyle(color: Colors.black, fontSize: 16),
+              style: TextStyle(color: colorTheme.theme.textPrimary, fontSize: 15),
             ),
           ),
         ),
@@ -49,13 +50,13 @@ class StreetNosheryCommonErrorBottomsheet extends StatelessWidget {
           width: Get.width,
           child: ElevatedButton(
             style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(Colors.black)),
+                backgroundColor: WidgetStateProperty.all(colorTheme.theme.textPrimary)),
             onPressed: () {
               Get.back();
             },
-            child: const Text(
+            child: Text(
               'Close',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: colorTheme.theme.surface, fontSize: 15),
             ),
           ),
         ),

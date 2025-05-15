@@ -68,10 +68,14 @@ class ReviewPopup extends GetView<StreetNosheryHomeController> {
               controller.streetNosheryHomePageFirebaseModel.review
                       ?.cancelButton ??
                   "Cancel",
-              style: const TextStyle(color: Colors.black),
+              style: TextStyle(color: colorsTheme.theme.textPrimary),
             ),
           ),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: colorsTheme.theme.lightLeafGreen, // Background color
+                foregroundColor: colorsTheme.theme.surface, // Text color
+              ),
             onPressed: (controller.shouldReviewButtonEnable(review))
                 ? () async {
                     showLoader();
@@ -80,13 +84,12 @@ class ReviewPopup extends GetView<StreetNosheryHomeController> {
                         context: context,
                         rating: controller.selectedStars.value,
                         foodIds: foodIds);
-                    hideLoader();
                   }
                 : null,
             child: Text(
                 controller.streetNosheryHomePageFirebaseModel.review?.submit ??
                     "Submit",
-                style: const TextStyle(color: Colors.black)),
+                style: TextStyle(color: colorsTheme.theme.textPrimary)),
           ),
         ],
       );

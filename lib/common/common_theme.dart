@@ -26,12 +26,14 @@ class CommonPrivateTheme {
   final Color greyTer = const Color(0xFFF5F5F5);
   final Color greySecondary = const Color(0xFF757575);
   final Color yellowStar = const Color(0xFFFFE135);
-  final Color pageBackgroundColor = const Color(0xFFF6F6F6);
+  final Color pageBackgroundColor = const Color(0xFFFFFFFF);
   final Color textGreen = const Color(0xFF2E7D32);
-  final Color errorText = const Color(0xFF9A0E0B);
+  final Color errorText = const Color(0xFFAC1A18);
   final Color orangeAccent = const Color(0xFFFFAB40);
   final Color surface = const Color(0xFFFFFFFF);
   final Color transwparent = const Color(0x00000000);
   final Color veg = const Color(0xFF388E3C);
   final Color shadowColor = const Color(0x42000000);
+  final Color pastelGreen = const Color(0xFFE8F6E8);
+  final Color lightBackground = const Color(0xFFF6F6F6);
 }

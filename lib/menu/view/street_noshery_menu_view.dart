@@ -82,16 +82,19 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                     child: Container(
                       width: Get.width,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: Colors.white,
-                        boxShadow: [
-                  BoxShadow(
-                    color: colorsTheme.theme.shadowColor, // Shadow color
-                    blurRadius: 6, // Blur radius
-                    spreadRadius: 2, // Spread radius
-                    offset: Offset(2, 4), // Shadow offset (x, y)
-                  )]
-                      ),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  colorsTheme.theme.shadowColor, // Shadow color
+                              blurRadius: 6, // Blur radius
+                              spreadRadius: 2, // Spread radius
+                              offset:
+                                  const Offset(2, 4), // Shadow offset (x, y)
+                            )
+                          ]),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
@@ -258,21 +261,20 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                                       fontSize: 20),
                                 ),
                                 (controller.isBreakfastSelected.value)
-                                    ? Text(
-                                        "^",
-                                        style: TextStyle(
-                                            color:
-                                                colorsTheme.theme.textPrimary,
-                                            fontSize: 25),
+                                    ? Icon(
+                                        Icons.expand_less,
+                                        size: 30,
+                                        color: colorsTheme.theme.textPrimary,
                                       )
-                                    : Text("v",
-                                        style: TextStyle(
-                                            color:
-                                                colorsTheme.theme.textPrimary,
-                                            fontSize: 18)),
+                                    : Icon(
+                                        Icons.expand_more,
+                                        size: 30,
+                                        color: colorsTheme.theme.textPrimary,
+                                      ),
                               ],
                             ),
                           ),
+                          const SizedBox(height: 10,),
                           (controller.isBreakfastSelected.value)
                               ? ListView.separated(
                                   shrinkWrap: true,
@@ -296,9 +298,6 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                         ],
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
                   ),
                   Container(
                     decoration: const BoxDecoration(
@@ -330,21 +329,20 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                                       fontSize: 20),
                                 ),
                                 (controller.isFooditemSelected.value)
-                                    ? Text(
-                                        "^",
-                                        style: TextStyle(
-                                            color:
-                                                colorsTheme.theme.textPrimary,
-                                            fontSize: 25),
+                                    ? Icon(
+                                        Icons.expand_less,
+                                        size: 30,
+                                        color: colorsTheme.theme.textPrimary,
                                       )
-                                    : Text("v",
-                                        style: TextStyle(
-                                            color:
-                                                colorsTheme.theme.textPrimary,
-                                            fontSize: 18)),
+                                    : Icon(
+                                        Icons.expand_more,
+                                        size: 30,
+                                        color: colorsTheme.theme.textPrimary,
+                                      ),
                               ],
                             ),
                           ),
+                          const SizedBox(height: 10,),
                           (controller.isFooditemSelected.value)
                               ? ListView.separated(
                                   shrinkWrap: true,
@@ -368,9 +366,6 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                         ],
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
                   ),
                   Container(
                     color: Colors.white,
@@ -400,21 +395,20 @@ class StreetNosheryMenuView extends GetView<StreetNosheryMenuController> {
                                       fontSize: 20),
                                 ),
                                 (controller.isDrinksSelected.value)
-                                    ? Text(
-                                        "^",
-                                        style: TextStyle(
-                                            color:
-                                                colorsTheme.theme.textPrimary,
-                                            fontSize: 25),
+                                    ? Icon(
+                                        Icons.expand_less,
+                                        size: 30,
+                                        color: colorsTheme.theme.textPrimary,
                                       )
-                                    : Text("v",
-                                        style: TextStyle(
-                                            color:
-                                                colorsTheme.theme.textPrimary,
-                                            fontSize: 18)),
+                                    : Icon(
+                                        Icons.expand_more,
+                                        size: 30,
+                                        color: colorsTheme.theme.textPrimary,
+                                      ),
                               ],
                             ),
                           ),
+                          const SizedBox(height: 10,),
                           (controller.isDrinksSelected.value)
                               ? ListView.separated(
                                   shrinkWrap: true,

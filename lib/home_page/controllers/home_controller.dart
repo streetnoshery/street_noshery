@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:street_noshery/common/common_bottomsheet.dart';
 import 'package:street_noshery/common/common_images.dart';
+import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_response.dart';
 import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_help_static_data.model.dart';
@@ -10,6 +12,7 @@ import 'package:street_noshery/home_page/models/street_noshery_menu_model.dart';
 import 'package:street_noshery/home_page/models/street_noshery_past_order_detail_model.dart';
 import 'package:street_noshery/home_page/models/street_noshery_past_orders_model.dart';
 import 'package:street_noshery/home_page/providers/street_noshery_home_page_provider.dart';
+import 'package:street_noshery/home_page/widgets/street_noshery_common_failure_bottomsheet.dart';
 import 'package:street_noshery/menu/enums/street_noshery_menu_enums.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
 import 'package:street_noshery/onboarding/models/street_noshery_onboarding_user_data_model.dart';
@@ -147,7 +150,8 @@ class StreetNosheryHomeController extends GetxController {
       required List<num> foodIds}) async {
     await updateFoodReview(rating: rating, foodIds: foodIds);
     final colorsTheme = CommonTheme();
-    ScaffoldMessenger.of(context).showSnackBar(
+    if(isFoodReviewUpdated.value = true){
+      ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
           "Review submitted",
@@ -159,9 +163,8 @@ class StreetNosheryHomeController extends GetxController {
     boxReviewController.text = "";
     selectedStars.value = 0;
     Get.back();
-    /*
-    TODO: Review API
-     */
+    }
+    hideLoader();
   }
 
   Future<void> updateFoodReview(
@@ -173,6 +176,14 @@ class StreetNosheryHomeController extends GetxController {
           shopId: streetNosheryUser.value.address?.shopId?.toInt() ?? 1);
       if (response.data != null) {
         isFoodReviewUpdated.value = true;
+      }
+      else{
+        StreetNosheryCommonBottomSheet.show(
+        child: const StreetNosheryCommonErrorBottomsheet(
+          errorTitle: "Something Went Wrong",
+          errorSubtitle:
+              "We're experiencing some issues at the moment. Please try again later.",
+        ));
       }
     } catch (e) {
       rethrow;

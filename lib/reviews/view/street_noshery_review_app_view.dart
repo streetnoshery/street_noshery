@@ -89,6 +89,9 @@ class StreetNosheryAppReviewView
                     onChanged: (value) {
                       controller.review.value = value;
                     },
+                    onEditingComplete: (){
+                      FocusScope.of(context).unfocus();
+                    },
                   ),
                 ),
                 const SizedBox(height: 20,),
@@ -117,9 +120,8 @@ class StreetNosheryAppReviewView
                       InkWell(
                         onTap: (controller.selectedStars.value != 0 && controller.review.value.isNotEmpty) ? () async {
                           showLoader();
+                          FocusScope.of(context).unfocus();
                           await controller.updateReview(controller.selectedStars.value,controller.review.value);
-                          hideLoader();
-                          Get.back();
                         } : null,
                         highlightColor: (controller.selectedStars.value != 0 && controller.review.value.isNotEmpty) ? Colors.teal.shade200 : Colors.grey.shade300,
                         child: Container(

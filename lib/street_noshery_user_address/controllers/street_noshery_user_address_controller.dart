@@ -23,7 +23,8 @@ class StreetNosheryUserAddressController extends GetxController {
   final secondLine = "".obs;
   final shopId = 0.obs;
   final isuserAddressUpdated = false.obs;
-  StreetNosheryAddressProviders userAddressProvider = StreetNosheryAddressProviders();
+  StreetNosheryAddressProviders userAddressProvider =
+      StreetNosheryAddressProviders();
 
   @override
   void onReady() {
@@ -45,6 +46,14 @@ class StreetNosheryUserAddressController extends GetxController {
         isuserAddressUpdated.value = true;
       } else {
         isuserAddressUpdated.value = false;
+        hideLoader();
+        StreetNosheryCommonBottomSheet.show(
+          child: const StreetNosheryCommonErrorBottomsheet(
+            errorTitle: "Address Update Failed",
+            errorSubtitle:
+                "We couldn’t update your address at the moment. Please try again shortly.",
+          ),
+        );
       }
     } catch (e) {
       hideLoader();

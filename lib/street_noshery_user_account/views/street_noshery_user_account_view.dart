@@ -22,122 +22,101 @@ class StreetNosheryUserAccountView
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              controller.accountSettingFirebaseModel.orderRelatedMessages?.title
-                      ?.toUpperCase() ??
-                  "ORDER RELATED MESSAGES",
-              style: TextStyle(color: colorsTheme.theme.textSecondary, fontSize: 15),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Container(
-              color: colorsTheme.theme.surface,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: Text(
-                  controller.accountSettingFirebaseModel.orderRelatedMessages
-                          ?.subTitle ??
-                      "Order related SMS cannot be disabled as they are critical to provide service",
-                  style: TextStyle(color: colorsTheme.theme.greySecondary, fontSize: 15),
-                ),
+          Container(
+            width: Get.width,
+            color: colorsTheme.theme.lightBackground,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+              child: Text(
+                controller.accountSettingFirebaseModel.orderRelatedMessages?.title
+                        ?.toUpperCase() ??
+                    "ORDER RELATED MESSAGES",
+                style: TextStyle(color: colorsTheme.theme.textSecondary, fontSize: 15),
               ),
             ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Text(
-              controller.accountSettingFirebaseModel.recommendations?.title ??
-                  "RECOMMENDATIONS & REMINDERS",
-              style: TextStyle(color: colorsTheme.theme.textSecondary, fontSize: 15),
+              controller.accountSettingFirebaseModel.orderRelatedMessages
+                      ?.subTitle ??
+                  "Order related SMS cannot be disabled as they are critical to provide service",
+              style: TextStyle(color: colorsTheme.theme.greySecondary, fontSize: 15),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Container(
-              color: colorsTheme.theme.surface,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: Text(
-                  controller.accountSettingFirebaseModel.recommendations
-                          ?.subTitle ??
-                      "Keep this on to receive offer recommendations & timely reminders based on your interests",
-                  style: TextStyle(color: colorsTheme.theme.greySecondary, fontSize: 15),
-                ),
+          Container(
+            width: Get.width,
+            color: colorsTheme.theme.lightBackground,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+              child: Text(
+                controller.accountSettingFirebaseModel.recommendations?.title ??
+                    "RECOMMENDATIONS & REMINDERS",
+                style: TextStyle(color: colorsTheme.theme.textSecondary, fontSize: 15),
               ),
             ),
           ),
-          const SizedBox(
-            height: 20,
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            child: Text(
+              controller.accountSettingFirebaseModel.recommendations
+                      ?.subTitle ??
+                  "Keep this on to receive offer recommendations & timely reminders based on your interests",
+              style: TextStyle(color: colorsTheme.theme.greySecondary, fontSize: 15),
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Container(
-              color: colorsTheme.theme.surface,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Column(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          controller.accountSettingFirebaseModel.sms
-                                  ?.toUpperCase() ??
-                              "SMS",
-                          style: TextStyle(
-                              color: colorsTheme.theme.textPrimary,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Obx(() {
-                          return Switch(
-                            value: controller
-                                    .homeController
-                                    .onboardingController
-                                    .streetNosheryUserData
-                                    .value
-                                    .isEmailNotificationEnable ??
-                                true,
-                            onChanged: (value) async {
-                              showLoader();
-                              await controller.notification(value);
-                              hideLoader();
-                            },
-                            activeColor: colorsTheme.theme.lightMossgreen,
-                          );
-                        })
-                      ],
+                    Text(
+                      controller.accountSettingFirebaseModel.sms
+                              ?.toUpperCase() ??
+                          "SMS",
+                      style: TextStyle(
+                          color: colorsTheme.theme.textPrimary,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
                     ),
+                    Obx(() {
+                      return Switch(
+                        value: controller
+                                .homeController
+                                .onboardingController
+                                .streetNosheryUserData
+                                .value
+                                .isEmailNotificationEnable ??
+                            true,
+                        onChanged: (value) async {
+                          showLoader();
+                          await controller.notification(value);
+                          hideLoader();
+                        },
+                        activeColor: colorsTheme.theme.lightMossgreen,
+                      );
+                    })
                   ],
                 ),
+              ],
+            ),
+          ),
+          Container(
+            width: Get.width,
+            color: colorsTheme.theme.lightBackground,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Text(
+                controller.accountSettingFirebaseModel.accountDelete?.title ??
+                    "ACCOUNT DELETION",
+                style: TextStyle(color: colorsTheme.theme.textSecondary, fontSize: 15),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              controller.accountSettingFirebaseModel.accountDelete?.title ??
-                  "ACCOUNT DELETION",
-              style: TextStyle(color: colorsTheme.theme.textSecondary, fontSize: 15),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
           ),
           Container(
             width: Get.width,
@@ -151,10 +130,12 @@ class StreetNosheryUserAccountView
                 style: TextStyle(
                     color: colorsTheme.theme.lightMossgreen,
                     fontWeight: FontWeight.bold,
-                    fontSize: 15),
+                    fontSize: 18),
               ),
             ),
-          )
+          ),
+          Container(color: colorsTheme.theme.lightBackground,
+          height: Get.height*0.25,width: Get.width,)
         ],
       )),
     );

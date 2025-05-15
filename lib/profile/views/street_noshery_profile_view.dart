@@ -139,51 +139,6 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
             ),
           ),
         ),
-        floatingActionButton: Visibility(
-          visible: !(controller
-                  .homeController.streetNosheryUser.value.isRegisterForShop ??
-              false),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 30),
-            child: SizedBox(
-              width: Get.width,
-              child: ElevatedButton(
-                onPressed: controller.homeController.foodCartList.isNotEmpty
-                    ? () {
-                        Get.toNamed(Routes.cart);
-                      }
-                    : null,
-                style: ElevatedButton.styleFrom(
-                  foregroundColor:
-                      controller.homeController.foodCartList.isNotEmpty
-                          ? Colors.white
-                          : Colors.black,
-                  backgroundColor:
-                      controller.homeController.foodCartList.isNotEmpty
-                          ? Colors.black
-                          : Colors.teal.shade400, // Text color
-                  elevation: 5, // Shadow depth
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 24, vertical: 12), // Padding
-                  shape: RoundedRectangleBorder(
-                    // Rounded corners
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                child: Text(
-                  controller.streetNosheryProfileFireBaseModel
-                          .primaryButtonTitle ??
-                      "Cart >",
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: controller.homeController.foodCartList.isNotEmpty
-                          ? colorsTheme.theme.surface
-                          : colorsTheme.theme.textTer), // Text style
-                ),
-              ),
-            ),
-          ),
-        ),
         body: SingleChildScrollView(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -324,18 +279,19 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
               visible: !(controller.homeController.streetNosheryUser.value
                       .isRegisterForShop ??
                   false),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                    controller.streetNosheryProfileFireBaseModel.body?.pastOrder
-                            ?.toUpperCase() ??
-                        "PAST ORDERS",
-                    style: TextStyle(
-                        color: colorsTheme.theme.textSecondary, fontSize: 15)),
+              child: Container(
+                color: colorsTheme.theme.lightBackground,
+                width: Get.width,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: Text(
+                      controller.streetNosheryProfileFireBaseModel.body?.pastOrder
+                              ?.toUpperCase() ??
+                          "PAST ORDERS",
+                      style: TextStyle(
+                          color: colorsTheme.theme.textSecondary, fontSize: 15)),
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 10,
             ),
             Visibility(
                 visible: (controller
@@ -377,9 +333,7 @@ class StreetNosheryProfileView extends GetView<StreetnosheryProfileController> {
                         .homeController.recentlyBroughtFoodItems.length),
               ),
             ),
-            const SizedBox(
-              height: 60,
-            ),
+            const SizedBox(height: 20,)
           ],
         )),
       );
