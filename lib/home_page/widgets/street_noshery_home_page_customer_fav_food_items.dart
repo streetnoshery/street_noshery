@@ -48,7 +48,6 @@ class BestSellerFoodItems extends StatelessWidget {
           child: ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
                   height: 10,
@@ -68,7 +67,8 @@ class BestSellerFoodItems extends StatelessWidget {
                 Center(
                   child: Text(
                     "${favFoodData[index].dishName}",
-                    style: TextStyle(color: colorsTheme.theme.textSecondary, fontSize: 15),
+                    style: TextStyle(color: colorsTheme.theme.textSecondary, fontSize: 15,),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Image.asset(

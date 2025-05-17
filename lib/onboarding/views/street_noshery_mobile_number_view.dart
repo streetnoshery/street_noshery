@@ -2,6 +2,7 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:street_noshery/common/common_bottomsheet.dart';
+import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/home_page/widgets/street_noshery_common_failure_bottomsheet.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
 import 'package:street_noshery/routes/app_pages.dart';
@@ -12,6 +13,7 @@ class StreetNosheryMobileNumberView
 
   @override
   Widget build(BuildContext context) {
+    final colorTheme = CommonTheme();
     final onboardingController =
         Get.isRegistered<StreetNosheryOnboardingController>()
             ? Get.find<StreetNosheryOnboardingController>()
@@ -55,7 +57,7 @@ class StreetNosheryMobileNumberView
                   style: TextStyle(
                     color: (onboardingController.isMobileNumberValid())
                         ? Colors.white
-                        : Colors.grey.shade600,
+                        : colorTheme.theme.greySecondary,
                   ),
                 ),
               ),

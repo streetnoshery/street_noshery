@@ -78,7 +78,6 @@ class ReviewPopup extends GetView<StreetNosheryHomeController> {
               ),
             onPressed: (controller.shouldReviewButtonEnable(review))
                 ? () async {
-                    showLoader();
                     await controller.submitReviews(
                         review: review,
                         context: context,

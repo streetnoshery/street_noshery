@@ -13,7 +13,6 @@ class StreetNosheryTimeLineTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: timeLineStapper.padding?.toDouble() ?? 20),
       child: ListView.builder(
-          padding: const EdgeInsets.only(top: 20),
           shrinkWrap: true,
           itemCount: timeLineStapper.timeLine.length,
           itemBuilder: (context, index) {

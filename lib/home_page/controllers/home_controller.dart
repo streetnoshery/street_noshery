@@ -4,6 +4,7 @@ import 'package:street_noshery/common/common_bottomsheet.dart';
 import 'package:street_noshery/common/common_images.dart';
 import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_response.dart';
+import 'package:street_noshery/common/common_snackbar.dart';
 import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_help_static_data.model.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_home_page_static_data.model.dart';
@@ -58,12 +59,14 @@ class StreetNosheryHomeController extends GetxController {
 
   Rx<StreetNosheryUser> streetNosheryUser = StreetNosheryUser().obs;
   List<StreetNosheryPastOrdersModel> pastOrders = [];
-  StreetNosheryHomeProviders streetNosheryhomeProvider = StreetNosheryHomeProviders();
-  StreetNosheryShopOrdersProviders streetNosheryShopOrderProvider = StreetNosheryShopOrdersProviders();
+  StreetNosheryHomeProviders streetNosheryhomeProvider =
+      StreetNosheryHomeProviders();
+  StreetNosheryShopOrdersProviders streetNosheryShopOrderProvider =
+      StreetNosheryShopOrdersProviders();
 
   final isOrderFetched = false.obs;
   RxList orders = [].obs;
-  final isFoodReviewUpdated = false.obs;
+  final isFoodReviewSubmitted = false.obs;
 
   @override
   void onInit() async {
@@ -92,7 +95,8 @@ class StreetNosheryHomeController extends GetxController {
 
     if (existingItemIndex != -1) {
       // Item exists, increase the count
-      foodCartList[existingItemIndex].count = (foodCartList[existingItemIndex].count ?? 0) + 1;
+      foodCartList[existingItemIndex].count =
+          (foodCartList[existingItemIndex].count ?? 0) + 1;
     } else {
       // If the item does not exist, add it with a count of 1
       foodCartList.add(MenuItem(
@@ -116,11 +120,12 @@ class StreetNosheryHomeController extends GetxController {
 
     if ((foodCartList[existingItemIndex].count ?? 1) > 1) {
       // Reduce the quantity if the item exists
-      foodCartList[existingItemIndex].count = (foodCartList[existingItemIndex].count ?? 0) - 1;
-      } else {
-        // If the count becomes 0 or less, remove the item
-        foodCartList.remove(foodCartList[existingItemIndex]);
-      }
+      foodCartList[existingItemIndex].count =
+          (foodCartList[existingItemIndex].count ?? 0) - 1;
+    } else {
+      // If the count becomes 0 or less, remove the item
+      foodCartList.remove(foodCartList[existingItemIndex]);
+    }
 
     foodCartList.refresh();
   }
@@ -130,16 +135,16 @@ class StreetNosheryHomeController extends GetxController {
       case UpdatePrice.add:
         totalCartAmount.value += itemPrice;
         totalPayment.value = totalCartAmount.value +
-        deliveryFee.value +
-        platFormFee.value +
-        gst.value;
+            deliveryFee.value +
+            platFormFee.value +
+            gst.value;
         break;
       case UpdatePrice.removed:
         totalCartAmount.value -= itemPrice;
         totalPayment.value = totalCartAmount.value +
-        deliveryFee.value +
-        platFormFee.value +
-        gst.value;
+            deliveryFee.value +
+            platFormFee.value +
+            gst.value;
     }
   }
 
@@ -149,42 +154,36 @@ class StreetNosheryHomeController extends GetxController {
       String? review,
       required List<num> foodIds}) async {
     await updateFoodReview(rating: rating, foodIds: foodIds);
-    final colorsTheme = CommonTheme();
-    if(isFoodReviewUpdated.value = true){
-      ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          "Review submitted",
-          style: TextStyle(color: colorsTheme.theme.textPrimary),
-        ),
-        backgroundColor: colorsTheme.theme.lightGreen,
-      ),
-    );
-    boxReviewController.text = "";
-    selectedStars.value = 0;
-    Get.back();
+    if (isFoodReviewSubmitted.value == false) {
+      Get.close(2);
+      boxReviewController.text = "";
+      selectedStars.value = 0;
+      StreetNosheryCommonBottomSheet.show(
+          child: const StreetNosheryCommonErrorBottomsheet(
+        errorTitle: "Something Went Wrong",
+        errorSubtitle:
+            "We're experiencing some issues at the moment. Please try again later.",
+      ));
     }
-    hideLoader();
   }
 
   Future<void> updateFoodReview(
       {required num rating, String? review, required List<num> foodIds}) async {
     try {
+      showLoader();
       RepoResponse response = await streetNosheryhomeProvider.updateFoodReview(
           rating: rating,
           foodIds: foodIds,
           shopId: streetNosheryUser.value.address?.shopId?.toInt() ?? 1);
       if (response.data != null) {
-        isFoodReviewUpdated.value = true;
+        isFoodReviewSubmitted.value = true;
+        SnackBarService.instance
+            .showSnackBar("Review Submitted", theme.theme.lightGreen);
+        Get.back();
+      } else {
+        isFoodReviewSubmitted.value = false;
       }
-      else{
-        StreetNosheryCommonBottomSheet.show(
-        child: const StreetNosheryCommonErrorBottomsheet(
-          errorTitle: "Something Went Wrong",
-          errorSubtitle:
-              "We're experiencing some issues at the moment. Please try again later.",
-        ));
-      }
+      showLoader();
     } catch (e) {
       rethrow;
     }
