@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:app_links/app_links.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
@@ -11,14 +12,17 @@ import 'package:street_noshery/routes/app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final AppLinks appLink = AppLinks();
+  final sub = appLink.uriLinkStream.listen((uri) {
+    log("printing uri: ${uri.toString()}");
+    print("printing uri : ${uri.toString()}");
+    log("URI: ${uri.toString()}");
+  });
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await Hive.initFlutter(); // Initializes Hive with Flutter bindings
   await Hive.openBox('myBox'); // Open a box named 'myBox'
-  log("main function running: log");
-  debugPrint("main function running: debug");
-  print("main function running: print");
   runApp(const MyApp());
 }
 
