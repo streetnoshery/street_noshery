@@ -1,5 +1,5 @@
 class StreetNosheryCommonHost {
-  static const String _baseUrl = "http://43.204.81.5:3000/";
+  static const String _baseUrl = "http://13.126.13.101:3000/";
   static const String _prefix = "street-noshery/";
 
   final StreetNosheryUrls urls = StreetNosheryUrls();

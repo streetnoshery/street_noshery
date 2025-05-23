@@ -19,23 +19,26 @@ class StreetnosheryUserAccountController extends GetxController {
     isNotificationUpdated.value = homeController.onboardingController.streetNosheryUserData.value.isEmailNotificationEnable ?? true;
     super.onInit();
   }
-  Future<void> notification(bool value) async {
+  Future<bool> notification(bool value) async {
     try {
       RepoResponse response = await userAccountProvider.enableNotification(customerId: homeController.onboardingController.streetNosheryUserData.value.customerId, isEnable: value);
       if(response.data != null) {
-        isNotificationUpdated.value = !isNotificationUpdated.value;
+        return true;
       }
       else{
-        hideLoader();
-        StreetNosheryCommonBottomSheet.show(
-        child: const StreetNosheryCommonErrorBottomsheet(
-          errorTitle: "Something Went Wrong",
-          errorSubtitle:
-              "We're experiencing some issues at the moment. Please try again later.",
-        ),
-      );
+        return false;
       }
     } catch (e) {
+      return false;
+    }
+  }
+
+  Future<void> updateNotificationAndTakeAction(bool value) async {
+    showLoader();
+    final isNotificationUpdate = await notification(value);
+    if(isNotificationUpdate) {
+      isNotificationUpdated.value = !isNotificationUpdated.value;
+    }else{
       hideLoader();
       StreetNosheryCommonBottomSheet.show(
         child: const StreetNosheryCommonErrorBottomsheet(
@@ -44,7 +47,6 @@ class StreetnosheryUserAccountController extends GetxController {
               "We're experiencing some issues at the moment. Please try again later.",
         ),
       );
-      rethrow;
     }
   }
 }

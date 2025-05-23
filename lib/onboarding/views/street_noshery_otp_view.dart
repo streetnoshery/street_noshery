@@ -30,18 +30,7 @@ class StreetNosheryMobileVerificationView
             child: FloatingActionButton(
               onPressed: (controller.otp.value.length == 6)
                   ? () async {
-                      final isOtpValid = await controller.validateOtp();
-                      if (isOtpValid) {
-                        await controller.checkExistingUser();
-                      } else {
-                        StreetNosheryCommonBottomSheet.show(
-                          child: const StreetNosheryCommonErrorBottomsheet(
-                            errorTitle: "OTP Validation Failed",
-                            errorSubtitle:
-                                "The OTP you entered is incorrect or has expired. Please try again or request a new OTP.",
-                          ),
-                        );
-                      }
+                      await controller.validateOtpAndSaveDetails();
                     }
                   : null,
               backgroundColor: (controller.otp.value.length == 6)
@@ -69,7 +58,9 @@ class StreetNosheryMobileVerificationView
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Image.asset(controller.allImages.streetNosheryLogo,
@@ -114,7 +105,11 @@ class StreetNosheryMobileVerificationView
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 20),
                     child: Text(
-                        'Waiting for OTP... ${controller.countdown.value} seconds remaining', style: TextStyle(color: controller.theme.theme.textSecondary, fontSize: 15),),
+                      'Waiting for OTP... ${controller.countdown.value} seconds remaining',
+                      style: TextStyle(
+                          color: controller.theme.theme.textSecondary,
+                          fontSize: 15),
+                    ),
                   ),
                 if (controller.showResendButton.value)
                   Padding(
@@ -122,16 +117,24 @@ class StreetNosheryMobileVerificationView
                     child: TextButton(
                       onPressed: () async {
                         final isOtpSent = await controller.sendOTP(context);
-                        if (isOtpSent) {}
+                        if (!isOtpSent) {
+                          StreetNosheryCommonBottomSheet.show(
+                              child: const StreetNosheryCommonErrorBottomsheet(
+                            errorTitle: "OTP Generation Failed",
+                            errorSubtitle:
+                                "We couldn’t generate your OTP at the moment. Please check your internet connection and try again.",
+                          ));
+                        }
                       },
                       style: ButtonStyle(
                         overlayColor: WidgetStateProperty.all(Colors
                             .transparent), // Removes the background highlight
                       ),
                       child: Text(
-                        'Resent Otp',
+                        'Resend Otp',
                         style: TextStyle(
-                            fontSize: 15, color: controller.theme.theme.textGreen),
+                            fontSize: 15,
+                            color: controller.theme.theme.textGreen),
                       ),
                     ),
                   ),

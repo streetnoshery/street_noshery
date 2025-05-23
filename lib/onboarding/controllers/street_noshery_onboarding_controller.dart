@@ -50,7 +50,6 @@ class StreetNosheryOnboardingController extends GetxController {
   late Animation<double> animation;
   final isOtpSent = false.obs;
   final isOtpVerify = false.obs;
-  final isUserRegister = false.obs;
   final customerId = "".obs;
   final isFirebaseDataChanged = false.obs;
 
@@ -78,15 +77,19 @@ class StreetNosheryOnboardingController extends GetxController {
       */
       Get.toNamed(Routes.mobileView);
     } else {
-      contactNumber.value = mobileNumber;
       customerId.value = customer;
-      final hashMobileNUmber = hashMobileNumber(contactNumber.value);
+      final hashMobileNUmber = hashMobileNumber(mobileNumber);
       await fireBaseContentHandler.userFirebaseData(hashMobileNUmber);
       await Future.delayed(const Duration(seconds: 2));
       if (!isFirebaseDataChanged.value) {
-        await getUser(contactNumber.value);
+        await getUser(mobileNumber);
       }
-      await onboardingStates();
+      if (streetNosheryUserData.value.status !=
+          UserStatus.USER_DETAILS_VERIFICATION) {
+        Get.toNamed(Routes.mobileView);
+      } else {
+        await onboardingStates();
+      }
     }
   }
 
@@ -199,6 +202,44 @@ class StreetNosheryOnboardingController extends GetxController {
     });
   }
 
+  Future<void> validateOtpAndSaveDetails() async {
+    showLoader();
+    final isOtpValid = await validateOtp();
+    if (isOtpValid) {
+      final isUserDetailsFind = await getUser(contactNumber.value);
+      if (isUserDetailsFind) {
+        hideLoader();
+        await onboardingStates();
+      } else {
+        try {
+          await savemobileDetails();
+          hideLoader();
+          Get.toNamed(Routes.emailPassword);
+        } catch (e) {
+          hideLoader();
+          StreetNosheryCommonBottomSheet.show(
+            child: const StreetNosheryCommonErrorBottomsheet(
+              errorTitle: "Something Went Wrong",
+              errorSubtitle:
+                  "We're experiencing some issues at the moment. Please try again later.",
+            ),
+          );
+          rethrow;
+        }
+      }
+      storeMobileNumberInHive();
+    } else {
+      hideLoader();
+      StreetNosheryCommonBottomSheet.show(
+        child: const StreetNosheryCommonErrorBottomsheet(
+          errorTitle: "OTP Validation Failed",
+          errorSubtitle:
+              "The OTP you entered is incorrect or has expired. Please try again or request a new OTP.",
+        ),
+      );
+    }
+  }
+
   Future<bool> validateOtp() async {
     try {
       showLoader();
@@ -207,13 +248,12 @@ class StreetNosheryOnboardingController extends GetxController {
           objective: StreetNosheryOnboardingEnums.MOBILE_VERIFICATION,
           otp: otp.value);
       if (response.data != null) {
-        isOtpVerify.value = true;
+        return true;
+      } else {
+        return false;
       }
-      hideLoader();
-      return isOtpVerify.value;
     } catch (e) {
-      hideLoader();
-      return isOtpVerify.value;
+      return false;
     }
   }
 
@@ -230,13 +270,6 @@ class StreetNosheryOnboardingController extends GetxController {
       await createUser(data);
       disposeTimer();
     } catch (e) {
-      StreetNosheryCommonBottomSheet.show(
-        child: const StreetNosheryCommonErrorBottomsheet(
-          errorTitle: "Something Went Wrong",
-          errorSubtitle:
-              "We're experiencing some issues at the moment. Please try again later.",
-        ),
-      );
       rethrow;
     }
   }
@@ -293,23 +326,18 @@ class StreetNosheryOnboardingController extends GetxController {
     }
   }
 
-  Future<void> getUser(String mobileNumber) async {
+  Future<bool> getUser(String mobileNumber) async {
     try {
       RepoResponse response = await onboardingProvider.getUser(mobileNumber);
       if (response.data != null) {
         streetNosheryUserData.value = response.data;
-        isUserRegister.value = true;
         customerId.value = streetNosheryUserData.value.customerId ?? "";
+        return true;
+      } else {
+        return false;
       }
     } catch (e) {
-      StreetNosheryCommonBottomSheet.show(
-        child: const StreetNosheryCommonErrorBottomsheet(
-          errorTitle: "Something Went Wrong",
-          errorSubtitle:
-              "We're experiencing some issues at the moment. Please try again later.",
-        ),
-      );
-      rethrow;
+      return false;
     }
   }
 
@@ -321,20 +349,13 @@ class StreetNosheryOnboardingController extends GetxController {
         customerId.value = streetNosheryUserData.value.customerId ?? "";
       }
     } catch (e) {
-      print(e);
       throw e;
     }
   }
 
   Future<void> checkExistingUser() async {
     try {
-      await getUser(contactNumber.value);
-      await onboardingStates();
-      if (!isUserRegister.value) {
-        await savemobileDetails();
-        Get.toNamed(Routes.emailPassword);
-      }
-      storeMobileNumberInHive();
+      showLoader();
     } catch (e) {
       rethrow;
     }

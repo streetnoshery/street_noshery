@@ -73,7 +73,6 @@ class StreetNosheryHomeController extends GetxController {
     streetNosheryUser.value = onboardingController.streetNosheryUserData.value;
     if (!(streetNosheryUser.value.isRegisterForShop ?? true)) {
       await getMenu(streetNosheryUser.value.address?.shopId ?? 1);
-      await getBestSeller(menu.value);
       await getPastOrders();
       assignPastOrders();
     } else {
@@ -227,6 +226,7 @@ class StreetNosheryHomeController extends GetxController {
           await streetNosheryhomeProvider.getMenu(shopId: shopId);
       if (response.data != null) {
         menu.value = response.data;
+        await getBestSeller(menu.value);
       }
     } catch (e) {
       rethrow;

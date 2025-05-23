@@ -5,7 +5,6 @@ import 'package:street_noshery/common/common_bottomsheet.dart';
 import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_response.dart';
 import 'package:street_noshery/firebase/firebase_model/street_noshery_review_static_data.model.dart';
-import 'package:street_noshery/home_page/controllers/home_controller.dart';
 import 'package:street_noshery/home_page/widgets/street_noshery_common_failure_bottomsheet.dart';
 import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
 import 'package:street_noshery/reviews/model/street_noshery_review_model.dart';
@@ -20,7 +19,6 @@ class StreetnosheryAppReviewController extends GetxController {
       onboardingController
           .fireBaseContentHandler.streetNosheryReviewFirebaseModel;
   StreetNosheryReviewmodel reviewmodel = StreetNosheryReviewmodel();
-  final homeController = Get.find<StreetNosheryHomeController>();
   StreetNosheryReviewProviders streetNosheryReviewprovider =
       StreetNosheryReviewProviders();
 
@@ -28,12 +26,7 @@ class StreetnosheryAppReviewController extends GetxController {
     selectedStars.value = index + 1;
   }
 
-  @override
-  void onInit() async {
-    super.onInit();
-  }
-
-  Future<void> updateReview(num? rating, String? reviews) async {
+  Future<bool> updateReview(num? rating, String? reviews) async {
     try {
       RepoResponse response = await streetNosheryReviewprovider.updateReview(
           customerId:
@@ -44,18 +37,23 @@ class StreetnosheryAppReviewController extends GetxController {
           reviews: reviews);
       if (response.data != null) {
         reviewmodel = response.data;
-        hideLoader();
+        return true;
       } else {
-        hideLoader();
-        StreetNosheryCommonBottomSheet.show(
-        child: const StreetNosheryCommonErrorBottomsheet(
-          errorTitle: "Review Submission Failed",
-          errorSubtitle:
-              "We couldn’t post your review right now. Please try again in a moment.",
-        ),
-      );
+        return false;
       }
     } catch (e) {
+      return false;
+    }
+  }
+
+  Future<void> updateShopReview(num? rating, String? reviews) async {
+    showLoader();
+    final ifReviewUpdated = await updateReview(rating,reviews);
+    if(ifReviewUpdated){
+      hideLoader();
+      Get.back();
+    }
+    else{
       hideLoader();
       StreetNosheryCommonBottomSheet.show(
         child: const StreetNosheryCommonErrorBottomsheet(
@@ -64,8 +62,6 @@ class StreetnosheryAppReviewController extends GetxController {
               "We couldn’t post your review right now. Please try again in a moment.",
         ),
       );
-
-      throw e;
     }
   }
 }

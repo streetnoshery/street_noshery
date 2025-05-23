@@ -7,6 +7,7 @@ import 'package:street_noshery/home_page/models/street_noshery_menu_model.dart';
 import 'package:street_noshery/home_page/models/street_noshery_past_orders_model.dart';
 import 'package:street_noshery/home_page/providers/street_noshery_home_page_provider.dart';
 import 'package:street_noshery/menu/enums/street_noshery_menu_enums.dart';
+import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
 import 'package:street_noshery/reviews/model/street_noshery_rating_review.dart';
 
 class StreetNosheryMenuController extends GetxController {
@@ -84,6 +85,7 @@ class StreetNosheryMenuController extends GetxController {
   RxList<StreetNosheryPastOrdersModel> menuList = <StreetNosheryPastOrdersModel>[].obs;
   Rx<Menu> selectedFood = Menu.drinkS.obs;
   final homeController = Get.find<StreetNosheryHomeController>();
+  final onboardingController = Get.find<StreetNosheryOnboardingController>();
   final isFooditemSelected = false.obs;
   final isDrinksSelected = false.obs;
   final isBreakfastSelected = false.obs;
@@ -190,7 +192,7 @@ class StreetNosheryMenuController extends GetxController {
   Future<void> reviews() async {
     try {
       RepoResponse response = await streetNosheryhomeProvider.getReviews(
-          shopId: homeController.streetNosheryUser.value.address?.shopId);
+          shopId: onboardingController.streetNosheryUserData.value.address?.shopId);
       if (response.data != null) {
         ratings = response.data;
         rating.value = ratings.averageRating?.toInt() ?? 0;

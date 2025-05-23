@@ -42,29 +42,29 @@ class API {
         case 'GET':
           response = await http
               .get(apiUri, headers: headers)
-              .timeout(const Duration(seconds: 5));
+              .timeout(const Duration(seconds: 60));
           break;
         case 'POST':
           response = await http
               .post(apiUri, headers: headers, body: jsonEncode(payload))
-              .timeout(const Duration(seconds: 5));
+              .timeout(const Duration(seconds: 60));
           break;
         case 'PUT':
           response = await http
               .put(apiUri, headers: headers, body: jsonEncode(payload))
-              .timeout(const Duration(seconds: 5));
+              .timeout(const Duration(seconds: 60));
           ;
           break;
         case 'DELETE':
           response = await http
               .delete(apiUri, headers: headers, body: jsonEncode(payload))
-              .timeout(const Duration(seconds: 5));
+              .timeout(const Duration(seconds: 60));
           ;
           break;
         case 'PATCH':
           response = await http
               .patch(apiUri, headers: headers, body: jsonEncode(payload))
-              .timeout(const Duration(seconds: 5));
+              .timeout(const Duration(seconds: 60));
           ;
           break;
         default:
@@ -77,36 +77,27 @@ class API {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return encryption.decryptResponse(response.body);
       } else {
-        return {
-          "error": "RequestFailed",
-          "statusCode": response.statusCode,
-          "message": response.reasonPhrase ?? "Request failed",
-        };
+        if (response.statusCode == 400) {
+          final Map<String, dynamic> bodyData = jsonDecode(response.body);
+
+          final status = bodyData['status'];
+          final statusText = bodyData['statusText'];
+
+          return ApiException(statusCode: status, message: statusText ?? "Request failed", errorReason: "RequestFailed");
+        }
       }
     } on TimeoutException catch (error) {
       return ApiException(
-        message: "Timeout",
-        errorCode: "400",
-        errorReason: error
-      );
+          message: "Timeout", errorCode: "400", errorReason: error);
     } on SocketException catch (_) {
       return ApiException(
-        message: "Socket hangup",
-        errorCode: "400",
-        errorReason: _
-      );
+          message: "Socket hangup", errorCode: "400", errorReason: _);
     } on FormatException catch (_) {
       return ApiException(
-        message: "BadFormatResponse",
-        errorCode: "400",
-        errorReason: _
-      );
+          message: "BadFormatResponse", errorCode: "400", errorReason: _);
     } catch (e) {
       print("API Request Error: $e");
-      return ApiException(
-        message: "Something went wrong",
-        errorReason: e
-      );
+      return ApiException(message: "Something went wrong", errorReason: e);
     }
   }
 }

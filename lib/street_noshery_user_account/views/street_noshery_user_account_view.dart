@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_theme.dart';
 
 import '../controllers/street_noshery_user_account_controller.dart';
@@ -94,11 +93,9 @@ class StreetNosheryUserAccountView
                                 .isEmailNotificationEnable ??
                             true,
                         onChanged: (value) async {
-                          showLoader();
-                          await controller.notification(value);
-                          hideLoader();
+                          await controller.updateNotificationAndTakeAction(value);
                         },
-                        activeColor: colorsTheme.theme.lightMossgreen,
+                        activeThumbColor: colorsTheme.theme.lightMossgreen,
                       );
                     })
                   ],

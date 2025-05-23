@@ -120,8 +120,7 @@ class StreetNosheryAppReviewView
                       InkWell(
                         onTap: (controller.selectedStars.value != 0 && controller.review.value.isNotEmpty) ? () async {
                           showLoader();
-                          FocusScope.of(context).unfocus();
-                          await controller.updateReview(controller.selectedStars.value,controller.review.value);
+                          await controller.updateShopReview(controller.selectedStars.value,controller.review.value);
                         } : null,
                         highlightColor: (controller.selectedStars.value != 0 && controller.review.value.isNotEmpty) ? Colors.teal.shade200 : Colors.grey.shade300,
                         child: Container(

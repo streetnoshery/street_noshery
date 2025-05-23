@@ -1,7 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/street_noshery_user_address/controllers/street_noshery_user_address_controller.dart';
 
@@ -91,9 +90,7 @@ class StreetNosheryUserAddressView
                       controller.shopId.value = item.shopAddress?.shopId ?? 0;
                     }
                   }
-                  showLoader();
-                  await controller.updateAddress();
-                  hideLoader();
+                  await controller.updateAddressAndTakeActions();
                 },
               ),
               Visibility(
