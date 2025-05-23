@@ -38,6 +38,7 @@ class StreetnosheryUserAccountController extends GetxController {
     final isNotificationUpdate = await notification(value);
     if(isNotificationUpdate) {
       isNotificationUpdated.value = !isNotificationUpdated.value;
+      hideLoader();
     }else{
       hideLoader();
       StreetNosheryCommonBottomSheet.show(

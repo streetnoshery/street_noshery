@@ -57,14 +57,18 @@ class StreetNosheryUserAddressController extends GetxController {
   }
 
   Future<void> updateAddressAndTakeActions() async{
+    showLoader();
     final isAddressUpdated = await updateAddress();
     if(isAddressUpdated) {
       if(addressResponse.address?.shopId != null) {
         streetNosheryHomeController.getMenu(addressResponse.address?.shopId ?? 1);
+        streetNosheryHomeController.foodCartList.value = [];
+        streetNosheryHomeController.totalCartAmount.value = 0;
       }
+      hideLoader();
     }
     else{
-      showLoader();
+      hideLoader();
       StreetNosheryCommonBottomSheet.show(
           child: const StreetNosheryCommonErrorBottomsheet(
             errorTitle: "Address Update Failed",
