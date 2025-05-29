@@ -27,6 +27,4 @@ class StreetNosheryOrderTrackingController extends GetxController{
       rethrow;
     }
   }
-
-
 }

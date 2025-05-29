@@ -16,7 +16,7 @@ class StreetNosheryCommonErrorBottomsheet extends StatelessWidget {
       mainAxisSize: MainAxisSize.min, // Adjusts to content size
       children: [
         Container(
-          padding: EdgeInsets.all(20), // Adjust size of circle
+          padding: const EdgeInsets.all(20), // Adjust size of circle
           decoration: BoxDecoration(
             color: colorTheme.theme.errorText, // Red background color
             shape: BoxShape.circle, // Make it round

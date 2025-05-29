@@ -67,10 +67,10 @@ class StreetNosheryShopOrdersProviders {
   }
 
   Future<RepoResponse> updateOrder(
-      {String? orderTrackId,
+      {required String orderTrackId,
       String? customerId,
       num? shopId,
-      String? status}) async {
+      required String status}) async {
     try {
       final String finalUrl = commonHost.url(StreetNosheryUrls.updateOrder);
       final response =
@@ -78,15 +78,15 @@ class StreetNosheryShopOrdersProviders {
         "orderTrackId": orderTrackId,
         "customerId": customerId,
         "shopId": shopId,
-        "status": status
+        "orderStatus": status
       });
       
       return response is ApiException
           ? RepoResponse<ApiException>(error: response, data: null)
-          : RepoResponse<StreetNosheryShopDataResponseModel>(
-              data: StreetNosheryShopDataResponseModel.fromJson(response == ''
+          : RepoResponse<OrderData>(
+              data: OrderData.fromJson(response == ''
                   ? {}
-                  : response));
+                  : response["data"] as Map<String, dynamic>));
     } catch (e) {
       rethrow;
     }

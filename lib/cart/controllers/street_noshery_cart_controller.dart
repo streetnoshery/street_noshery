@@ -12,6 +12,7 @@ import 'package:street_noshery/firebase/firebase_model/street_noshery_cart_stati
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
 import 'package:street_noshery/home_page/widgets/street_noshery_common_failure_bottomsheet.dart';
 import 'package:street_noshery/menu/controller/street_noshery_menu_controller.dart';
+import 'package:street_noshery/onboarding/controllers/street_noshery_onboarding_controller.dart';
 import 'package:street_noshery/orders/models/street_noshery_order_payload_model.dart';
 import 'package:street_noshery/orders/providers/street_noshery_order_provider.dart';
 
@@ -36,7 +37,9 @@ class StreetNosheryCartController extends GetxController {
   final isOrderCreated = false.obs;
   final paymentId = "".obs;
   final orderId = "".obs;
-  StreetNosheryShopOrdersProviders streetNosheryShopOrderProvider = StreetNosheryShopOrdersProviders();
+  StreetNosheryShopOrdersProviders streetNosheryShopOrderProvider =
+      StreetNosheryShopOrdersProviders();
+  final onboardingControlelr = Get.find<StreetNosheryOnboardingController>();
 
   @override
   void onInit() {
@@ -69,7 +72,8 @@ class StreetNosheryCartController extends GetxController {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: colorsTheme.theme.darkLeafGreen, // Header background color
+            primaryColor:
+                colorsTheme.theme.darkLeafGreen, // Header background color
             colorScheme: ColorScheme.light(
                 primary: colorsTheme.theme.darkLeafGreen), // Header text color
             buttonTheme:
@@ -106,7 +110,8 @@ class StreetNosheryCartController extends GetxController {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: colorsTheme.theme.darkLeafGreen, // Header background color
+            primaryColor:
+                colorsTheme.theme.darkLeafGreen, // Header background color
             colorScheme: ColorScheme.light(
                 primary: colorsTheme.theme.darkLeafGreen), // Header text color
             buttonTheme:
@@ -156,26 +161,61 @@ class StreetNosheryCartController extends GetxController {
 
   CustomerOrderModel getOrderPayload() {
     return CustomerOrderModel(
-        customerId: homeController.streetNosheryUser.value.customerId ?? "",
-        shopId: homeController.streetNosheryUser.value.address?.shopId ?? 1,
+        customerId:
+            onboardingControlelr.streetNosheryUserData.value.customerId ?? "",
+        shopId:
+            onboardingControlelr.streetNosheryUserData.value.address?.shopId ??
+                1,
         orderItems: homeController.foodCartList,
         amount: homeController.totalPayment.value);
   }
 
   Future<void> createOrder() async {
     try {
+      showLoader();
       RepoResponse response = await streetNosheryShopOrderProvider.createOrder(
           orderTrackId: orderData.value.orderTrackId,
-          customerId: homeController.streetNosheryUser.value.customerId ?? "",
-          shopId: homeController.streetNosheryUser.value.address?.shopId ?? 1,
+          customerId:
+              onboardingControlelr.streetNosheryUserData.value.customerId ?? "",
+          shopId: onboardingControlelr
+                  .streetNosheryUserData.value.address?.shopId ??
+              1,
           paymentId: paymentId.value,
           razorpayOrderId: orderId.value);
       if (response.data != null) {
         orderData.value = response.data;
         isOrderCreated.value = true;
       }
+      hideLoader();
     } catch (error) {
       hideLoader();
+      rethrow;
+    }
+  }
+
+  Future<void> updateFailedOrder() async {
+    try {
+      showLoader();
+      RepoResponse response = await streetNosheryShopOrderProvider.updateOrder(
+          orderTrackId: orderData.value.orderTrackId!,
+          customerId:
+              onboardingControlelr.streetNosheryUserData.value.customerId,
+          status: "FAILED",
+          shopId:
+              onboardingControlelr.streetNosheryUserData.value.address?.shopId);
+      if (response.data != null) {
+        orderData.value = response.data;
+      }
+      hideLoader();
+    } catch (e) {
+      hideLoader();
+      StreetNosheryCommonBottomSheet.show(
+        child: const StreetNosheryCommonErrorBottomsheet(
+          errorTitle: "Payment Failed",
+          errorSubtitle:
+              "Your payment couldn’t be processed. Please check your details or try another method.",
+        ),
+      );
       rethrow;
     }
   }
@@ -184,17 +224,16 @@ class StreetNosheryCartController extends GetxController {
     // Do something when payment succeeds
     paymentId.value = response.paymentId ?? "";
     orderId.value = response.orderId ?? "";
-    showLoader();
     await createOrder();
-    hideLoader();
     homeController.switchToHome();
     await homeController.getPastOrders();
     homeController.assignPastOrders();
     homeController.foodCartList.value = [];
   }
 
-  void _handlePaymentError(PaymentFailureResponse response) {
+  void _handlePaymentError(PaymentFailureResponse response) async {
     // Do something when payment fails
+    await updateFailedOrder();
     StreetNosheryCommonBottomSheet.show(
       child: const StreetNosheryCommonErrorBottomsheet(
         errorTitle: "Payment Failed",

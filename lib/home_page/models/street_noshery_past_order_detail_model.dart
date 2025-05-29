@@ -1,6 +1,6 @@
 class PastOrderDetailsResponse {
   String title;
-  int rating;
+  num rating;
   String? price;
 
   PastOrderDetailsResponse({required this.title, required this.rating, this.price});

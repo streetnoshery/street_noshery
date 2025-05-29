@@ -61,7 +61,7 @@ class OrderView extends GetView<StreetNosheryHomeController> {
               Flexible(
                 child: InkWell(
                   onTap: () async {
-                    final orderTrackId = order?.orderTrackId;
+                    final orderTrackId = order?.orderTrackId as String;
                     final getStatus = controller.statusTobeUpdated(order?.orderStatus ?? "");
                     showLoader();
                     await controller.updateOrder(orderTrackId, getStatus);
@@ -86,7 +86,7 @@ class OrderView extends GetView<StreetNosheryHomeController> {
               Flexible(
                 child: InkWell(
                   onTap: () async {
-                    final orderTrackId = order?.orderTrackId;
+                    final orderTrackId = order?.orderTrackId as String;
                     const getStatus = "CANCELLED";
                     showLoader();
                     controller.updateOrder(orderTrackId, getStatus);

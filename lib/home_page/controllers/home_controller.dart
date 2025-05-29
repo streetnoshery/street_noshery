@@ -163,6 +163,10 @@ class StreetNosheryHomeController extends GetxController {
         errorSubtitle:
             "We're experiencing some issues at the moment. Please try again later.",
       ));
+    } else {
+      boxReviewController.text = "";
+      boxReview.value = "";
+      selectedStars.value = 0;
     }
   }
 
@@ -178,12 +182,14 @@ class StreetNosheryHomeController extends GetxController {
         isFoodReviewSubmitted.value = true;
         SnackBarService.instance
             .showSnackBar("Review Submitted", theme.theme.lightGreen);
+        hideLoader();
         Get.back();
       } else {
         isFoodReviewSubmitted.value = false;
+        hideLoader();
       }
-      showLoader();
     } catch (e) {
+      hideLoader();
       rethrow;
     }
   }
@@ -259,14 +265,14 @@ class StreetNosheryHomeController extends GetxController {
     var price = 0;
     for (var pastOrderMenu in menuList) {
       response.title += "${pastOrderMenu.dishName} ";
-      response.rating += pastOrderMenu.rating?.toInt() ?? 0;
+      response.rating += pastOrderMenu.rating?? 0;
       price += num.tryParse(pastOrderMenu.price.toString())?.toInt() ?? 0;
     }
 
     if (response.title.length > 20) {
       response.title = '${response.title.substring(0, 20)}...';
     }
-    response.rating = (response.rating / menuList.length).toInt();
+    response.rating = double.parse((response.rating / menuList.length).toStringAsFixed(1));
     response.price = price.toString();
     return response;
   }
@@ -300,7 +306,8 @@ class StreetNosheryHomeController extends GetxController {
     }
   }
 
-  Future<void> updateOrder(String? orderTrackId, String? status) async {
+  Future<void> updateOrder(String orderTrackId, String status) async {
+    // TODO: Logic should have to review
     try {
       RepoResponse response = await streetNosheryShopOrderProvider.updateOrder(
           shopId: streetNosheryUser.value.address?.shopId,

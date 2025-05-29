@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:street_noshery/common/common_loader.dart';
 import 'package:street_noshery/common/common_theme.dart';
 import 'package:street_noshery/home_page/controllers/home_controller.dart';
 
@@ -61,6 +60,7 @@ class ReviewPopup extends GetView<StreetNosheryHomeController> {
           TextButton(
             onPressed: () {
               controller.boxReviewController.text = "";
+              controller.boxReview.value = "";
               controller.selectedStars.value = 0;
               Get.back();
             },
